@@ -1,0 +1,15 @@
+services:
+#    burger.example:
+#        class: BurgerBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    burger.admin.produit:
+        class: BurgerBundle\Admin\ProduitAdmin
+        arguments: [~, BurgerBundle\Entity\Produit, BurgerBundle:ProduitAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Produit }
+
+    burger.admin.image:
+        class: BurgerBundle\Admin\ImageAdmin
+        arguments: [~, BurgerBundle\Entity\Image, BurgerBundle:ImageAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Image, show_in_dashboard: false }
