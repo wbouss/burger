@@ -66,11 +66,10 @@ class ProduitAdmin extends AbstractAdmin {
      */
     protected function configureShowFields(ShowMapper $showMapper) {
         $showMapper
-                ->add('id')
                 ->add('intitule')
                 ->add('description')
                 ->add('prix')
-
+                ->add('Image', null, array('template' => 'BurgerBundle:Admin:Produit/show_image.html.twig'))
         ;
     }
 

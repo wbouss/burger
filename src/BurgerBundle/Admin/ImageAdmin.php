@@ -55,9 +55,7 @@ class ImageAdmin extends AbstractAdmin {
      */
     protected function configureShowFields(ShowMapper $showMapper) {
         $showMapper
-                ->add('id')
-                ->add('name')
-                ->add('path')
+                ->add('path', "Image")
         ;
     }
 

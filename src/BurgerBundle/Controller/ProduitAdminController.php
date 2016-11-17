@@ -71,27 +71,30 @@ class ProduitAdminController extends CRUDController {
                 $object = $this->admin->getNewInstance();
                 $form = $this->admin->getForm();
                 $produitFromForm = $form->getData();
+                $produitToEdit = $repositoryProduit->find($id);
                 $ImageFromForm = $produitFromForm->getImage();
                 $newImage = new Image();
                 $newImage->setFile($ImageFromForm->getFile());
+                $produitToEdit->setIntitule($produitFromForm->getIntitule());
+                $produitToEdit->setDescription($produitFromForm->getDescription());
+                $produitToEdit->setPrix($produitFromForm->getPrix());
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($produitToEdit);
                 if (!empty($ImageFromForm->getFile())) {
                     $ImageToChange = $repositoryImage->find($ImageFromForm->getId());
                     if (file_exists($ImageToChange->getPath() . $ImageToChange->getName() . "." . $ImageToChange->getExtension())) {
                         unlink($ImageToChange->getPath() . $ImageToChange->getName() . "." . $ImageToChange->getExtension());
                     }
-                    $em = $this->getDoctrine()->getManager();
                     $em->remove($ImageToChange);
                     $newImage->upload();
-                    $produitFromForm->setImage($newImage);
-                    $em->persist($produitFromForm);
+                    $produitToEdit->setImage($newImage);
                     $em->persist($newImage);
-                    $em->flush();
                 }
+                $em->flush();
                 return new RedirectResponse($this->admin->generateUrl('list'));
             }
         }
         return parent::editAction($id);
-
     }
 
 }

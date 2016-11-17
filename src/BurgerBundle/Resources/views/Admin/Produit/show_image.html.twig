@@ -1,0 +1,7 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field %}
+    <div>
+        <img src="{{ asset(object.image.path ~ object.image.name ~ '.' ~ object.image.extension)}}" width="250" alt=""/>
+    </div>
+{% endblock %}

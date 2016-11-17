@@ -137,5 +137,8 @@ class Image {
         }
         return $string;
     }
+    
+  
+
 
 }
