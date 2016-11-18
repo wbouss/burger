@@ -4,6 +4,7 @@ namespace BurgerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use BurgerBundle\Controller\ImageAdminController;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Image
  *
@@ -20,6 +21,14 @@ class Image {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+     /**
+     * @Assert\File(
+     *     maxSize = "5024k",
+     *     mimeTypes = {"image/png", "image/jpeg"},
+     *     mimeTypesMessage = "le fichier doit être un format image"
+     * )
+     */
     private $file;
     
     /**
@@ -104,7 +113,7 @@ class Image {
 
     
     public function getUploadDir() {
-        return "Bundles/burger/images/";
+        return "Bundles/burger/images/produits/";
     }
     function getFile() {
         return $this->file;

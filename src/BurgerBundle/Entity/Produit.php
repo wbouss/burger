@@ -3,6 +3,7 @@
 namespace BurgerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Produit
@@ -34,6 +35,13 @@ class Produit
      * @ORM\Column(name="description", type="string", length=3000)
      */
     private $description;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=3000)
+     */
+    private $type;
 
     /**
      * @var float
@@ -44,7 +52,8 @@ class Produit
     
    /**
    * @ORM\OneToOne(targetEntity="BurgerBundle\Entity\Image", cascade={"persist"})
-   */
+   * @Assert\Valid()
+   **/
   private $image;
 
 
@@ -136,6 +145,14 @@ class Produit
 
     function setImage($image) {
         $this->image = $image;
+    }
+
+    function getType() {
+        return $this->type;
+    }
+
+    function setType($type) {
+        $this->type = $type;
     }
 
 

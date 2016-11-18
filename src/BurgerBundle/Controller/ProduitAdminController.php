@@ -7,7 +7,7 @@ use BurgerBundle\Entity\Image;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use BurgerBundle\Entity\Produit;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ProduitAdminController extends CRUDController {
 
     public function createAction() {
@@ -60,41 +60,57 @@ class ProduitAdminController extends CRUDController {
     }
 
     public function editAction($id = null) {
-
+        $templateKey = 'edit';   
+        $id = $this->getRequest()->get($this->admin->getIdParameter());
+        $object = $this->admin->getObject($id);
+        $this->admin->setSubject($object);
+         if (!$object) {
+            throw new NotFoundHttpException(sprintf('unable to find the object with id : %s', $id));
+        }
         $form = $this->admin->getForm();
-
+        $form->setData($object);
+        
         if ($form->handleRequest($this->getRequest())->isValid()) {
             // persist if the form was valid and if in preview mode the preview was approved
-            if (!$this->isInPreviewMode() || $this->isPreviewApproved()) {
-                $repositoryImage = $this->getDoctrine()->getManager()->getRepository("BurgerBundle:Image");
-                $repositoryProduit = $this->getDoctrine()->getManager()->getRepository("BurgerBundle:Produit");
-                $object = $this->admin->getNewInstance();
-                $form = $this->admin->getForm();
-                $produitFromForm = $form->getData();
-                $produitToEdit = $repositoryProduit->find($id);
-                $ImageFromForm = $produitFromForm->getImage();
-                $newImage = new Image();
-                $newImage->setFile($ImageFromForm->getFile());
-                $produitToEdit->setIntitule($produitFromForm->getIntitule());
-                $produitToEdit->setDescription($produitFromForm->getDescription());
-                $produitToEdit->setPrix($produitFromForm->getPrix());
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($produitToEdit);
-                if (!empty($ImageFromForm->getFile())) {
-                    $ImageToChange = $repositoryImage->find($ImageFromForm->getId());
-                    if (file_exists($ImageToChange->getPath() . $ImageToChange->getName() . "." . $ImageToChange->getExtension())) {
-                        unlink($ImageToChange->getPath() . $ImageToChange->getName() . "." . $ImageToChange->getExtension());
-                    }
-                    $em->remove($ImageToChange);
-                    $newImage->upload();
-                    $produitToEdit->setImage($newImage);
-                    $em->persist($newImage);
+            $repositoryImage = $this->getDoctrine()->getManager()->getRepository("BurgerBundle:Image");
+            $repositoryProduit = $this->getDoctrine()->getManager()->getRepository("BurgerBundle:Produit");
+            $object = $this->admin->getNewInstance();
+            $form = $this->admin->getForm();
+            $produitFromForm = $form->getData();
+            $produitToEdit = $repositoryProduit->find($id);
+            $ImageFromForm = $produitFromForm->getImage();
+            $newImage = new Image();
+            $newImage->setFile($ImageFromForm->getFile());
+            $produitToEdit->setIntitule($produitFromForm->getIntitule());
+            $produitToEdit->setDescription($produitFromForm->getDescription());
+            $produitToEdit->setPrix($produitFromForm->getPrix());
+            $produitToEdit->setType($produitFromForm->getType());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($produitToEdit);
+            if (!empty($ImageFromForm->getFile())) {
+                $ImageToChange = $repositoryImage->find($ImageFromForm->getId());
+                if (file_exists($ImageToChange->getPath() . $ImageToChange->getName() . "." . $ImageToChange->getExtension())) {
+                    unlink($ImageToChange->getPath() . $ImageToChange->getName() . "." . $ImageToChange->getExtension());
                 }
-                $em->flush();
-                return new RedirectResponse($this->admin->generateUrl('list'));
+                $em->remove($ImageToChange);
+                $newImage->upload();
+                $produitToEdit->setImage($newImage);
+                $em->persist($newImage);
             }
+            $em->flush();
+            return new RedirectResponse($this->admin->generateUrl('list'));
         }
-        return parent::editAction($id);
+
+        $view = $form->createView();
+
+        // set the theme for the current Admin Form
+        $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
+
+        return $this->render($this->admin->getTemplate($templateKey), array(
+                    'action' => 'edit',
+                    'form' => $view,
+                    'object' => $object,
+        ));
     }
 
 }

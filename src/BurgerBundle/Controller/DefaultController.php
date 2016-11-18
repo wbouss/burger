@@ -14,6 +14,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('BurgerBundle:Default:index.html.twig');
+        return $this->render('BurgerBundle:Default:main.html.twig');
     }
 }

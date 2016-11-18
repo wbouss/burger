@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ProduitAdmin extends AbstractAdmin {
 
@@ -33,10 +34,10 @@ class ProduitAdmin extends AbstractAdmin {
      */
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
-                ->add('id')
                 ->add('intitule')
                 ->add('description')
                 ->add('prix')
+                ->add('type')
                 ->add('_action', null, array(
                     'actions' => array(
                         'show' => array(),
@@ -55,6 +56,7 @@ class ProduitAdmin extends AbstractAdmin {
                 ->add('intitule')
                 ->add('description')
                 ->add('prix')
+                ->add('type', "choice", array("choices" => array("Burger" => "Burger", "Woop's" => "Woop's", "sandwich" => "sandwich", "Tex mex" => "Tex mex", "Dessert et boisson" => "Dessert et boisson")))
                 ->add('image', "sonata_type_admin", array(
                     'label' => false,
                     'required' => false))
@@ -69,6 +71,7 @@ class ProduitAdmin extends AbstractAdmin {
                 ->add('intitule')
                 ->add('description')
                 ->add('prix')
+                ->add('type')
                 ->add('Image', null, array('template' => 'BurgerBundle:Admin:Produit/show_image.html.twig'))
         ;
     }
