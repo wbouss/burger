@@ -277,13 +277,13 @@ section::before,section::after {
     padding-top:30px;
     padding-bottom:15px;
 }
-.menu-titles h3 {
+.menu-titles h4 {
     text-shadow:none;
     color:#ed0121;
     text-align:center;
     margin:0 auto;
-    padding-top:10px;
-    padding-bottom:10px;
+    padding-top:5px;
+    padding-bottom:5px;
 }
 #food-menu ul {
     margin:0;
@@ -297,7 +297,8 @@ section::before,section::after {
     border:5px solid #dadada;
     display:block;
     margin:auto;
-    margin-top: 40px;
+    width: 200px;
+    margin-top: 10px;
 }
 
 
@@ -330,7 +331,6 @@ section::before,section::after {
     background-color:#51d466 !important;
 }
 .pricing {
-    border-top:1px solid #f1f1f1;
 }
 .pricing .pricing-item {
     position:relative;

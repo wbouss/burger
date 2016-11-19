@@ -76,138 +76,70 @@
                 <p class="lead main text-center">There is no sincerer love than the love of food!</p>
 
                 <div class="row">
-                    <div class="col-sm-3 col-md-3">
-                        <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/hot-drinks.png")}}"  alt="Hot Drinks"/></div>
-                        <div class="menu-titles"><h3 class="">Les Burgers</h3></div>
+                    <div class="col-xs-2">
+                        <a href="{{ path('burger_carte', { "type": "burger" }) }}">
+                            <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/hot-drinks.png")}}"  alt="Hot Drinks"/></div>
+                            <div class="menu-titles"><h4 class="">Les Burgers</h4></div>
+                        </a>
                     </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/ice-drinks.png")}}"  alt="Ice Drinks"/></div>
-                        <div class="menu-titles"><h3 class="">Les Woop's</h3></div>
+                    <div class="col-xs-2">
+                        <a href="{{ path('burger_carte', { "type": "Woop's" }) }}">
+                            <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/ice-drinks.png")}}"  alt="Ice Drinks"/></div>
+                            <div class="menu-titles"><h4 class="">Les Woop's</h4></div>
+                        </a>
+                    </div>
+                    <div class="col-xs-2">
+                        <a href="{{ path('burger_carte', { "type": "Sandwich" }) }}">
+                            <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/smoothies.png")}}"  alt="Smoothies"/></div>
+                            <div class="menu-titles"><h4 class="">Les sandwichs</h4></div>
+                        </a>
+                    </div>
+                    <div class="col-xs-2">
+                        <a href="{{ path('burger_carte', { "type": "Tex mex" }) }}">
+                            <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/deserts.png")}}"  alt="Desserts"/></div>
+                            <div class="menu-titles"><h4 class="">Les Text Mex</h4></div>
+                        </a>
+                    </div>
+                    <div class="col-xs-2">
+                        <a href="{{ path('burger_carte', { "type": "Dessert" }) }}">
+                            <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/wine.png")}}"  alt="Smoothies"/></div>
+                            <div class="menu-titles"><h4 class="">Les desserts</h4></div>
+                        </a>
 
                     </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/smoothies.png")}}"  alt="Smoothies"/></div>
-                        <div class="menu-titles"><h3 class="">Les sandwichs</h3></div>
-
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/deserts.png")}}"  alt="Desserts"/></div>
-                        <div class="menu-titles"><h3 class="">Les Text Mex</h3></div>
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-3 col-md-3">
-                        <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/cocktails.png")}}"  alt="Hot Drinks"/></div>
-                        <div class="menu-titles"><h3 class="">Les Desserts</h3></div>
-
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/beer.png")}}"  alt="Ice Drinks"/></div>
-                        <div class="menu-titles"><h3 class="">Les boissons</h3></div>
-
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/wine.png")}}"  alt="Smoothies"/></div>
-                        <div class="menu-titles"><h3 class="">Wine</h3></div>
-
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/sprites.png")}}"  alt="Desserts"/></div>
-                        <div class="menu-titles"><h3 class="">Sprites</h3></div>
+                    <div class="col-xs-2">
+                        <a href="{{ path('burger_carte', { "type": "Boisson" }) }}">
+                            <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/beer.png")}}"  alt="Ice Drinks"/></div>
+                            <div class="menu-titles"><h4 class="">Les boissons</h4></div>
+                        </a>
 
                     </div>
                 </div>
 
-            </div>
-            <!-- /.container -->
-{#            <section class="ss-style-bottom"></section>
-#}        </div><!--/#food-menu-->
+                <!-- /.container -->
+                {#            <section class="ss-style-bottom"></section>
+                #}        
+            </div><!--/#food-menu-->
 
-        <div id="special-offser" class="parallax pricing">
-            <div class="container inner">
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-
-                        <div class="pricing-item">
-
-                            <a href="#"> <img  class="img-responsive img-thumbnail" src="{{ asset("bundles/burger/images/default/dish/dish3.jpg")}}"  alt=""/></a>
-
-                            <div class="pricing-item-details">
-
-                                <h3><a href="#">Chicken Fried Rice</a></h3>
-
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
-                                <a class="btn btn-danger" href="#">Order now</a>
-                                <div class="clearfix"></div>
+            <div id="special-offser" class="parallax pricing">
+                <div class="container inner">
+                    <div class="row">
+                        {% for produit in produits %}
+                            <div class="col-md-6 col-sm-6">
+                                <div class="pricing-item">
+                                    <a href="#"> <img  class="img-responsive img-thumbnail" src="{{ asset(produit.image.path~produit.image.name~"."~produit.image.extension)}}"  alt=""/></a>
+                                    <div class="pricing-item-details">
+                                        <h3><a href="#">{{ produit.intitule }}</a></h3>
+                                        <p>{{ produit.description }}</p>
+                                        <a class="btn btn-danger" href="#">Ajouter au panier</a>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <!--price tag-->
+                                    <span class="hot-tag br-red">{{ produit.prix }}€</span>
+                                    <div class="clearfix"></div>
+                                </div>           
                             </div>
-                            <!--price tag-->
-                            <span class="hot-tag br-red">$26</span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-
-                        <div class="pricing-item">
-
-                            <a href="#"><img  class="img-responsive img-thumbnail" src="{{ asset("bundles/burger/images/default/dish/dish2.jpg")}}"  alt=""/></a>
-
-                            <div class="pricing-item-details">
-
-                                <h3><a href="#">Hot Fried Chicken</a></h3>
-
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
-                                <a class="btn btn-danger" href="#">Order now</a>
-                                <div class="clearfix"></div>
-                            </div>
-                            <!--price tag-->
-                            <span class="hot-tag br-lblue">$37</span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                    <div class="clearfix visible-md"></div>
-                    <div class="col-md-6 col-sm-6">
-
-                        <div class="pricing-item">
-
-                            <a href="#"><img  class="img-responsive img-thumbnail" src="{{ asset("bundles/burger/images/default/dish/dish4.jpg")}}"  alt=""/></a>
-
-                            <div class="pricing-item-details">
-
-                                <h3><a href="#">Thi Chicken Momo</a></h3>
-
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
-                                <a class="btn btn-danger" href="#">Order now</a>
-                                <div class="clearfix"></div>
-                            </div>
-                            <!--price tag-->
-                            <span class="hot-tag br-green">$54</span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-
-                        <div class="pricing-item">
-
-                            <a href="#"><img  class="img-responsive img-thumbnail" src="{{ asset("bundles/burger/images/default/dish/dish1.jpg")}}"  alt=""/></a>
-
-                            <div class="pricing-item-details">
-
-                                <h3><a href="#">Cocktail Sushi</a></h3>
-
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
-                                <a class="btn btn-danger" href="#">Order now</a>
-                                <div class="clearfix"></div>
-                            </div>
-                            <!--price tag-->
-                            <span class="hot-tag br-red">$27</span>
-                            <div class="clearfix"></div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

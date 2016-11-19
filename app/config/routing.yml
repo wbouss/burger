@@ -9,12 +9,12 @@ app:
 
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
-    prefix: /admin
+    prefix: /administration
 
 _sonata_admin:
     resource: .
     type: sonata_admin
-    prefix: /admin
+    prefix: /administration
     
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
