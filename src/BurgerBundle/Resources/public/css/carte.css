@@ -135,7 +135,7 @@ section::before,section::after {
     position:relative;
     top:-5px;
 }
-.navbar-nav>li:nth-child(4) {
+.navbar-nav>li:nth-child(3) {
     margin-right: 110px;
 }
 
@@ -178,8 +178,8 @@ section::before,section::after {
     background:#fbfbfb;
 }
 .inner {
-    padding-top:100px;
-    padding-bottom:100px;
+    padding-top:50px;
+    padding-bottom:10px;
 }
 .section-title {
     font-size:36px;
@@ -189,7 +189,7 @@ section::before,section::after {
     font-weight:600;
 }
 .main.lead {
-    margin-bottom:80px;
+    margin-bottom:20px;
 }
 .lead {
     font-size:17px;
@@ -224,7 +224,7 @@ section::before,section::after {
     05. parallax 
 ========================================================================== */
 .parallax {
-    background:url(../../../bundles/burger/images/default/parallax1.jpg) fixed no-repeat center center;
+    background-color: #fbfbfb;
     -webkit-background-size:/*@@prefixmycss->No equivalent*/;
     -moz-background-size:cover;
     -o-background-size:/*@@prefixmycss->No equivalent*/;
@@ -233,7 +233,7 @@ section::before,section::after {
     color:#FFF;
 }
 .parallax .inner {
-    padding-top:130px;
+    padding-top:10px;
     padding-bottom:130px;
 }
 .parallax.parallax2 {
@@ -341,7 +341,12 @@ section::before,section::after {
     max-width:250px;
     float:left;
 }
-.pricing-item-details a,.pricing-item-details p,.pricing .lead {
+.pricing-item-details p , .pricing-item-details a{
+    color: black;
+    font-weight:bold;
+}
+
+.pricing .lead {
     color:white;
     font-weight:bold;
 }
@@ -354,9 +359,12 @@ section::before,section::after {
     font-size:22px;
 }
 .pricing .pricing-item .pricing-item-details p {
+    
 }
 .pricing .pricing-item .pricing-item-details a.btn {
     margin-top:10px;
+       color:white;
+    font-weight:bold;
 }
 .pricing .pricing-item .pricing-item-details a.view-link {
     display:inline-block;
