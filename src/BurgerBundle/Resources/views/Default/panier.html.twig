@@ -1,1 +1,128 @@
-{# empty Twig template #}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Le panier</title>
+
+        {% stylesheets '@BurgerBundle/Resources/public/css/bootstrap-theme.min.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% stylesheets '@BurgerBundle/Resources/public/css/bootstrap.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% stylesheets '@BurgerBundle/Resources/public/css/font-awesome.min.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% stylesheets '@BurgerBundle/Resources/public/css/carte.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {% stylesheets '../vendor/datatables/datatables/media/css/jquery.dataTables.css'  filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {#       {% stylesheets '@BurgerBundle/Resources/public/css/semantic.min.css'  filter='cssrewrite' %}
+               <link rel="stylesheet" href="{{ asset_url }}" />
+               {% endstylesheets %}
+       
+               {% stylesheets '@BurgerBundle/Resources/public/css/dataTables.semanticui.min.css'  filter='cssrewrite' %}
+               <link rel="stylesheet" href="{{ asset_url }}" />
+               {% endstylesheets %}#}
+
+
+        {% javascripts 
+        '@BurgerBundle/Resources/public/js/jquery.js'
+        '@BurgerBundle/Resources/public/js/bootstrap.js'
+        '../vendor/datatables/datatables/media/js/jquery.dataTables.js' 
+
+        %}
+        <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+
+    </head>
+    <body>
+        <div id="menu" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header visible-xs">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"><h2>Meat King</h2></a>
+                </div><!-- navbar-header -->
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="hidden-xs" id="logo"><a href="#header">
+                            <img src="img/logo.png" alt="">
+                        </a></div>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#story">Histoire</a></li>
+                        <li><a href="#facts">Faits</a></li>
+                        <li><a href="#chefs">Nos Chefs</a></li>
+
+                        <li><a href="#food-menu">Offres</a></li>
+                        <li><a href="#special-offser">Panier</a></li>
+                        <li><a href="#special-offser">Mon compte</a></li>
+
+                        <!--fix for scroll spy active menu element-->
+                        <li style="display:none;"><a href="#header"></a></li>
+
+                    </ul>
+                </div><!--/.navbar-collapse -->
+            </div><!-- container -->
+        </div><!-- menu -->
+        <div class="container inner">
+            <div id="panier_Content">
+                <div id="panier_Content_etape">
+                    <div class="btn-group btn-group-justified" role="group"  width="300" aria-label="...">
+                        <button type="button" id="panier_Content_etape" class="btn btn-primary"> <span class="badge">1</span> Panier</button>
+                        <button type="button" id="panier_Content_etape" class="btn btn-default"> <span class="badge">2</span> Paiement</button>
+                        <button type="button" id="panier_Content_etape" class="btn btn-default"> <span class="badge">3</span> Confirmation</button>
+                    </div>
+                </div>
+            </div>
+            <table id="tabPanier" class="display" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Article</th>
+                        <th>Prix unitaire</th>
+                        <th>Quantité</th>
+                        <th>Prix Total</th>
+                    </tr>
+                </thead>
+            </table>
+            <table id="tabTotaux" class="display" width="100%" cellspacing="0">
+                <tr>
+                    <td> <h4 class="media-heading">Total de vos articles TTC</h4></td>
+                    <td>50</td>
+                </tr>
+            </table>
+            
+            <button onClick="location.href='{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
+            <button onClick="location.href='{{ path('burger_commander') }}'" type="button" class="btn btn-primary">Commander</button>
+
+            {% javascripts 
+                '@BurgerBundle/Resources/public/js/panier.js'
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}  
+        </div>
+    </div>
+</body>
+</html>

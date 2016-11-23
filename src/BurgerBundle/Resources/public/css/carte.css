@@ -71,7 +71,10 @@ section::before,section::after {
     z-index: 100;
 }
 
-
+#tabTotaux{
+    float: right;
+    width: 300px;
+}
 /* ==========================================================================
     02. Header 
 ========================================================================== */
@@ -170,6 +173,15 @@ section::before,section::after {
     text-shadow:none;
 }
 
+#panier_Content{
+    margin-top: 20px;
+}
+
+#panier_Content_etape button{
+    width: 150px;
+    height: 30px;
+    margin-bottom: 15px;
+}
 
 /* ==========================================================================
     04. Services 

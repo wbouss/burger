@@ -131,7 +131,7 @@
                                     <div class="pricing-item-details">
                                         <h3><a href="#">{{ produit.intitule }}</a></h3>
                                         <p>{{ produit.description }}</p>
-                                        <a class="btn btn-danger" href="#">Ajouter au panier</a>
+                                        <a class="btn btn-danger" href="{{ path("burger_ajoutpanier", { "produitId" : produit.id } )}}">Ajouter au panier</a>
                                         <div class="clearfix"></div>
                                     </div>
                                     <!--price tag-->
