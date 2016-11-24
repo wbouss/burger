@@ -58,7 +58,7 @@ class DefaultController extends Controller {
      */
     public function panierDataAction(Request $request) {
         // on retourne vide si le panier n'existe pas
-        if(empty($request->getSession()->get("panier"))){
+        if (empty($request->getSession()->get("panier"))) {
             return new response('{"aaData":{}}');
         }
         $em = $this->getDoctrine()->getManager();
@@ -100,7 +100,7 @@ class DefaultController extends Controller {
 
     function creationPanier($request) {
         $session = $request->getSession();
-        if (!isset($_SESSION['panier'])) {
+        if ($session->get("panier") == null) {
             $panier = array();
             $panier["idProduit"] = array();
             $panier["qteProduit"] = array();
@@ -125,40 +125,72 @@ class DefaultController extends Controller {
     /**
      * Matches 
      *
-     * @Route("/supprimerArticle/{produitId}", name="burger_supprimerpanier")
+     * @Route("/supprimerArticlePanier/{produitId}", name="burger_supprimerpanier")
      */
     function supprimerArticlePanierAction(Request $request) {
         $produitId = $request->get("produitId");
         if (!empty($produitId)) {
-            return $this->supprimerArticle($produitId , $request);
+              $this->supprimerArticle($produitId, $request);
+        }
+        return $this->render('BurgerBundle:Default:panier.html.twig');
+    }
+    /**
+     * Matches 
+     *
+     * @Route("/reduireArticlePanier/{produitId}", name="burger_supprimerpanier")
+     */
+    function reduireArticlePanierAction(Request $request) {
+        $produitId = $request->get("produitId");
+        if (!empty($produitId)) {
+              $this->supprimerArticle($produitId, $request);
         }
         return $this->render('BurgerBundle:Default:panier.html.twig');
     }
 
     function ajouterArticle($idProduit, $qteProduit, $prixProduit, $request) {
         $session = $request->getSession();
-        $p = $session->get("panier");
 
         //Si le panier existe
         if ($this->creationPanier($request) && !$this->isVerrouille($request)) {
-            // Session vide
-            if (empty($p["idProduit"])) {
+            $p = $session->get("panier");
+            //Si le produit existe déjà on ajoute seulement la quantité
+            $positionProduit = array_search($idProduit, $p["idProduit"]);
+
+            if ($positionProduit !== false) {
+                $p['qteProduit'][$positionProduit] += $qteProduit;
+            } else {
+
+                //Sinon on ajoute le produit
                 $p["idProduit"][] = $idProduit;
                 $p["qteProduit"][] = $qteProduit;
                 $p["prixProduit"][] = $prixProduit;
-            } else {
-                //Si le produit existe déjà on ajoute seulement la quantité
-                $positionProduit = array_search($idProduit, $p["idProduit"]);
+            }
 
-                if ($positionProduit !== false) {
+            $session->set("panier", $p);
+            return true;
+        } else
+            return false;
+    }
+    
+        function reduireArticle($idProduit, $request) {
+        $session = $request->getSession();
+
+        //Si le panier existe
+        if ($this->creationPanier($request) && !$this->isVerrouille($request)) {
+            $p = $session->get("panier");
+            //Si le produit existe déjà on ajoute seulement la quantité
+            $positionProduit = array_search($idProduit, $p["idProduit"]);
+
+            if ($positionProduit !== false) {
+                if( $p['qteProduit'][$positionProduit] == 1)
+                    $this->supprimerArticle($idProduit, $request);
+                else if($p['qteProduit'][$positionProduit] < 1)
                     $p['qteProduit'][$positionProduit] += $qteProduit;
-                } else {
-
-                    //Sinon on ajoute le produit
-                    $p["idProduit"][] = $idProduit;
-                    $p["qteProduit"][] = $qteProduit;
-                    $p["prixProduit"][] = $prixProduit;
-                }
+                else
+                    return false;
+            } else {
+                //Sinon le produit n'existe pas, on ne fait rien
+                return false;
             }
             $session->set("panier", $p);
             return true;
@@ -167,29 +199,26 @@ class DefaultController extends Controller {
     }
 
     function supprimerArticle($idProduit, $request) {
-        $panier = $request->getSession()->get("panier");
 
         //Si le panier existe
         if ($this->creationPanier($request) && !$this->isVerrouille($request)) {
             //Nous allons passer par un panier temporaire
+            
             $tmp = array();
             $tmp['idProduit'] = array();
             $tmp['qteProduit'] = array();
             $tmp['prixProduit'] = array();
-            return new Response(json_encode($panier["verrou"]));
+            $panier = $request->getSession()->get("panier");
             $tmp['verrou'] = $panier["verrou"];
-
             for ($i = 0; $i < count($panier['idProduit']); $i++) {
-                if ($panier['idProduit'][$i] !== $idProduit) {
-                    array_push($tmp['idProduit'], $panier['idProduit'][$i]);
-                    array_push($tmp['qteProduit'], $panier['qteProduit'][$i]);
-                    array_push($tmp['prixProduit'], $panier['prixProduit'][$i]);
+                if ($panier['idProduit'][$i] != $idProduit) {
+                    $tmp['idProduit'][] = $panier['idProduit'][$i];
+                    $tmp['qteProduit'][] = $panier['qteProduit'][$i];
+                    $tmp['prixProduit'][] = $panier['prixProduit'][$i];
                 }
             }
             //On remplace le panier en session par notre panier temporaire à jour
             $request->getSession()->set("panier", $tmp);
-            //On efface notre panier temporaire
-            unset($tmp);
             return true;
         } else
             return false;

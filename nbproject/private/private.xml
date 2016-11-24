@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/carte.html.twig</file>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Controller/ProduitAdminController.php</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/Produit.php</file>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/panier.html.twig</file>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/main.css</file>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/carte.css</file>
