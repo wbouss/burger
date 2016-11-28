@@ -24,8 +24,89 @@ class User extends BaseUser {
      */
     protected $id;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="adresse", type="string", length=3000)
+     */
+    private $adresse;
+    
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="firstName", type="string", length=3000)
+     */
+    private $firstName;
+
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lastName", type="string", length=3000)
+     */
+    private $lastName;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codepostale", type="string", length=3000)
+     */
+    private $codepostale;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ville", type="string", length=3000)
+     */
+    private $ville;
+
     public function __construct() {
         parent::__construct();
         // your own logic
     }
+    
+    function getAdresse() {
+        return $this->adresse;
+    }
+
+    function getCodepostale() {
+        return $this->codepostale;
+    }
+
+    function getVille() {
+        return $this->ville;
+    }
+
+    function setAdresse($adresse) {
+        $this->adresse = $adresse;
+    }
+
+    function setCodepostale($codepostale) {
+        $this->codepostale = $codepostale;
+    }
+
+    function setVille($ville) {
+        $this->ville = $ville;
+    }
+
+    function getFirstName() {
+        return $this->firstName;
+    }
+
+    function getLastName() {
+        return $this->lastName;
+    }
+
+    function setFirstName($firstName) {
+        $this->firstName = $firstName;
+    }
+
+    function setLastName($lastName) {
+        $this->lastName = $lastName;
+    }
+
+
+
+
 }

@@ -36,14 +36,6 @@ class Commande
     private $etat;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="produits", type="string", length=255)
-     */
-    private $produits;
-
-
-    /**
      * Get id
      *
      * @return int
@@ -124,5 +116,10 @@ class Commande
     {
         return $this->produits;
     }
+    
+    function __construct() {
+        $this->etat = "Emise";
+    }
+
 }
 

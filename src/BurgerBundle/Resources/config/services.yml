@@ -13,3 +13,21 @@ services:
         arguments: [~, BurgerBundle\Entity\Image, BurgerBundle:ImageAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Image, show_in_dashboard: false }
+
+    burger.admin.ligne_commande:
+        class: BurgerBundle\Admin\LigneCommandeAdmin
+        arguments: [~, BurgerBundle\Entity\LigneCommande, BurgerBundle:LigneCommandeAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: LigneCommande,  show_in_dashboard: false  }
+
+    burger.admin.commande:
+        class: BurgerBundle\Admin\CommandeAdmin
+        arguments: [~, BurgerBundle\Entity\Commande, BurgerBundle:CommandeAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Commande }
+
+    burger.admin.user:
+        class: BurgerBundle\Admin\UserAdmin
+        arguments: [~, BurgerBundle\Entity\User, BurgerBundle:UserAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: User }

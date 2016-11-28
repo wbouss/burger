@@ -7,16 +7,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Security;
 
 class DefaultController extends Controller {
+
 
     /**
      * Matches 
      *
-     * @Route("/burger", name="burger_homepage")
+     * @Route("/", name="burger_homepage")
      */
     public function indexAction() {
-        return $this->render('BurgerBundle:Default:main.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
+        $produits = $repositoryProduit->findAll();
+        return $this->render('BurgerBundle:Default:main.html.twig', array("produits" => $produits));
     }
 
     /**
@@ -38,6 +43,25 @@ class DefaultController extends Controller {
      */
     public function panierAction(Request $request) {
         return $this->render('BurgerBundle:Default:panier.html.twig');
+    }
+
+    /**
+     * Matches 
+     *
+     * @Route("/livraison", name="burger_livraison")
+     */
+    public function livraisonAction(Request $request) {
+        $nb = count($request->getSession()->get("panier")["idProduit"]);
+        return $this->render('BurgerBundle:Default:livraison.html.twig', array("nbArticlePanier" => $nb));
+    }
+
+    /**
+     * Matches 
+     *
+     * @Route("/moncompte", name="burger_moncompte")
+     */
+    public function monCompteAction(Request $request) {
+        return $this->render('BurgerBundle:Default:moncompte.html.twig');
     }
 
     /**
@@ -85,7 +109,9 @@ class DefaultController extends Controller {
     /**
      * Matches 
      *
-     * @Route("/Ajoutpanier/{produitId}", name="burger_ajoutpanier")
+     * @Route("/Ajoutpanier/{produitId}",
+     * options = { "expose" = true },
+     *  name="burger_ajoutpanier")
      */
     public function AjouterProduitPanierAction(Request $request) {
         $produitId = $request->get("produitId");
@@ -125,24 +151,29 @@ class DefaultController extends Controller {
     /**
      * Matches 
      *
-     * @Route("/supprimerArticlePanier/{produitId}", name="burger_supprimerpanier")
+     * @Route("/supprimerArticlePanier/{produitId}",
+     * options = { "expose" = true },
+     *  name="burger_supprimerpanier")
      */
     function supprimerArticlePanierAction(Request $request) {
         $produitId = $request->get("produitId");
         if (!empty($produitId)) {
-              $this->supprimerArticle($produitId, $request);
+            $this->supprimerArticle($produitId, $request);
         }
         return $this->render('BurgerBundle:Default:panier.html.twig');
     }
+
     /**
      * Matches 
      *
-     * @Route("/reduireArticlePanier/{produitId}", name="burger_supprimerpanier")
+     * @Route("/reduireArticlePanier/{produitId}",
+     * options = { "expose" = true },
+     *  name="burger_reduirepanier")
      */
     function reduireArticlePanierAction(Request $request) {
         $produitId = $request->get("produitId");
         if (!empty($produitId)) {
-              $this->supprimerArticle($produitId, $request);
+            $this->reduireArticle($produitId, $request);
         }
         return $this->render('BurgerBundle:Default:panier.html.twig');
     }
@@ -171,8 +202,8 @@ class DefaultController extends Controller {
         } else
             return false;
     }
-    
-        function reduireArticle($idProduit, $request) {
+
+    function reduireArticle($idProduit, $request) {
         $session = $request->getSession();
 
         //Si le panier existe
@@ -182,17 +213,17 @@ class DefaultController extends Controller {
             $positionProduit = array_search($idProduit, $p["idProduit"]);
 
             if ($positionProduit !== false) {
-                if( $p['qteProduit'][$positionProduit] == 1)
+                if ($p['qteProduit'][$positionProduit] == 1)
                     $this->supprimerArticle($idProduit, $request);
-                else if($p['qteProduit'][$positionProduit] < 1)
-                    $p['qteProduit'][$positionProduit] += $qteProduit;
-                else
+                else if ($p['qteProduit'][$positionProduit] > 1) {
+                    $p['qteProduit'][$positionProduit] -= 1;
+                    $session->set("panier", $p);
+                } else
                     return false;
             } else {
                 //Sinon le produit n'existe pas, on ne fait rien
                 return false;
             }
-            $session->set("panier", $p);
             return true;
         } else
             return false;
@@ -203,7 +234,7 @@ class DefaultController extends Controller {
         //Si le panier existe
         if ($this->creationPanier($request) && !$this->isVerrouille($request)) {
             //Nous allons passer par un panier temporaire
-            
+
             $tmp = array();
             $tmp['idProduit'] = array();
             $tmp['qteProduit'] = array();

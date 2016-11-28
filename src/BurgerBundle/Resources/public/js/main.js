@@ -85,14 +85,15 @@ $(document).ready(function() {
 		}
 		);
 	});
-	jQuery('.nav > li > a, #logo a').click(function(e) {
-		e.preventDefault();
-
-		jQuery.scrollTo(jQuery(this).attr('href'), 400, {
-			offset:-(jQuery('#header #menu').height()), axis:'y'
-		}
-		);
-	});
+//	jQuery('.nav > li > a.menuscroll, #logo a').click(function(e) {
+//            console.log(e);
+//		e.preventDefault();
+//
+//		jQuery.scrollTo(jQuery(this).attr('href'), 400, {
+//			offset:-(jQuery('#header #menu').height()), axis:'y'
+//		}
+//		);
+//	});
 
 
 });

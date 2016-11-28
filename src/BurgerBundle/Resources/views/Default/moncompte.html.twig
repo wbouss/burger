@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Le panier</title>
+        <title>Mon compte</title>
 
         {% stylesheets '@BurgerBundle/Resources/public/css/bootstrap-theme.min.css' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
@@ -31,15 +31,6 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
-        {#       {% stylesheets '@BurgerBundle/Resources/public/css/semantic.min.css'  filter='cssrewrite' %}
-               <link rel="stylesheet" href="{{ asset_url }}" />
-               {% endstylesheets %}
-       
-               {% stylesheets '@BurgerBundle/Resources/public/css/dataTables.semanticui.min.css'  filter='cssrewrite' %}
-               <link rel="stylesheet" href="{{ asset_url }}" />
-               {% endstylesheets %}#}
-
-
         {% javascripts 
         '@BurgerBundle/Resources/public/js/jquery.js'
         '@BurgerBundle/Resources/public/js/bootstrap.js'
@@ -50,7 +41,6 @@
         {% endjavascripts %}
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
         <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-
 
     </head>
     <body>
@@ -87,41 +77,47 @@
             </div><!-- container -->
         </div><!-- menu -->
         <div class="container inner">
-            <div id="panier_Content">
-                <div id="panier_Content_etape">
-                    <div class="btn-group btn-group-justified" role="group"  width="300" aria-label="...">
-                        <button type="button" id="panier_Content_etape" class="btn btn-primary" style="cursor: default;"> <span class="badge">1</span> Panier</button>
-                        <button type="button" id="panier_Content_etape" class="btn btn-default" style="cursor: default;"> <span class="badge">2</span> Livraison</button>
-                        <button type="button" id="panier_Content_etape" class="btn btn-default" style="cursor: default;"> <span class="badge">3</span> Récapitulatif</button>
-                        <button type="button" id="panier_Content_etape" class="btn btn-default" style="cursor: default;"> <span class="badge">4</span> Paiement</button>
-                        <button type="button" id="panier_Content_etape" class="btn btn-default" style="cursor: default;"> <span class="badge">5</span> Confirmation</button>
-                    </div></div>
+            <div id="moncompte_content">
+                <div>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                        <button class="btn btn-danger btn-xs" onClick="location.href = '{{ path('fos_user_security_logout') }}'"> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</button>
+                        <div class="alert alert-default" role="alert">
+                            {{ render(controller("FOSUserBundle:Profile:editBis", { 'call' : 'action' })) }}
+                        </div>
+                    {% else %}
+                        <div>
+                            {% block fos_user_content %}
+                                <div class="page-header">
+                                    <h1>Se connecter</h1>
+                                </div>
+                                <div class="alert alert-info" role="alert">
+                                    {{ render(controller("FOSUserBundle:Security:LoginBis", { 'call' : 'action' })) }}
+                                </div> 
+                                <div class="page-header">
+                                    <h1>S'enregistrer</h1>
+                                </div>
+                                <div class="alert alert-default" role="alert">
+                                    {{ render(controller("FOSUserBundle:Registration:registerBis", { 'call' : 'action' })) }}
+                                </div>
+                            {% endblock fos_user_content %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if app.request.hasPreviousSession %}
+                    {% for type, messages in app.session.flashbag.all() %}
+                        {% for message in messages %}
+                            <div class="flash-{{ type }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+
             </div>
-            <table id="tabPanier" class="display" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Article</th>
-                        <th>Prix unitaire</th>
-                        <th>Quantité</th>
-                        <th>Prix Total</th>
-                    </tr>
-                </thead>
-            </table>
-            <table id="tabTotaux" class="display" width="100%" cellspacing="0">
-                <tr>
-                    <td> <h4 class="media-heading">Total de vos articles TTC</h4></td>
-                    <td>20.5</td>
-                </tr>
-            </table>
-            <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
-            <button onClick="location.href = '{{ path('burger_livraison') }}'" type="button" class="btn btn-primary">Commander</button>
-            {% javascripts 
-                '@BurgerBundle/Resources/public/js/panier.js'
-            %}
-            <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}  
         </div>
-    </div>
-</body>
+
+    </body>
 </html>

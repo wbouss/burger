@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="produit")
  * @ORM\Entity(repositoryClass="BurgerBundle\Repository\ProduitRepository")
  */
-class Produit
-{
+class Produit {
+
     /**
      * @var int
      *
@@ -35,7 +35,7 @@ class Produit
      * @ORM\Column(name="description", type="string", length=3000)
      */
     private $description;
-    
+
     /**
      * @var string
      *
@@ -49,21 +49,19 @@ class Produit
      * @ORM\Column(name="prix", type="float")
      */
     private $prix;
-    
-   /**
-   * @ORM\OneToOne(targetEntity="BurgerBundle\Entity\Image", cascade={"persist"})
-   * @Assert\Valid()
-   **/
-  private $image;
 
+    /**
+     * @ORM\OneToOne(targetEntity="BurgerBundle\Entity\Image", cascade={"persist"})
+     * @Assert\Valid()
+     * */
+    private $image;
 
     /**
      * Get id
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -74,8 +72,7 @@ class Produit
      *
      * @return Produit
      */
-    public function setIntitule($intitule)
-    {
+    public function setIntitule($intitule) {
         $this->intitule = $intitule;
 
         return $this;
@@ -86,8 +83,7 @@ class Produit
      *
      * @return string
      */
-    public function getIntitule()
-    {
+    public function getIntitule() {
         return $this->intitule;
     }
 
@@ -98,8 +94,7 @@ class Produit
      *
      * @return Produit
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -110,8 +105,7 @@ class Produit
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -122,8 +116,7 @@ class Produit
      *
      * @return Produit
      */
-    public function setPrix($prix)
-    {
+    public function setPrix($prix) {
         $this->prix = $prix;
 
         return $this;
@@ -134,11 +127,10 @@ class Produit
      *
      * @return float
      */
-    public function getPrix()
-    {
+    public function getPrix() {
         return $this->prix;
     }
-    
+
     function getImage() {
         return $this->image;
     }
@@ -155,6 +147,4 @@ class Produit
         $this->type = $type;
     }
 
-
 }
-
