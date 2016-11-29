@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Le panier</title>
+        <title>Le récapitulatif</title>
 
         {% stylesheets '@BurgerBundle/Resources/public/css/bootstrap-theme.min.css' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
@@ -90,14 +90,14 @@
             <div id="panier_Content">
                 <div id="panier_Content_etape">
                     <div class="btn-group btn-group-justified" role="group"  width="300" aria-label="...">
-                        <button type="button" id="panier_Content_etape" class="btn btn-primary" style="cursor: default;"> <span class="badge">1</span> Panier</button>
+                        <button type="button" id="panier_Content_etape" class="btn btn-default" style="cursor: default;"> <span class="badge">1</span> Panier</button>
                         <button type="button" id="panier_Content_etape" class="btn btn-default" style="cursor: default;"> <span class="badge">2</span> Livraison</button>
-                        <button type="button" id="panier_Content_etape" class="btn btn-default" style="cursor: default;"> <span class="badge">3</span> Récapitulatif</button>
+                        <button type="button" id="panier_Content_etape" class="btn btn-primary" style="cursor: default;"> <span class="badge">3</span> Récapitulatif</button>
                         <button type="button" id="panier_Content_etape" class="btn btn-default" style="cursor: default;"> <span class="badge">4</span> Paiement</button>
                         <button type="button" id="panier_Content_etape" class="btn btn-default" style="cursor: default;"> <span class="badge">5</span> Confirmation</button>
                     </div></div>
             </div>
-            <table id="tabPanier" class="display" width="100%" cellspacing="0">
+            <table id="tabRecap" class="display" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th></th>
@@ -110,18 +110,22 @@
             </table>
             <table id="tabTotaux" class="display" width="100%" cellspacing="0">
                 <tr>
+                    <td> <h4 class="media-heading">Choix de livraison</h4></td>
+                    <td>{{ typeLivraison }} (Gratuit)</td>
+                </tr>
+                <tr>
                     <td> <h4 class="media-heading">Total de vos articles TTC</h4></td>
                     <td>{{ total }} €</td>
                 </tr>
             </table>
-            <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
+            <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Annuler</button>
             {% if is_granted("ROLE_USER") %}
-                <button onClick="location.href = '{{ path('burger_livraison') }}'" type="button" class="btn btn-primary">Commander</button>
+                <button onClick="location.href = '{{ path('burger_paiement') }}'" type="button" class="btn btn-primary">Paiement</button>
             {% else %}
                 <button onClick="location.href = '{{ path('burger_moncompte') }}'" type="button" class="btn btn-primary">Se connecter pour commander</button>
             {% endif %}
             {% javascripts 
-                '@BurgerBundle/Resources/public/js/panier.js'
+                '@BurgerBundle/Resources/public/js/recap.js'
             %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}  

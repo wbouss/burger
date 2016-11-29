@@ -70,13 +70,24 @@ section::before,section::after {
     margin-top:0px;
     z-index: 100;
 }
-
-
+#register_confirm{
+    margin-top: 20px;
+}
+#moncompte_content{
+    margin-top: 20px;
+}
+#inputTextQuantite{
+    width: 30px;
+}
+#tabTotaux{
+    float: right;
+    width: 300px;
+}
 /* ==========================================================================
     02. Header 
 ========================================================================== */
 #header {
-    background-image: url(../../../../bundles/burger/images/default/night.jpg);
+    background-image: url(../bundles/burger/images/default/night.jpg);
     -webkit-background-size:/*@@prefixmycss->No equivalent*/;
     -moz-background-size:cover;
     -o-background-size:/*@@prefixmycss->No equivalent*/;
@@ -169,7 +180,29 @@ section::before,section::after {
     color:white;
     text-shadow:none;
 }
+#livraison_choix{
+    width: 70%;
+    display: inline-block;
+    vertical-align:top;
+}
+#livraison_domicile{
+    width: 29%;
+    display: inline-block;
+    vertical-align:top;
 
+}
+#livraison_button_to_continue{
+    text-align: right;
+}
+#panier_Content,#livraison_Content {
+    margin-top: 20px;
+}
+
+#panier_Content_etape button, #livraison_Content_etape button{
+    width: 150px;
+    height: 30px;
+    margin-bottom: 15px;
+}
 
 /* ==========================================================================
     04. Services 
@@ -178,8 +211,8 @@ section::before,section::after {
     background:#fbfbfb;
 }
 .inner {
-    padding-top:100px;
-    padding-bottom:100px;
+    padding-top:50px;
+    padding-bottom:10px;
 }
 .section-title {
     font-size:36px;
@@ -189,7 +222,7 @@ section::before,section::after {
     font-weight:600;
 }
 .main.lead {
-    margin-bottom:80px;
+    margin-bottom:20px;
 }
 .lead {
     font-size:17px;
@@ -224,7 +257,7 @@ section::before,section::after {
     05. parallax 
 ========================================================================== */
 .parallax {
-    background:url(../../../../bundles/burger/images/default/parallax1.jpg) fixed no-repeat center center;
+    background-color: #fbfbfb;
     -webkit-background-size:/*@@prefixmycss->No equivalent*/;
     -moz-background-size:cover;
     -o-background-size:/*@@prefixmycss->No equivalent*/;
@@ -233,11 +266,11 @@ section::before,section::after {
     color:#FFF;
 }
 .parallax .inner {
-    padding-top:130px;
+    padding-top:10px;
     padding-bottom:130px;
 }
 .parallax.parallax2 {
-    background-image:url(../../../../bundles/burger/images/default/parallax2.jpg);
+    background-image:url(../bundles/burger/images/default/parallax2.jpg);
 }
 .bm10 {
     margin-bottom:10px !important;
@@ -277,13 +310,13 @@ section::before,section::after {
     padding-top:30px;
     padding-bottom:15px;
 }
-.menu-titles h3 {
+.menu-titles h4 {
     text-shadow:none;
     color:#ed0121;
     text-align:center;
     margin:0 auto;
-    padding-top:10px;
-    padding-bottom:10px;
+    padding-top:5px;
+    padding-bottom:5px;
 }
 #food-menu ul {
     margin:0;
@@ -297,7 +330,8 @@ section::before,section::after {
     border:5px solid #dadada;
     display:block;
     margin:auto;
-    margin-top: 40px;
+    width: 200px;
+    margin-top: 10px;
 }
 
 
@@ -330,7 +364,6 @@ section::before,section::after {
     background-color:#51d466 !important;
 }
 .pricing {
-    border-top:1px solid #f1f1f1;
 }
 .pricing .pricing-item {
     position:relative;
@@ -341,7 +374,12 @@ section::before,section::after {
     max-width:250px;
     float:left;
 }
-.pricing-item-details a,.pricing-item-details p,.pricing .lead {
+.pricing-item-details p , .pricing-item-details a{
+    color: black;
+    font-weight:bold;
+}
+
+.pricing .lead {
     color:white;
     font-weight:bold;
 }
@@ -354,9 +392,12 @@ section::before,section::after {
     font-size:22px;
 }
 .pricing .pricing-item .pricing-item-details p {
+
 }
 .pricing .pricing-item .pricing-item-details a.btn {
     margin-top:10px;
+    color:white;
+    font-weight:bold;
 }
 .pricing .pricing-item .pricing-item-details a.view-link {
     display:inline-block;

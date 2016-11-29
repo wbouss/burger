@@ -69,7 +69,7 @@
 
                         <li><a href="{{path("burger_carte")}}">Offres</a></li>
                         <li><a href="{{path("burger_panier")}}">Panier</a></li>
-                        <li><a href="#special-offser">Mon compte</a></li>
+                        <li><a href="{{path("burger_moncompte")}}">Mon compte</a></li>
 
                         <!--fix for scroll spy active menu element-->
                         <li style="display:none;"><a href="#header"></a></li>
@@ -100,35 +100,45 @@
                         <div class="panel-heading">Adresse de livraison</div>
                         <div class="panel-body">
                             <div>{{ app.user.firstName }} {{ app.user.lastName }}<br>{{ app.user.adresse }}<br>{{ app.user.ville }} {{ app.user.codepostale }}</div>
-                            <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-default btn-xs">Modifier mon adresse</button>
+                            <button onClick="location.href = '{{ path('burger_moncompte') }}'" type="button" class="btn btn-default btn-xs">Modifier mon adresse</button>
                         </div>
                     </div>
                     <div id="livraison_choix" class="panel panel-default">
                         <div class="panel-heading">Choix de livraison</div>
                         <div class="panel-body">
                             <div class="list-group">
-                                <a href="#" class="list-group-item active">
-                                    <h4 class="list-group-item-heading">En magasin-Gratuit</h4>
-                                    <p class="list-group-item-text">Sur place ou à emporter</p>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <h4 class="list-group-item-heading">Livraison à domicile-Gratuit à partir de 15 euros</h4>
-                                    <p class="list-group-item-text">Adresse: {{ app.user.adresse }} {{ app.user.ville }} {{ app.user.codepostale }}</p>
-                                </a>
-                            </div>  
-                        </div>
-                    </div>
-                    <div id="livraison_button_to_continue">
-                        <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
-                        <button onClick="location.href = '{{ path('burger_commander') }}'" type="button" class="btn btn-primary">Valider</button>
-                    </div>
-                {% endif %}
-            </div>
-            {% javascripts 
+                                {% if type == "magasin" %}
+                                    <a href="#" class="list-group-item active"  onClick="location.href = '{{ path('burger_livraison', { "type": "magasin" }) }}'">
+                                    {% else %}
+                                        <a href="#" class="list-group-item"  onClick="location.href = '{{ path('burger_livraison', { "type": "magasin" }) }}'">
+                                        {% endif %}
+                                        <h4 class="list-group-item-heading">En magasin-Gratuit</h4>
+                                        <p class="list-group-item-text">Sur place ou à emporter</p>
+                                    </a>
+                                    {% if type == "domicile" %}
+
+                                        <a href="#" class="list-group-item active"  onClick="location.href = '{{ path('burger_livraison', { "type": "domicile" }) }}'">
+                                        {% else %}
+                                            <a href="#" class="list-group-item"  onClick="location.href = '{{ path('burger_livraison', { "type": "domicile" }) }}'">
+                                            {% endif %}
+
+                                            <h4 class="list-group-item-heading">Livraison à domicile-Gratuit à partir de 15 euros</h4>
+                                            <p class="list-group-item-text">Adresse: {{ app.user.adresse }} {{ app.user.ville }} {{ app.user.codepostale }}</p>
+                                        </a>
+                                        </div>  
+                                        </div>
+                                        </div>
+                                        <div id="livraison_button_to_continue">
+                                            <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
+                                            <button onClick="location.href = '{{ path('burger_commander') }}'" type="button" class="btn btn-primary">Valider</button>
+                                        </div>
+                                    {% endif %}
+                                    </div>
+                                    {% javascripts 
                 '@BurgerBundle/Resources/public/js/panier.js'
-            %}
-            <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}  
-        </div>
-    </body>
-</html>
+                                    %}
+                                    <script src="{{ asset_url }}"></script>
+                                    {% endjavascripts %}  
+                                    </div>
+                                    </body>
+                                    </html>

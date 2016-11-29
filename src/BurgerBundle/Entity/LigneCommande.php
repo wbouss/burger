@@ -44,6 +44,8 @@ class LigneCommande {
      * @ORM\JoinColumn(nullable=false)
      */
     private $commande;
+    
+    
 
     /**
      * Get id

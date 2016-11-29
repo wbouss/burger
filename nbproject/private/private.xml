@@ -3,12 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/carte.html.twig</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/font-awesome.min.css</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Admin/CommandeAdmin.php</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/Commande.php</file>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/livraison.html.twig</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/panier.html.twig</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/moncompte.html.twig</file>
+            <file>file:/C:/wamp64/www/burger/web/app.php</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/commander.html.twig</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/main.css</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Admin/Produit/ligneproduits.html.twig</file>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Controller/DefaultController.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/main.html.twig</file>
+            <file>file:/C:/wamp64/www/burger/app/AppKernel.php</file>
+            <file>file:/C:/wamp64/www/burger/app/config/config.yml</file>
         </group>
     </open-files>
 </project-private>

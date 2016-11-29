@@ -83,7 +83,7 @@
                         {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
                         <button class="btn btn-danger btn-xs" onClick="location.href = '{{ path('fos_user_security_logout') }}'"> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</button>
                         <div class="alert alert-default" role="alert">
-                            {{ render(controller("FOSUserBundle:Profile:editBis", { 'call' : 'action' })) }}
+                            {{ render(controller("UserCustomBundle:Profile:edit", { 'call' : 'action' })) }}
                         </div>
                     {% else %}
                         <div>
@@ -92,13 +92,13 @@
                                     <h1>Se connecter</h1>
                                 </div>
                                 <div class="alert alert-info" role="alert">
-                                    {{ render(controller("FOSUserBundle:Security:LoginBis", { 'call' : 'action' })) }}
+                                    {{ render(controller("UserCustomBundle:Security:Login", { 'call' : 'action' })) }}
                                 </div> 
                                 <div class="page-header">
                                     <h1>S'enregistrer</h1>
                                 </div>
                                 <div class="alert alert-default" role="alert">
-                                    {{ render(controller("FOSUserBundle:Registration:registerBis", { 'call' : 'action' })) }}
+                                    {{ render(controller("UserCustomBundle:Registration:register", { 'call' : 'action' })) }}
                                 </div>
                             {% endblock fos_user_content %}
                         </div>

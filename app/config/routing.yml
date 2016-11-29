@@ -1,3 +1,7 @@
+user_custom:
+    resource: "@UserCustomBundle/Controller/"
+    type:     annotation
+
 burger:
     resource: "@BurgerBundle/Controller/"
     type:     annotation
@@ -21,3 +25,12 @@ fos_user:
     
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    
+user_custom:
+    resource: "@UserCustomBundle/Controller/"
+    type:     annotation
+
+login_failure:
+    path: /log_fail 
+    defaults:  { _controller: UserCustomBundle:Security:login }    
+        

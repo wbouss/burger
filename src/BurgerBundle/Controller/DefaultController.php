@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Security;
 
 class DefaultController extends Controller {
 
+    private $livraison = "magasin";
 
     /**
      * Matches 
@@ -42,17 +43,40 @@ class DefaultController extends Controller {
      * @Route("/panier", name="burger_panier")
      */
     public function panierAction(Request $request) {
-        return $this->render('BurgerBundle:Default:panier.html.twig');
+        $total = $this->MontantGlobal($request);
+        return $this->render('BurgerBundle:Default:panier.html.twig', array("total" => $total));
     }
 
     /**
      * Matches 
      *
-     * @Route("/livraison", name="burger_livraison")
+     * @Route("/register_confirm", name="burger_register_confirm")
      */
-    public function livraisonAction(Request $request) {
+    public function registerConfirmAction(Request $request) {
+        return $this->render('BurgerBundle:Default:register_confirm.html.twig');
+    }
+
+    /**
+     * Matches 
+     *
+     * @Route("/register_confirm", name="burger_update_confirm")
+     */
+    public function updateConfirmAction(Request $request) {
+        return $this->render('BurgerBundle:Default:update_confirm.html.twig');
+    }
+
+    /**
+     * Matches 
+     *
+     * @Route("/livraison/{type}", name="burger_livraison")
+     */
+    public function livraisonAction(Request $request, $type = "") {
         $nb = count($request->getSession()->get("panier")["idProduit"]);
-        return $this->render('BurgerBundle:Default:livraison.html.twig', array("nbArticlePanier" => $nb));
+        if ($type != "" && $type == "magasin")
+            $this->livraison = "magasin";
+        if ($type != "" && $type == "domicile")
+            $this->livraison = "domicile";
+        return $this->render('BurgerBundle:Default:livraison.html.twig', array("nbArticlePanier" => $nb, "type" => $this->livraison));
     }
 
     /**
@@ -70,7 +94,42 @@ class DefaultController extends Controller {
      * @Route("/commander", name="burger_commander")
      */
     public function commanderAction(Request $request) {
-        return $this->render('BurgerBundle:Default:panier.html.twig');
+        $total = $this->MontantGlobal($request);
+        return $this->render('BurgerBundle:Default:commander.html.twig', (array("typeLivraison" => $this->livraison, "total" => $total)));
+    }
+
+    /**
+     * Matches 
+     *
+     * @Route("/paiement", name="burger_paiement")
+     */
+    public function paiementAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
+        $panier = $request->getSession()->get("panier");
+
+        // creation de la commande
+        $commande = new \BurgerBundle\Entity\Commande();
+        $commande->setAdresse($this->getUser()->getAdresse());
+        $commande->setNom($this->getUser()->getLastName());
+        $commande->setEtat("Emise");
+        $commande->setDate(new \DateTime());
+        $commande->setLivraison("magasin");
+        $em->persist($commande);
+        
+        // creation des ligne de commande
+        for( $i = 0; $i < count($panier["idProduit"]) ; $i++) {
+            $ligne = new \BurgerBundle\Entity\LigneCommande();
+            $p = $repositoryProduit->find($panier["idProduit"][$i]);
+            $ligne->setProduit($p);
+            $ligne->setQuantite($panier["qteProduit"][$i]);
+            $ligne->setPrix($panier["prixProduit"][$i]);
+            $ligne->setCommande($commande);
+            $em->persist($ligne);
+        }
+        
+        $em->flush();
+        return $this->render('BurgerBundle:Default:paiement.html.twig');
     }
 
     /**
@@ -121,7 +180,8 @@ class DefaultController extends Controller {
             $produit = $repositoryProduit->find($produitId);
             $this->ajouterArticle($produit->getId(), 1, $produit->getPrix(), $request);
         }
-        return $this->render('BurgerBundle:Default:panier.html.twig');
+        $total = $this->MontantGlobal($request);
+        return $this->render('BurgerBundle:Default:panier.html.twig', array("total" => $total));
     }
 
     function creationPanier($request) {
@@ -160,7 +220,8 @@ class DefaultController extends Controller {
         if (!empty($produitId)) {
             $this->supprimerArticle($produitId, $request);
         }
-        return $this->render('BurgerBundle:Default:panier.html.twig');
+        $total = $this->MontantGlobal($request);
+        return $this->render('BurgerBundle:Default:panier.html.twig', array("total" => $total));
     }
 
     /**
@@ -175,7 +236,8 @@ class DefaultController extends Controller {
         if (!empty($produitId)) {
             $this->reduireArticle($produitId, $request);
         }
-        return $this->render('BurgerBundle:Default:panier.html.twig');
+        $total = $this->MontantGlobal($request);
+        return $this->render('BurgerBundle:Default:panier.html.twig', array("total" => $total));
     }
 
     function ajouterArticle($idProduit, $qteProduit, $prixProduit, $request) {
@@ -272,10 +334,11 @@ class DefaultController extends Controller {
             echo "Un problème est survenu veuillez contacter l'administrateur du site.";
     }
 
-    function MontantGlobal() {
+    function MontantGlobal($request) {
+        $panier = $request->getSession()->get("panier");
         $total = 0;
-        for ($i = 0; $i < count($_SESSION['panier']['libelleProduit']); $i++) {
-            $total += $_SESSION['panier']['qteProduit'][$i] * $_SESSION['panier']['prixProduit'][$i];
+        for ($i = 0; $i < count($panier['idProduit']); $i++) {
+            $total += $panier['qteProduit'][$i] * $panier['prixProduit'][$i];
         }
         return $total;
     }

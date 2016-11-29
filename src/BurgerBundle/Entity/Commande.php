@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="commande")
  * @ORM\Entity(repositoryClass="BurgerBundle\Repository\CommandeRepository")
  */
-class Commande
-{
+class Commande {
+
     /**
      * @var int
      *
@@ -36,12 +36,32 @@ class Commande
     private $etat;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="adresse", type="string", length=255)
+     */
+    private $adresse;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="livraison", type="string", length=255)
+     */
+    private $livraison;
+
+    /**
      * Get id
      *
      * @return int
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -52,8 +72,7 @@ class Commande
      *
      * @return Commande
      */
-    public function setDate($date)
-    {
+    public function setDate($date) {
         $this->date = $date;
 
         return $this;
@@ -64,8 +83,7 @@ class Commande
      *
      * @return \DateTime
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
     }
 
@@ -76,8 +94,7 @@ class Commande
      *
      * @return Commande
      */
-    public function setEtat($etat)
-    {
+    public function setEtat($etat) {
         $this->etat = $etat;
 
         return $this;
@@ -88,38 +105,37 @@ class Commande
      *
      * @return string
      */
-    public function getEtat()
-    {
+    public function getEtat() {
         return $this->etat;
     }
 
-    /**
-     * Set produits
-     *
-     * @param string $produits
-     *
-     * @return Commande
-     */
-    public function setProduits($produits)
-    {
-        $this->produits = $produits;
 
-        return $this;
+    function getNom() {
+        return $this->nom;
     }
 
-    /**
-     * Get produits
-     *
-     * @return string
-     */
-    public function getProduits()
-    {
-        return $this->produits;
+    function getAdresse() {
+        return $this->adresse;
     }
-    
+
+    function setNom($nom) {
+        $this->nom = $nom;
+    }
+
+    function setAdresse($adresse) {
+        $this->adresse = $adresse;
+    }
+    function getLivraison() {
+        return $this->livraison;
+    }
+
+    function setLivraison($livraison) {
+        $this->livraison = $livraison;
+    }
+
+  
     function __construct() {
         $this->etat = "Emise";
     }
 
 }
-

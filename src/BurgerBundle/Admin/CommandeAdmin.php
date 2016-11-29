@@ -63,11 +63,19 @@ class CommandeAdmin extends AbstractAdmin {
      * @param ShowMapper $showMapper
      */
     protected function configureShowFields(ShowMapper $showMapper) {
+        $repositorylignes = $this->getConfigurationPool()->getContainer()->get('doctrine')->getRepository("BurgerBundle:LigneCommande");
+        $repositorycommande = $this->getConfigurationPool()->getContainer()->get('doctrine')->getRepository("BurgerBundle:Commande");
+        $commande = $repositorycommande->find($this->getRoot()->getSubject()->getId());
+        $lignes = $repositorylignes->findByCommande($commande);
+        $this->ligne = $lignes;
         $showMapper
                 ->add('id')
                 ->add('date')
                 ->add('etat')
+                ->add("ligne", "entity" , array ("label" => "les produits" ,'template' => 'BurgerBundle:Admin:Produit/ligneproduits.html.twig' // <-- This is the trick
+                ))
         ;
+        
     }
 
     protected function configureRoutes(RouteCollection $collection) {
