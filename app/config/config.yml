@@ -90,3 +90,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: BurgerBundle\Entity\User
+    registration:
+        form:
+            type: UserCustomBundle\Form\RegistrationType
+    profile:
+        form:
+            type: UserCustomBundle\Form\ProfileType
