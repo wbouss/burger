@@ -76,7 +76,7 @@ class SecurityController extends BaseController {
         if ($error != null)
             return $this->container->get('templating')->renderResponse('BurgerBundle:Default:moncompte.html.twig', array(
                         'last_username' => null,
-                        'error' => $error,
+                        'errorL' => "Nom d'utilisateur ou mot de passe incorrect",
                         'csrf_token' => $csrfToken));
 
         // last username entered by the user

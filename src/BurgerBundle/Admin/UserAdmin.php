@@ -43,6 +43,7 @@ class UserAdmin extends AbstractAdmin {
                 ->add('email')
                 ->add('locked')
                 ->add('roles')
+                ->add('telephone')
                 ->add('_action', null, array(
                     'actions' => array(
                         'show' => array(),
@@ -88,6 +89,7 @@ class UserAdmin extends AbstractAdmin {
                 ->add('ville')
                 ->add('firstName')
                 ->add('lastName')
+                ->add('telephone')
                 ->add('lastLogin')
                 ->add('roles')
         ;

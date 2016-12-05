@@ -31,6 +31,12 @@ class User extends BaseUser {
      */
     private $adresse;
     
+     /**
+     *
+     * @ORM\Column(name="telephone", type="integer", length=3000)
+     */
+    private $telephone;
+    
         /**
      * @var string
      *
@@ -104,6 +110,14 @@ class User extends BaseUser {
 
     function setLastName($lastName) {
         $this->lastName = $lastName;
+    }
+
+    function getTelephone() {
+        return $this->telephone;
+    }
+
+    function setTelephone($telephone) {
+        $this->telephone = $telephone;
     }
 
 

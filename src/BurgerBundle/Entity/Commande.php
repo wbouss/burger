@@ -48,6 +48,13 @@ class Commande {
      * @ORM\Column(name="adresse", type="string", length=255)
      */
     private $adresse;
+    
+    /**
+     *
+     * @ORM\Column(name="telephone", type="integer")
+     */
+    private $telephone;
+
 
     /**
      * @var string
@@ -133,8 +140,15 @@ class Commande {
         $this->livraison = $livraison;
     }
 
-  
-    function __construct() {
+    function getTelephone() {
+        return $this->telephone;
+    }
+
+    function setTelephone($telephone) {
+        $this->telephone = $telephone;
+    }
+
+        function __construct() {
         $this->etat = "Emise";
     }
 

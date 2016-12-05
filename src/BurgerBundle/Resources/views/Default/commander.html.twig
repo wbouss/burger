@@ -27,18 +27,9 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
-        {% stylesheets '../vendor/datatables/datatables/media/css/jquery.dataTables.css'  filter='cssrewrite' %}
+        {% stylesheets '@BurgerBundle/Resources/public/css/jquery.dataTables.css'  filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
-
-        {#       {% stylesheets '@BurgerBundle/Resources/public/css/semantic.min.css'  filter='cssrewrite' %}
-               <link rel="stylesheet" href="{{ asset_url }}" />
-               {% endstylesheets %}
-       
-               {% stylesheets '@BurgerBundle/Resources/public/css/dataTables.semanticui.min.css'  filter='cssrewrite' %}
-               <link rel="stylesheet" href="{{ asset_url }}" />
-               {% endstylesheets %}#}
-
 
         {% javascripts 
         '@BurgerBundle/Resources/public/js/jquery.js'
@@ -120,7 +111,7 @@
             </table>
             <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Annuler</button>
             {% if is_granted("ROLE_USER") %}
-                <button onClick="location.href = '{{ path('burger_paiement') }}'" type="button" class="btn btn-primary">Paiement</button>
+                <button onClick="location.href = '{{ path('burger_paiement' , {"livraison" : typeLivraison }) }}'" type="button" class="btn btn-primary">Paiement</button>
             {% else %}
                 <button onClick="location.href = '{{ path('burger_moncompte') }}'" type="button" class="btn btn-primary">Se connecter pour commander</button>
             {% endif %}

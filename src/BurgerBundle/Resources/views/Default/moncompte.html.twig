@@ -27,14 +27,11 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
-        {% stylesheets '../vendor/datatables/datatables/media/css/jquery.dataTables.css'  filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
+  
 
         {% javascripts 
         '@BurgerBundle/Resources/public/js/jquery.js'
         '@BurgerBundle/Resources/public/js/bootstrap.js'
-        '../vendor/datatables/datatables/media/js/jquery.dataTables.js' 
 
         %}
         <script src="{{ asset_url }}"></script>
@@ -67,7 +64,7 @@
 
                         <li><a href="{{path("burger_carte")}}">Offres</a></li>
                         <li><a href="{{path("burger_panier")}}">Panier</a></li>
-                        <li><a href="#">Mon compte</a></li>
+                        <li><a href="{{path("burger_moncompte")}}">Mon compte</a></li>
 
                         <!--fix for scroll spy active menu element-->
                         <li style="display:none;"><a href="#header"></a></li>
@@ -83,6 +80,9 @@
                         {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
                         <button class="btn btn-danger btn-xs" onClick="location.href = '{{ path('fos_user_security_logout') }}'"> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</button>
                         <div class="alert alert-default" role="alert">
+                              {% if errorP is defined %}
+                                    <div class="alert alert-danger" role="alert">{{ errorP }}</div>
+                                {% endif %}
                             {{ render(controller("UserCustomBundle:Profile:edit", { 'call' : 'action' })) }}
                         </div>
                     {% else %}
@@ -91,11 +91,30 @@
                                 <div class="page-header">
                                     <h1>Se connecter</h1>
                                 </div>
+                                {% if errorL is defined %}
+                                    <div class="alert alert-danger" role="alert">{{ errorL }}</div>
+                                {% endif %}
                                 <div class="alert alert-info" role="alert">
                                     {{ render(controller("UserCustomBundle:Security:Login", { 'call' : 'action' })) }}
                                 </div> 
                                 <div class="page-header">
                                     <h1>S'enregistrer</h1>
+                                    {% if formR is defined %}
+                                        {% if formR.vars.submitted == true %}
+                                            <div class="alert alert-danger" role="alert">Le formulaire comporte des erreurs</div>
+                                            <ul>
+                                                {{ form_errors(formR.email) }}
+                                                {{ form_errors(formR.username) }}
+                                                {{ form_errors(formR.plainPassword.first) }}
+                                                {{ form_errors(formR.plainPassword.second) }}
+                                                {{ form_errors(formR.lastName) }}
+                                                {{ form_errors(formR.firstName) }}
+                                                {{ form_errors(formR.adresse) }}
+                                                {{ form_errors(formR.ville) }}
+                                                {{ form_errors(formR.codepostale) }}
+                                            </ul>
+                                        {% endif %}
+                                    {% endif %}
                                 </div>
                                 <div class="alert alert-default" role="alert">
                                     {{ render(controller("UserCustomBundle:Registration:register", { 'call' : 'action' })) }}

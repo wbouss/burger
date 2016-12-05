@@ -77,7 +77,7 @@ class RegistrationController extends BaseController {
             }
             else{
                  return $this->render('BurgerBundle:Default:moncompte.html.twig', array(
-                    'form' => $form->createView()
+                    'formR' => $form->createView(), "errors" => $form->getErrors()
                 ));
 
             }           

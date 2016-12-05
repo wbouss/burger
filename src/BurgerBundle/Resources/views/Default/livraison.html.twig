@@ -27,16 +27,12 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
-        {% stylesheets '../vendor/datatables/datatables/media/css/jquery.dataTables.css'  filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
+
 
 
         {% javascripts 
         '@BurgerBundle/Resources/public/js/jquery.js'
         '@BurgerBundle/Resources/public/js/bootstrap.js'
-        '../vendor/datatables/datatables/media/js/jquery.dataTables.js' 
-
         %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
@@ -130,12 +126,12 @@
                                         </div>
                                         <div id="livraison_button_to_continue">
                                             <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
-                                            <button onClick="location.href = '{{ path('burger_commander') }}'" type="button" class="btn btn-primary">Valider</button>
+                                            <button onClick="location.href = '{{ path('burger_commander', {"livraison" : type }) }}'" type="button" class="btn btn-primary">Valider</button>
                                         </div>
                                     {% endif %}
                                     </div>
                                     {% javascripts 
-                '@BurgerBundle/Resources/public/js/panier.js'
+                                            '@BurgerBundle/Resources/public/js/panier.js'
                                     %}
                                     <script src="{{ asset_url }}"></script>
                                     {% endjavascripts %}  

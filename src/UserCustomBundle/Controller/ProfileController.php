@@ -99,7 +99,7 @@ class ProfileController extends BaseControllerr {
                 return $response;
             } else {
                 return $this->render('BurgerBundle:Default:moncompte.html.twig', array(
-                            'form' => $form->createView()
+                            'errorP' => "Erreur: Email existant"
                 ));
             }
         }

@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Security;
 class DefaultController extends Controller {
 
     private $livraison = "magasin";
+    public static $MailResp = "wbouss@gmail.com";
 
     /**
      * Matches 
@@ -35,6 +36,15 @@ class DefaultController extends Controller {
         $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
         $produits = $repositoryProduit->findByType($type);
         return $this->render('BurgerBundle:Default:carte.html.twig', array("produits" => $produits));
+    }
+
+    /**
+     * Matches 
+     *
+     * @Route("/changepasseword/", name="burger_changepassword")
+     */
+    public function changePassewordAction(Request $request) {
+        return $this->render('BurgerBundle:Default:changepassword.html.twig', array("etape" => "initial"));
     }
 
     /**
@@ -68,20 +78,6 @@ class DefaultController extends Controller {
     /**
      * Matches 
      *
-     * @Route("/livraison/{type}", name="burger_livraison")
-     */
-    public function livraisonAction(Request $request, $type = "") {
-        $nb = count($request->getSession()->get("panier")["idProduit"]);
-        if ($type != "" && $type == "magasin")
-            $this->livraison = "magasin";
-        if ($type != "" && $type == "domicile")
-            $this->livraison = "domicile";
-        return $this->render('BurgerBundle:Default:livraison.html.twig', array("nbArticlePanier" => $nb, "type" => $this->livraison));
-    }
-
-    /**
-     * Matches 
-     *
      * @Route("/moncompte", name="burger_moncompte")
      */
     public function monCompteAction(Request $request) {
@@ -91,19 +87,35 @@ class DefaultController extends Controller {
     /**
      * Matches 
      *
-     * @Route("/commander", name="burger_commander")
+     * @Route("/commander/{livraison}", name="burger_commander")
      */
-    public function commanderAction(Request $request) {
+    public function commanderAction(Request $request, $livraison = "magasin") {
         $total = $this->MontantGlobal($request);
-        return $this->render('BurgerBundle:Default:commander.html.twig', (array("typeLivraison" => $this->livraison, "total" => $total)));
+        return $this->render('BurgerBundle:Default:commander.html.twig', (array("typeLivraison" => $livraison, "total" => $total)));
     }
 
     /**
      * Matches 
      *
-     * @Route("/paiement", name="burger_paiement")
+     * @Route("/livraison/{type}", name="burger_livraison")
      */
-    public function paiementAction(Request $request) {
+    public function livraisonAction(Request $request, $type = "") {
+        $nb = count($request->getSession()->get("panier")["idProduit"]);
+        if ($type != "" && $type == "magasin")
+            $livraison = "magasin";
+        if ($type != "" && $type == "domicile")
+            $livraison = "domicile";
+        else
+            $livraison = "magasin";
+        return $this->render('BurgerBundle:Default:livraison.html.twig', array("nbArticlePanier" => $nb, "type" => $livraison));
+    }
+
+    /**
+     * Matches 
+     *
+     * @Route("/paiement/{livraison}", name="burger_paiement")
+     */
+    public function paiementAction(Request $request, $livraison = "magasin") {
         $em = $this->getDoctrine()->getManager();
         $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
         $panier = $request->getSession()->get("panier");
@@ -112,13 +124,15 @@ class DefaultController extends Controller {
         $commande = new \BurgerBundle\Entity\Commande();
         $commande->setAdresse($this->getUser()->getAdresse());
         $commande->setNom($this->getUser()->getLastName());
+        $commande->setTelephone($this->getUser()->getTelephone());
         $commande->setEtat("Emise");
         $commande->setDate(new \DateTime());
-        $commande->setLivraison("magasin");
+        $commande->setLivraison($livraison);
         $em->persist($commande);
-        
+
+        $lignes = array();
         // creation des ligne de commande
-        for( $i = 0; $i < count($panier["idProduit"]) ; $i++) {
+        for ($i = 0; $i < count($panier["idProduit"]); $i++) {
             $ligne = new \BurgerBundle\Entity\LigneCommande();
             $p = $repositoryProduit->find($panier["idProduit"][$i]);
             $ligne->setProduit($p);
@@ -126,9 +140,45 @@ class DefaultController extends Controller {
             $ligne->setPrix($panier["prixProduit"][$i]);
             $ligne->setCommande($commande);
             $em->persist($ligne);
+            $lignes[] = $ligne;
         }
-        
+
         $em->flush();
+
+        /*
+         *  mail au fournisseur
+         */
+        $titre = "Nouvelle commande";
+        $from = "noreply-burger@bibiburger.fr";
+
+
+        $body = $this->get("templating")->render('BurgerBundle:Mail:nouvelleCommandeResponsable.html.twig', array('commande' => $commande, "lignes" => $lignes));
+
+        $message = \Swift_Message::newInstance()
+                ->setSubject($titre)
+                ->setFrom($from)
+                ->setTo(DefaultController::$MailResp)
+                ->setBody($body)
+                ->setContentType('text/html');
+        $this->get('mailer')->send($message);
+
+        /*
+         *  mail au client
+         */
+        $titre = "Votre commande BIBIBURGER";
+        $from = "noreply-burger@bibiburger.fr";
+
+
+        $body = $this->get("templating")->render('BurgerBundle:Mail:nouvelleCommandeClient.html.twig', array('commande' => $commande, "lignes" => $lignes));
+
+        $message = \Swift_Message::newInstance()
+                ->setSubject($titre)
+                ->setFrom($from)
+                ->setTo($this->getUser()->getTelephone())
+                ->setBody($body)
+                ->setContentType('text/html');
+        $this->get('mailer')->send($message);
+
         return $this->render('BurgerBundle:Default:paiement.html.twig');
     }
 

@@ -27,16 +27,10 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
-        {% stylesheets '../vendor/datatables/datatables/media/css/jquery.dataTables.css'  filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-
 
         {% javascripts 
         '@BurgerBundle/Resources/public/js/jquery.js'
         '@BurgerBundle/Resources/public/js/bootstrap.js'
-        '../vendor/datatables/datatables/media/js/jquery.dataTables.js' 
-
         %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}

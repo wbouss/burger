@@ -42,7 +42,9 @@ section::before,section::after {
     position:absolute;
     content: '';
 }
-
+#top_login{
+    margin-bottom: 10px;
+}
 /* Separators Styles */
 .ss-style-top::before {
     left:0;
