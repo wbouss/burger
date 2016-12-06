@@ -190,7 +190,7 @@
                 </div>
             </div>
         </div>
-        <script>
+{#        <script>
             $("#buttonAjoutPanier").click(function(){
                 var produit = $("#choixProduit");
                 var typeproduit = "{{ produit.type }}";
@@ -202,6 +202,6 @@
                 var supplement = $("#choixSupplement");
                 $.post(Routing.generate("burger_ajoutpanier",{"idProduit": ,  }))
             });
-        </script>
+        </script>#}
     </body>
 </html>
