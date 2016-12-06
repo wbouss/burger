@@ -112,9 +112,6 @@ class Image {
     }
 
     
-    public function getUploadDir() {
-        return "Bundles/burger/images/produits/";
-    }
     function getFile() {
         return $this->file;
     }

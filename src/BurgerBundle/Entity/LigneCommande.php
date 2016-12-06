@@ -22,9 +22,9 @@ class LigneCommande {
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="BurgerBundle\Entity\Produit")
-     * @ORM\JoinColumn(nullable=false)
-     */
+     *
+     * @ORM\Column(name="produit", type="string")   
+     **/
     private $produit;
     
     /**

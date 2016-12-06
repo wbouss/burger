@@ -130,8 +130,54 @@
                                     <a href="#"> <img  class="img-responsive img-thumbnail" src="{{ asset(produit.image.path~produit.image.name~"."~produit.image.extension)}}"  alt=""/></a>
                                     <div class="pricing-item-details">
                                         <h3><a href="#">{{ produit.intitule }}</a></h3>
-                                        <p>{{ produit.description }}</p>
-                                        <a class="btn btn-danger" href="{{ path("burger_ajoutpanier", { "produitId" : produit.id } )}}">Ajouter au panier</a>
+                                        <p>
+                                            {{ produit.description }}<br>
+
+                                            {% if produit.type == "Burger" or produit.type == "Woop's" or produit.type == "Sandwich"  %}
+                                                Type de frite
+                                                <select id="ChoixFrite">
+                                                    {% for frite in frites %}
+                                                        <option    value="{{ frite.id }}">{{ frite.nom }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <br> 
+                                                Sauce frites N°1
+                                                <select  id="ChoixSauce1">
+                                                    {% for sauce in sauces %}
+                                                        <option   value="{{ sauce.id }}">{{ sauce.nom }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <br>
+                                                Sauce frites N°2
+                                                <select id="ChoixSauce2">
+                                                    {% for sauce in sauces %}
+                                                        <option    value="{{ sauce.id }}">{{ sauce.nom }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <br>
+                                                Choix de la boisson
+                                                <select id="ChoixBoisson">
+                                                    {% for boisson in boissons %}
+                                                        <option  value="{{ boisson.id }}">{{ boisson.intitule }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <br>
+                                                Supplément ?
+                                                <select id="ChoixSupplement">
+                                                    <option  value="-1">Aucun</option>
+                                                    {% for supplement in supplements %}
+                                                        <option  value="{{ supplement.id }}">{{ supplement.nom }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% endif %}
+                                            {% if produit.type == "Sandwich" %}
+                                                {% for crudite in crudites %}
+                                                    <label><input type="checkbox" id="boxChoiceSauce" value="{{ crudite.id }}">{{ crudite.nom }}</label>
+                                                    {% endfor %}
+                                                {% endif %}
+                                        </p>
+
+                                        <a id="buttonAjoutPanier" class="btn btn-danger" href="{{ path("burger_ajoutpanier", { "produitId" : produit.id } )}}">Ajouter au panier</a>
                                         <div class="clearfix"></div>
                                     </div>
                                     <!--price tag-->
@@ -144,5 +190,18 @@
                 </div>
             </div>
         </div>
+        <script>
+            $("#buttonAjoutPanier").click(function(){
+                var produit = $("#choixProduit");
+                var typeproduit = "{{ produit.type }}";
+                
+                var frite = $("#choixTypeFrite");
+                var sauce1 = $("#choixSauce1");
+                var sauce2 = $("#choixSauce2");
+                var boisson = $("#choixBoisson");
+                var supplement = $("#choixSupplement");
+                $.post(Routing.generate("burger_ajoutpanier",{"idProduit": ,  }))
+            });
+        </script>
     </body>
 </html>

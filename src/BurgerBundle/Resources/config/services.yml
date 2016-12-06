@@ -31,3 +31,27 @@ services:
         arguments: [~, BurgerBundle\Entity\User, BurgerBundle:UserAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: User }
+
+    burger.admin.sauce:
+        class: BurgerBundle\Admin\SauceAdmin
+        arguments: [~, BurgerBundle\Entity\Sauce, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Sauce }
+
+    burger.admin.crudite:
+        class: BurgerBundle\Admin\CruditeAdmin
+        arguments: [~, BurgerBundle\Entity\Crudite, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Crudite }
+
+    burger.admin.type_frite:
+        class: BurgerBundle\Admin\TypeFriteAdmin
+        arguments: [~, BurgerBundle\Entity\TypeFrite, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TypeFrite }
+
+    burger.admin.supplement:
+        class: BurgerBundle\Admin\SupplementAdmin
+        arguments: [~, BurgerBundle\Entity\Supplement, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Supplement }

@@ -34,8 +34,18 @@ class DefaultController extends Controller {
     public function carteAction(Request $request, $type = "burger") {
         $em = $this->getDoctrine()->getManager();
         $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
+        $repositorySauce = $em->getRepository("BurgerBundle:Sauce");
+        $repositoryCrudite = $em->getRepository("BurgerBundle:Crudite");
+        $repositoryTypeFrite = $em->getRepository("BurgerBundle:TypeFrite");
+        $repositorySupplement = $em->getRepository("BurgerBundle:Supplement");
         $produits = $repositoryProduit->findByType($type);
-        return $this->render('BurgerBundle:Default:carte.html.twig', array("produits" => $produits));
+        $boissons = $repositoryProduit->findByType("Boisson");
+        $sauces = $repositorySauce->findAll();
+        $crudites = $repositoryCrudite->findAll();
+        $frites = $repositoryTypeFrite->findAll();
+        $supplements = $repositorySupplement->findAll();
+        
+        return $this->render('BurgerBundle:Default:carte.html.twig', array("typeProduit"=> $type , "produits" => $produits, "sauces"=> $sauces,"crudites"=>$crudites, "boissons" => $boissons, "frites"=>$frites, "supplements"=>$supplements));
     }
 
     /**
@@ -135,7 +145,7 @@ class DefaultController extends Controller {
         for ($i = 0; $i < count($panier["idProduit"]); $i++) {
             $ligne = new \BurgerBundle\Entity\LigneCommande();
             $p = $repositoryProduit->find($panier["idProduit"][$i]);
-            $ligne->setProduit($p);
+            $ligne->setProduit($p->getIntitule());
             $ligne->setQuantite($panier["qteProduit"][$i]);
             $ligne->setPrix($panier["prixProduit"][$i]);
             $ligne->setCommande($commande);
