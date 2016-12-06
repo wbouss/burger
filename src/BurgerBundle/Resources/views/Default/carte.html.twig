@@ -10,6 +10,8 @@
         <meta name="author" content="">
 
         <title>La carte</title>
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
         {% stylesheets '@BurgerBundle/Resources/public/css/bootstrap-theme.min.css' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
@@ -141,14 +143,14 @@
                                                     {% endfor %}
                                                 </select>
                                                 <br> 
-                                                Sauce frites N°1
+                                                Sauce  N°1
                                                 <select  id="ChoixSauce1">
                                                     {% for sauce in sauces %}
                                                         <option   value="{{ sauce.id }}">{{ sauce.nom }}</option>
                                                     {% endfor %}
                                                 </select>
                                                 <br>
-                                                Sauce frites N°2
+                                                Sauce  N°2
                                                 <select id="ChoixSauce2">
                                                     {% for sauce in sauces %}
                                                         <option    value="{{ sauce.id }}">{{ sauce.nom }}</option>
@@ -175,9 +177,26 @@
                                                     <label><input type="checkbox" id="boxChoiceSauce" value="{{ crudite.id }}">{{ crudite.nom }}</label>
                                                     {% endfor %}
                                                 {% endif %}
+                                                {% if produit.type == "Tex mex" %}
+                                                Sauce
+                                                <select  id="ChoixSauce1">
+                                                    {% for sauce in sauces %}
+                                                        <option   value="{{ sauce.id }}">{{ sauce.nom }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <br>
+                                                Supplément ?
+                                                <select id="ChoixSupplement">
+                                                    <option  value="-1">Aucun</option>
+                                                    {% for supplement in supplements %}
+                                                        <option  value="{{ supplement.id }}">{{ supplement.nom }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            {% endif %}
+
                                         </p>
 
-                                        <a id="buttonAjoutPanier" class="btn btn-danger" href="{{ path("burger_ajoutpanier", { "produitId" : produit.id } )}}">Ajouter au panier</a>
+                                        <a id="buttonAjoutPanier" class="btn btn-danger" data-id="{{produit.id}}">Ajouter au panier</a>
                                         <div class="clearfix"></div>
                                     </div>
                                     <!--price tag-->
@@ -190,18 +209,33 @@
                 </div>
             </div>
         </div>
-{#        <script>
-            $("#buttonAjoutPanier").click(function(){
-                var produit = $("#choixProduit");
-                var typeproduit = "{{ produit.type }}";
-                
-                var frite = $("#choixTypeFrite");
-                var sauce1 = $("#choixSauce1");
-                var sauce2 = $("#choixSauce2");
-                var boisson = $("#choixBoisson");
-                var supplement = $("#choixSupplement");
-                $.post(Routing.generate("burger_ajoutpanier",{"idProduit": ,  }))
+        <script>
+            $("#buttonAjoutPanier").click(function () {
+                var typeProduit = "{{ typeProduit }}";
+                var idProduit = $(this).attr("data-id");
+                var frite = -1;
+                var sauce1 = -1;
+                var sauce2 = -1;
+                var boisson = -1;
+                var supplement = -1;
+                if (typeProduit == "Burger" || typeProduit == "Woop's" || typeProduit == "Sandwich")
+                {
+                    var frite = $("#ChoixFrite").val();
+                    var sauce1 = $("#ChoixSauce1").val();
+                    var sauce2 = $("#ChoixSauce2").val();
+                    var boisson = $("#ChoixBoisson").val();
+                    var supplement = $("#ChoixSupplement").val();
+                }
+                else if (typeProduit == "Tex mex")
+                {
+                    var sauce1 = $("#ChoixSauce1").val();
+                    var supplement = $("#ChoixSupplement").val();
+                }
+                $.post(Routing.generate("burger_ajoutpanier", {"idProduit": idProduit, "typeProduit": typeProduit, "frite": frite, "sauce1": sauce1, "sauce2": sauce2, "boisson": boisson, "supplement": supplement
+                }), function (ret) {
+
+                });
             });
-        </script>#}
+        </script>
     </body>
 </html>

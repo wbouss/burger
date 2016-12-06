@@ -31,7 +31,7 @@ class DefaultController extends Controller {
      *
      * @Route("/carte/{type}", name="burger_carte")
      */
-    public function carteAction(Request $request, $type = "burger") {
+    public function carteAction(Request $request, $type = "Burger") {
         $em = $this->getDoctrine()->getManager();
         $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
         $repositorySauce = $em->getRepository("BurgerBundle:Sauce");
@@ -228,12 +228,14 @@ class DefaultController extends Controller {
     /**
      * Matches 
      *
-     * @Route("/Ajoutpanier/{produitId}",
-     * options = { "expose" = true },
+     * @Route("/Ajoutpanier/{idProduit}/{typeProduit}/{frite}/{sauce1}/{sauce2}/{boisson}/{supplement}",
+     * options = {"expose" = true },
      *  name="burger_ajoutpanier")
      */
-    public function AjouterProduitPanierAction(Request $request) {
-        $produitId = $request->get("produitId");
+    public function AjouterProduitPanier(Request $request) {
+        $produitId = $request->get("idProduit");
+        
+        $options =  Array($this->get("frite"),$this->get("sauce1"),$this->get("sauce2"),$this->get("boisson"),$this->get("supplement") );
         if (!empty($produitId)) {
             $em = $this->getDoctrine()->getManager();
             $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
@@ -241,7 +243,7 @@ class DefaultController extends Controller {
             $this->ajouterArticle($produit->getId(), 1, $produit->getPrix(), $request);
         }
         $total = $this->MontantGlobal($request);
-        return $this->render('BurgerBundle:Default:panier.html.twig', array("total" => $total));
+        return new Response("ok");
     }
 
     function creationPanier($request) {
