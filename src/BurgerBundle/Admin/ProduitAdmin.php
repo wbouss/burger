@@ -56,7 +56,7 @@ class ProduitAdmin extends AbstractAdmin {
                 ->add('intitule')
                 ->add('description')
                 ->add('prix')
-                ->add('type', "choice", array("choices" => array("Burger" => "Burger", "Woop's" => "Woop's", "Sandwich" => "Sandwich", "Tex mex" => "Tex mex", "Dessert" => "Dessert", "Boisson"=>"Boisson")))
+                ->add('type', "choice", array("choices" => array("Burger" => "Burger", "Woop's" => "Woop", "Sandwich" => "Sandwich", "Tex mex" => "Tex mex", "Dessert" => "Dessert", "Boisson"=>"Boisson")))
                 ->add('image', "sonata_type_admin", array(
                     'label' => false,
                     'required' => true))

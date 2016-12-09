@@ -42,7 +42,9 @@ section::before,section::after {
     position:absolute;
     content: '';
 }
-
+#top_login{
+    margin-bottom: 10px;
+}
 /* Separators Styles */
 .ss-style-top::before {
     left:0;
@@ -333,7 +335,9 @@ section::before,section::after {
     width: 200px;
     margin-top: 10px;
 }
-
+#detail_produit{
+    color: black;
+}
 
 /* ==========================================================================
     07. Special offers 

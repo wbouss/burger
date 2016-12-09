@@ -335,7 +335,9 @@ section::before,section::after {
     width: 200px;
     margin-top: 10px;
 }
-
+#detail_produit{
+    color: black;
+}
 
 /* ==========================================================================
     07. Special offers 

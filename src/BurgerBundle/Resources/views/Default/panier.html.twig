@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
-        {% stylesheets '@BurgerBundle/Resources/public/css/font-awesome.min.css' filter='cssrewrite' %}
+        {% stylesheets '../vendor/fortawesome/font-awesome/css/font-awesome.min.css' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
@@ -31,13 +31,6 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
-        {#       {% stylesheets '@BurgerBundle/Resources/public/css/semantic.min.css'  filter='cssrewrite' %}
-               <link rel="stylesheet" href="{{ asset_url }}" />
-               {% endstylesheets %}
-       
-               {% stylesheets '@BurgerBundle/Resources/public/css/dataTables.semanticui.min.css'  filter='cssrewrite' %}
-               <link rel="stylesheet" href="{{ asset_url }}" />
-               {% endstylesheets %}#}
 
 
         {% javascripts 
@@ -100,6 +93,7 @@
             <table id="tabPanier" class="display" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th>Article</th>
                         <th>Prix unitaire</th>

@@ -47,19 +47,19 @@ table.dataTable thead .sorting_desc_disabled {
   background-position: center right;
 }
 table.dataTable thead .sorting {
-  background-image: url("../../../bundles/burger/images/dataTable/sort_both.png");
+  background-image: url("../bundles/burger/images/sort_both.png");
 }
 table.dataTable thead .sorting_asc {
-  background-image: url("../../../bundles/burger/images/dataTable/sort_asc.png");
+  background-image: url("../bundles/burger/images/sort_asc.png");
 }
 table.dataTable thead .sorting_desc {
-  background-image: url("../../../bundles/burger/images/dataTable/sort_desc.png");
+  background-image: url("../bundles/burger/images/sort_desc.png");
 }
 table.dataTable thead .sorting_asc_disabled {
-  background-image: url("../../../bundles/burger/images/dataTable/sort_asc_disabled.png");
+  background-image: url("../bundles/burger/images/sort_asc_disabled.png");
 }
 table.dataTable thead .sorting_desc_disabled {
-  background-image: url("../../../bundles/burger/images/dataTable/sort_desc_disabled.png");
+  background-image: url("../bundles/burger/images/sort_desc_disabled.png");
 }
 table.dataTable tbody tr {
   background-color: #ffffff;
@@ -449,11 +449,4 @@ table.dataTable td {
   .dataTables_wrapper .dataTables_filter {
     margin-top: 0.5em;
   }
-}
-td.details-control {
-    background: url('../../../bundles/burger/images/dataTable/details_open.png') no-repeat center center;
-    cursor: pointer;
-}
-tr.shown td.details-control {
-    background: url('../../../bundles/burger/images/dataTable/details_close.png') no-repeat center center;
 }

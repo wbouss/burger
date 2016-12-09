@@ -3,26 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/Commande.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/TypeFrite.php</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/font-awesome.min.css</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/bootstrap.css</file>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/carte.html.twig</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Admin/Produit/show_image.html.twig</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/Crudite.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Controller/ProduitAdminController.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Admin/TypeFriteAdmin.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/Image.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/Supplement.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/main.html.twig</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Admin/SauceAdmin.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/LigneCommande.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/Produit.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Controller/ImageAdminController.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Admin/SupplementAdmin.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Admin/CruditeAdmin.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/panier.html.twig</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/carte.css</file>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Admin/ProduitAdmin.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Form/ProduitType.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/Sauce.php</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/js/panier.js</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/jquery.dataTables.css</file>
         </group>
     </open-files>
 </project-private>

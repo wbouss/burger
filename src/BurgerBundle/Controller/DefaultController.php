@@ -13,6 +13,7 @@ class DefaultController extends Controller {
 
     private $livraison = "magasin";
     public static $MailResp = "wbouss@gmail.com";
+    public static $tarifSup = 0.5;
 
     /**
      * Matches 
@@ -44,8 +45,8 @@ class DefaultController extends Controller {
         $crudites = $repositoryCrudite->findAll();
         $frites = $repositoryTypeFrite->findAll();
         $supplements = $repositorySupplement->findAll();
-        
-        return $this->render('BurgerBundle:Default:carte.html.twig', array("typeProduit"=> $type , "produits" => $produits, "sauces"=> $sauces,"crudites"=>$crudites, "boissons" => $boissons, "frites"=>$frites, "supplements"=>$supplements));
+
+        return $this->render('BurgerBundle:Default:carte.html.twig', array("typeProduit" => $type, "produits" => $produits, "sauces" => $sauces, "crudites" => $crudites, "boissons" => $boissons, "frites" => $frites, "supplements" => $supplements));
     }
 
     /**
@@ -207,18 +208,92 @@ class DefaultController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
         $session = $request->getSession()->get("panier");
+
+        $repositoryFrite = $em->getRepository("BurgerBundle:TypeFrite");
+        $repositorySauce = $em->getRepository("BurgerBundle:Sauce");
+        $repositorySupplement = $em->getRepository("BurgerBundle:Supplement");
+        $repositoryCrudite = $em->getRepository("BurgerBundle:Crudite");
+
         $retour = array();
         $i = 0;
         foreach ($session["idProduit"] as $s) {
             $format = array();
-            $format["IdProduit"] = $session["idProduit"][$i];
-            $produit = $repositoryProduit->find($session["idProduit"][$i]);
+            $format["IdProduit"] = $session["idProduit"][$i][0];
+            $produit = $repositoryProduit->find($session["idProduit"][$i][0]);
             $format["libelleProduit"] = $produit->getIntitule();
             $format["prixProduit"] = $produit->getPrix();
             $format["imageProduit"] = $produit->getImage()->getPath() . $produit->getImage()->getName() . "." . $produit->getImage()->getExtension();
             $format["qteProduit"] = $session["qteProduit"][$i];
             $format["prixProduit"] = $session["prixProduit"][$i];
             $format["descriptionProduit"] = $produit->getDescription();
+
+            $optionsTranslation = Array();
+            if ($produit->getType() == "Burger" || $produit->getType() == "Woop") {
+
+                $friteTranslation = $repositoryFrite->find(intval($session["idProduit"][$i][1][0]))->getNom();
+                $sauce1Translation = $repositorySauce->find(intval($session["idProduit"][$i][1][1]))->getNom();
+                $sauce2Translation = $repositorySauce->find(intval($session["idProduit"][$i][1][2]))->getNom();
+                $boissonTranslation = $repositoryProduit->find(intval($session["idProduit"][$i][1][3]))->getIntitule();
+                $supplementTranslation = Array();
+                if ($session["idProduit"][$i][1][4] != -1) {
+                    foreach ($session["idProduit"][$i][1][4] as $s) {
+                        $supplementTranslation[] = $repositorySupplement->find(intval($s))->getNom();
+                    }
+                } else
+                    $supplementTranslation = -1;
+                $optionsTranslation[] = $friteTranslation;
+                $optionsTranslation [] = $sauce1Translation;
+                $optionsTranslation[] = $sauce2Translation;
+                $optionsTranslation[] = $boissonTranslation;
+                $optionsTranslation[] = $supplementTranslation;
+                $optionsTranslation[] = -1;
+            } else if ($produit->getType() == "Sandwich") {
+
+                $friteTranslation = $repositoryFrite->find(intval($session["idProduit"][$i][1][0]))->getNom();
+                $sauce1Translation = $repositorySauce->find(intval($session["idProduit"][$i][1][1]))->getNom();
+                $sauce2Translation = $repositorySauce->find(intval($session["idProduit"][$i][1][2]))->getNom();
+                $boissonTranslation = $repositoryProduit->find(intval($session["idProduit"][$i][1][3]))->getIntitule();
+                $supplementTranslation = Array();
+                $cruditeTranslation = Array();
+                if ($session["idProduit"][$i][1][4] != -1) {
+                    foreach ($session["idProduit"][$i][1][4] as $s) {
+                        $supplementTranslation[] = $repositorySupplement->find(intval($s))->getNom();
+                    }
+                } else
+                    $supplementTranslation = -1;
+                if ($session["idProduit"][$i][1][5] != -1) {
+                    foreach ($session["idProduit"][$i][1][5] as $c) {
+                        $cruditeTranslation[] = $repositoryCrudite->find(intval($c))->getNom();
+                    }
+                } else {
+                    $cruditeTranslation = -1;
+                }
+                $optionsTranslation[] = $friteTranslation;
+                $optionsTranslation [] = $sauce1Translation;
+                $optionsTranslation[] = $sauce2Translation;
+                $optionsTranslation[] = $boissonTranslation;
+                $optionsTranslation[] = $supplementTranslation;
+                $optionsTranslation[] = $cruditeTranslation;
+            } else if ($produit->getType() == "Tex mex") {
+
+                $sauce1Translation = $repositorySauce->find(intval($session["idProduit"][$i][1][1]))->getNom();
+                $supplementTranslation = Array();
+                if ($session["idProduit"][$i][1][4] != -1) {
+                    foreach ($session["idProduit"][$i][1][4] as $s) {
+                        $supplementTranslation[] = $repositorySupplement->find(intval($s))->getNom();
+                    }
+                } else
+                    $supplementTranslation = -1;
+                $optionsTranslation[] = -1;
+                $optionsTranslation [] = $sauce1Translation;
+                $optionsTranslation[] = -1;
+                $optionsTranslation[] = -1;
+                $optionsTranslation[] = $supplementTranslation;
+                $optionsTranslation[] = -1;
+            }
+            $format["optionsProduit"] = $optionsTranslation;
+            $format["typeProduit"] = $produit->getType();
+
             $retour[] = $format;
             $i++;
         }
@@ -228,23 +303,27 @@ class DefaultController extends Controller {
     /**
      * Matches 
      *
-     * @Route("/Ajoutpanier/{idProduit}/{typeProduit}/{frite}/{sauce1}/{sauce2}/{boisson}/{supplement}",
+     * @Route("/Ajoutpanier/{idProduit}/{typeProduit}/{frite}/{sauce1}/{sauce2}/{boisson}/{supplement}/{crudite}",
      * options = {"expose" = true },
      *  name="burger_ajoutpanier")
      */
     public function AjouterProduitPanier(Request $request) {
+
         $produitId = $request->get("idProduit");
-        
-        $options =  Array($this->get("frite"),$this->get("sauce1"),$this->get("sauce2"),$this->get("boisson"),$this->get("supplement") );
+        $produitType = $request->get("typeProduit");
+
+        $options = Array($request->get("frite"), $request->get("sauce1"), $request->get("sauce2"), $request->get("boisson"), $request->get("supplement"), $request->get("crudite"));
         if (!empty($produitId)) {
             $em = $this->getDoctrine()->getManager();
             $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
             $produit = $repositoryProduit->find($produitId);
-            $this->ajouterArticle($produit->getId(), 1, $produit->getPrix(), $request);
+            $this->ajouterArticle($produit->getId(), 1, $produit->getPrix(), $options, $produitType, $request);
         }
         $total = $this->MontantGlobal($request);
         return new Response("ok");
     }
+
+    
 
     function creationPanier($request) {
         $session = $request->getSession();
@@ -302,29 +381,68 @@ class DefaultController extends Controller {
         return $this->render('BurgerBundle:Default:panier.html.twig', array("total" => $total));
     }
 
-    function ajouterArticle($idProduit, $qteProduit, $prixProduit, $request) {
+    function ajouterArticle($idProduit, $qteProduit, $prixProduit, $options, $typeProduit, $request) {
         $session = $request->getSession();
+        if ($options[4] != -1) {
+            $arraySupplement = explode(",", $options[4]);
+            $options[4] = $arraySupplement;
+            $prix = $prixProduit + count($arraySupplement) * DefaultController::$tarifSup;
+        } else
+            $prix = $prixProduit;
+
+        if ($options[5] != -1) {
+            $arrayCrudite = explode(",", $options[5]);
+            $options[5] = $arrayCrudite;
+        }
 
         //Si le panier existe
         if ($this->creationPanier($request) && !$this->isVerrouille($request)) {
             $p = $session->get("panier");
             //Si le produit existe déjà on ajoute seulement la quantité
-            $positionProduit = array_search($idProduit, $p["idProduit"]);
+            $positionProduit = $this->recherche_produit($idProduit, $options, $p["idProduit"]);
 
-            if ($positionProduit !== false) {
+            if ($positionProduit >= 0) {
                 $p['qteProduit'][$positionProduit] += $qteProduit;
             } else {
-
                 //Sinon on ajoute le produit
-                $p["idProduit"][] = $idProduit;
+                $p["idProduit"][] = Array($idProduit, $options);
                 $p["qteProduit"][] = $qteProduit;
-                $p["prixProduit"][] = $prixProduit;
+                $p["prixProduit"][] = $prix;
             }
 
             $session->set("panier", $p);
             return true;
         } else
             return false;
+    }
+
+    function recherche_produit($idProduit, $options, $panierProduits) {
+        $i = 0;
+        $j = 0;
+        $memeProduit = false;
+        $memeOptions = true;
+        $positionPossibleProduit = -1;
+
+        foreach ($panierProduits as $panierProduit) {
+            if ($panierProduit[0] == $idProduit) { // même produit, reste a savoir si il on les mêmes options
+                $memeProduit = true;
+                $j = 0;
+                foreach ($panierProduit[1] as $panierProduitOptions) {
+                    if ($panierProduitOptions != $options[$j])
+                        $memeOptions = false;
+                    $j++;
+                }
+                if ($memeOptions == true)
+                    return $i;
+                else
+                    $memeOptions = true;
+            }
+            $i++;
+        }
+        if ($memeProduit)
+            return -1;
+        else
+            return -2;
     }
 
     function reduireArticle($idProduit, $request) {

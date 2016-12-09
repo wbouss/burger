@@ -79,13 +79,13 @@
 
                 <div class="row">
                     <div class="col-xs-2">
-                        <a href="{{ path('burger_carte', { "type": "burger" }) }}">
+                        <a href="{{ path('burger_carte', { "type": "Burger" }) }}">
                             <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/hot-drinks.png")}}"  alt="Hot Drinks"/></div>
                             <div class="menu-titles"><h4 class="">Les Burgers</h4></div>
                         </a>
                     </div>
                     <div class="col-xs-2">
-                        <a href="{{ path('burger_carte', { "type": "Woop's" }) }}">
+                        <a href="{{ path('burger_carte', { "type": "Woop" }) }}">
                             <div class="menu-images "><img src="{{ asset("bundles/burger/images/default/menu/ice-drinks.png")}}"  alt="Ice Drinks"/></div>
                             <div class="menu-titles"><h4 class="">Les Woop's</h4></div>
                         </a>
@@ -132,10 +132,10 @@
                                     <a href="#"> <img  class="img-responsive img-thumbnail" src="{{ asset(produit.image.path~produit.image.name~"."~produit.image.extension)}}"  alt=""/></a>
                                     <div class="pricing-item-details">
                                         <h3><a href="#">{{ produit.intitule }}</a></h3>
-                                        <p>
+                                        <div id="detail_produit">
                                             {{ produit.description }}<br>
 
-                                            {% if produit.type == "Burger" or produit.type == "Woop's" or produit.type == "Sandwich"  %}
+                                            {% if produit.type == "Burger" or produit.type == "Woop" or produit.type == "Sandwich"  %}
                                                 Type de frite
                                                 <select id="ChoixFrite">
                                                     {% for frite in frites %}
@@ -163,40 +163,40 @@
                                                         <option  value="{{ boisson.id }}">{{ boisson.intitule }}</option>
                                                     {% endfor %}
                                                 </select>
-                                                <br>
-                                                Supplément ?
-                                                <select id="ChoixSupplement">
-                                                    <option  value="-1">Aucun</option>
+                                                <div id="SupplementBox">
+                                                    Supplément(0.5€) :<br>
                                                     {% for supplement in supplements %}
-                                                        <option  value="{{ supplement.id }}">{{ supplement.nom }}</option>
-                                                    {% endfor %}
-                                                </select>
+                                                        <label><input type="checkbox" id="choixSupplement" value="{{ supplement.id }}"> {{ supplement.nom }}</label>
+                                                        {% endfor %}
+                                                </div>
                                             {% endif %}
                                             {% if produit.type == "Sandwich" %}
-                                                {% for crudite in crudites %}
-                                                    <label><input type="checkbox" id="boxChoiceSauce" value="{{ crudite.id }}">{{ crudite.nom }}</label>
-                                                    {% endfor %}
-                                                {% endif %}
-                                                {% if produit.type == "Tex mex" %}
+                                                <div id="CruditesBox">
+                                                    Crudités : 
+                                                    {% for crudite in crudites %}
+                                                        <label><input type="checkbox" id="choixCrudite" value="{{ crudite.id }}"> {{ crudite.nom }}</label>
+                                                        {% endfor %}
+                                                </div>
+                                            {% endif %}
+
+                                            {% if produit.type == "Tex mex" %}
                                                 Sauce
                                                 <select  id="ChoixSauce1">
                                                     {% for sauce in sauces %}
                                                         <option   value="{{ sauce.id }}">{{ sauce.nom }}</option>
                                                     {% endfor %}
                                                 </select>
-                                                <br>
-                                                Supplément ?
-                                                <select id="ChoixSupplement">
-                                                    <option  value="-1">Aucun</option>
+                                                <div id="SupplementBox">
+                                                    Supplément(0.5€) :<br>
                                                     {% for supplement in supplements %}
-                                                        <option  value="{{ supplement.id }}">{{ supplement.nom }}</option>
+                                                        <input type="checkbox" id="choixSupplement" value="{{ supplement.id }}"> {{ supplement.nom }}
                                                     {% endfor %}
-                                                </select>
+                                                </div>
                                             {% endif %}
 
-                                        </p>
+                                        </div>
 
-                                        <a id="buttonAjoutPanier" class="btn btn-danger" data-id="{{produit.id}}">Ajouter au panier</a>
+                                        <a class="btn btn-danger buttonAjoutPanier" data-id="{{produit.id}}">Ajouter au panier</a>
                                         <div class="clearfix"></div>
                                     </div>
                                     <!--price tag-->
@@ -210,31 +210,65 @@
             </div>
         </div>
         <script>
-            $("#buttonAjoutPanier").click(function () {
+            $(".buttonAjoutPanier").click(function () {
                 var typeProduit = "{{ typeProduit }}";
                 var idProduit = $(this).attr("data-id");
                 var frite = -1;
                 var sauce1 = -1;
                 var sauce2 = -1;
                 var boisson = -1;
-                var supplement = -1;
-                if (typeProduit == "Burger" || typeProduit == "Woop's" || typeProduit == "Sandwich")
+                var selectedCrudites = -1;
+                var selectedSupplement = -1;
+                if (typeProduit == "Burger" || typeProduit == "Woop")
                 {
                     var frite = $("#ChoixFrite").val();
                     var sauce1 = $("#ChoixSauce1").val();
                     var sauce2 = $("#ChoixSauce2").val();
                     var boisson = $("#ChoixBoisson").val();
-                    var supplement = $("#ChoixSupplement").val();
-                }
-                else if (typeProduit == "Tex mex")
+                    var selectedSupplementCp = [];
+                    $('#SupplementBox input:checked').each(function () {
+                        selectedSupplementCp.push($(this).attr('value'));
+                    });
+                    if (selectedSupplementCp.length > 0)
+                        selectedSupplement = selectedSupplementCp;
+                } else if (typeProduit == "Sandwich") {
+                    var frite = $("#ChoixFrite").val();
+                    var sauce1 = $("#ChoixSauce1").val();
+                    var sauce2 = $("#ChoixSauce2").val();
+                    var boisson = $("#ChoixBoisson").val();
+                    var selectedSupplementCp = [];
+                    var selectedCruditesCp = [];
+                    $('#SupplementBox input:checked').each(function () {
+                        selectedSupplementCp.push($(this).attr('value'));
+                    });
+
+                    $('#CruditesBox input:checked').each(function () {
+                        selectedCruditesCp.push($(this).attr('value'));
+                    });
+                    if (selectedSupplementCp.length > 0)
+                        selectedSupplement = selectedSupplementCp;
+                    if (selectedCruditesCp.length > 0)
+                        selectedCrudites = selectedCruditesCp;
+
+                } else if (typeProduit == "Tex mex")
                 {
                     var sauce1 = $("#ChoixSauce1").val();
-                    var supplement = $("#ChoixSupplement").val();
+                    var selectedSupplementCp = [];
+                    $('#SupplementBox input:checked').each(function () {
+                        selectedSupplementCp.push($(this).attr('value'));
+                    });
+                    if (selectedSupplementCp.length > 0)
+                        selectedSupplement = selectedSupplementCp;
+                } else if (typeProduit == "Dessert" || typeProduit == "Boisson")
+                {
+
                 }
-                $.post(Routing.generate("burger_ajoutpanier", {"idProduit": idProduit, "typeProduit": typeProduit, "frite": frite, "sauce1": sauce1, "sauce2": sauce2, "boisson": boisson, "supplement": supplement
+
+                $.post(Routing.generate("burger_ajoutpanier", {"idProduit": idProduit, "typeProduit": typeProduit, "frite": frite, "sauce1": sauce1, "sauce2": sauce2, "boisson": boisson, "supplement": selectedSupplement, "crudite": selectedCrudites
                 }), function (ret) {
 
                 });
+
             });
         </script>
     </body>
