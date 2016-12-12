@@ -52,15 +52,28 @@ class ProduitAdmin extends AbstractAdmin {
      * @param FormMapper $formMapper
      */
     protected function configureFormFields(FormMapper $formMapper) {
-        $formMapper
-                ->add('intitule')
-                ->add('description')
-                ->add('prix')
-                ->add('type', "choice", array("choices" => array("Burger" => "Burger", "Woop's" => "Woop", "Sandwich" => "Sandwich", "Tex mex" => "Tex mex", "Dessert" => "Dessert", "Boisson"=>"Boisson")))
-                ->add('image', "sonata_type_admin", array(
-                    'label' => false,
-                    'required' => true))
-        ;
+        if ($this->id($this->getSubject())) {
+            // EDIT
+            $formMapper
+                    ->add('intitule')
+                    ->add('description')
+                    ->add('prix')
+                    ->add('type', "choice", array("choices" => array("Burger" => "Burger", "Woop's" => "Woop", "Sandwich" => "Sandwich", "Tex mex" => "Tex mex", "Dessert" => "Dessert", "Boisson" => "Boisson")))
+                    ->add('image', "sonata_type_admin", array(
+                        'label' => false,
+                        'required' => false))
+            ;
+        } else {
+            $formMapper
+                    ->add('intitule')
+                    ->add('description')
+                    ->add('prix')
+                    ->add('type', "choice", array("choices" => array("Burger" => "Burger", "Woop's" => "Woop", "Sandwich" => "Sandwich", "Tex mex" => "Tex mex", "Dessert" => "Dessert", "Boisson" => "Boisson")))
+                    ->add('image', "sonata_type_admin", array(
+                        'label' => false,
+                        'required' => true))
+            ;
+        }
     }
 
     /**

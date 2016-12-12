@@ -49,6 +49,28 @@ class Commande {
      */
     private $adresse;
     
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="codepostale", type="string", length=255)
+     */
+    private $codepostale;
+    
+    
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="ville", type="string", length=255)
+     */
+    private $ville;
+    
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="informationComplementairesAdresse", type="string", length=255)
+     */
+    private $informationComplementairesAdresse;
+  
     /**
      *
      * @ORM\Column(name="telephone", type="integer")
@@ -151,5 +173,36 @@ class Commande {
         function __construct() {
         $this->etat = "Emise";
     }
+    
+    function getCodepostale() {
+        return $this->codepostale;
+    }
+
+    function getVille() {
+        return $this->ville;
+    }
+
+    function getInformationComplementairesAdresse() {
+        return $this->informationComplementairesAdresse;
+    }
+
+    function getOptions() {
+        return $this->options;
+    }
+
+    function setCodepostale($codepostale) {
+        $this->codepostale = $codepostale;
+    }
+
+    function setVille($ville) {
+        $this->ville = $ville;
+    }
+
+    function setInformationComplementairesAdresse($informationComplementairesAdresse) {
+        $this->informationComplementairesAdresse = $informationComplementairesAdresse;
+    }
+
+   
+
 
 }

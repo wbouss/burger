@@ -88,6 +88,13 @@
                         <button type="button" id="panier_Content_etape" class="btn btn-default" style="cursor: default;"> <span class="badge">5</span> Confirmation</button>
                     </div></div>
             </div>
+            {% if message is defined %}
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {{ message }}
+                </div>
+            {% endif %}
             <table id="tabRecap" class="display" width="100%" cellspacing="0">
                 <thead>
                     <tr>

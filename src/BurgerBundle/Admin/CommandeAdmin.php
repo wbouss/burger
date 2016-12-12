@@ -67,7 +67,13 @@ class CommandeAdmin extends AbstractAdmin {
         $repositorycommande = $this->getConfigurationPool()->getContainer()->get('doctrine')->getRepository("BurgerBundle:Commande");
         $commande = $repositorycommande->find($this->getRoot()->getSubject()->getId());
         $lignes = $repositorylignes->findByCommande($commande);
+
         $this->ligne = $lignes;
+        foreach ($lignes as $l) {
+            $custom[] = json_decode($l->getOptions());
+        }
+        $this->optionsBurger = $custom;
+
         $showMapper
                 ->add('id')
                 ->add('date')
@@ -76,10 +82,9 @@ class CommandeAdmin extends AbstractAdmin {
                 ->add('nom')
                 ->add('adresse')
                 ->add('telephone')
-                ->add("ligne", "entity" , array ("label" => "les produits" ,'template' => 'BurgerBundle:Admin:Produit/ligneproduits.html.twig' // <-- This is the trick
+                ->add("ligne", "entity", array("label" => "les produits", 'template' => 'BurgerBundle:Admin:Produit/ligneproduits.html.twig' // <-- This is the trick
                 ))
         ;
-        
     }
 
     protected function configureRoutes(RouteCollection $collection) {

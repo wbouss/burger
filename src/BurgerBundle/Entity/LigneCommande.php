@@ -35,10 +35,18 @@ class LigneCommande {
  
     /**
      *
-     * @ORM\Column(name="prix", type="integer")   
+     * @ORM\Column(name="prix", type="float")   
      **/
     private $prix;
-
+    
+  
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="options", type="string", length=255)
+     */
+    private $options;
+    
     /**
      * @ORM\ManyToOne(targetEntity="BurgerBundle\Entity\Commande")
      * @ORM\JoinColumn(nullable=false)
@@ -86,6 +94,14 @@ class LigneCommande {
 
     function setPrix($prix) {
         $this->prix = $prix;
+    }
+
+    function getOptions() {
+        return $this->options;
+    }
+
+    function setOptions($options) {
+        $this->options = $options;
     }
 
 

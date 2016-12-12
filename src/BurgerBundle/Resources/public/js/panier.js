@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     var table = $('#tabPanier').DataTable({
         "sAjaxSource": Routing.generate('panier_data'),
         "columns": [
@@ -41,8 +42,7 @@ $(document).ready(function () {
             $('td', row).eq(2).html("<a href=''>" + data["libelleProduit"] + "</a><br>" + data["descriptionProduit"]);
             $('td', row).eq(3).html(data["prixProduit"] + " €");
             var op = data
-$('td', row).eq(4).html('<i class="fa fa-plus-circle fa-lg" aria-hidden="true" onClick="incrementerProduitPanier('+data+')"  onmouseover="this.style.cursor=\'pointer\'""></i> <i class="fa fa-minus-circle fa-lg" aria-hidden="true"   onmouseover="this.style.cursor=\'pointer\'" onClick="location.href=\'' + Routing.generate("burger_reduirepanier", {"produitId": data["IdProduit"]}) + '\'" ></i> <input type="text" id="inputTextQuantite" value="' + data['qteProduit'] + '"  readonly/> <i class="fa fa-times fa-lg" aria-hidden="true"  onmouseover="this.style.cursor=\'pointer\'" onClick="location.href=\'' + Routing.generate("burger_supprimerpanier", {"produitId": data["IdProduit"]}) + '\'" ></i>');
-
+            $('td', row).eq(4).html('<i class="fa fa-plus-circle fa-lg" aria-hidden="true" onClick="incrementerProduitPanier(' + index + ')"  onmouseover="this.style.cursor=\'pointer\'""></i> <i class="fa fa-minus-circle fa-lg" aria-hidden="true"   onmouseover="this.style.cursor=\'pointer\'" onClick="reduireProduitPanier(' + index + ')"></i> <input type="text" id="inputTextQuantite" value="' + data['qteProduit'] + '"  readonly/> <i class="fa fa-times fa-lg" aria-hidden="true"  onmouseover="this.style.cursor=\'pointer\'" onClick="supprimerProduitPanier(' + index + ')"></i>');
             $('td', row).eq(5).html(data["prixProduit"] * data["qteProduit"] + " €");
         }
     });
@@ -109,4 +109,27 @@ $('td', row).eq(4).html('<i class="fa fa-plus-circle fa-lg" aria-hidden="true" o
 
         return retour;
     }
+
+
 });
+function incrementerProduitPanier(index) {
+    $.post(Routing.generate("burger_incrementerproduitexistant", {"index": index}), function (ret) {
+        $("#tabPanier").DataTable().ajax.reload();
+        $("#tdTotal").html(ret + " €");
+    })
+}
+
+function reduireProduitPanier(index) {
+    $.post(Routing.generate("burger_reduireproduitexistant", {"index": index}), function (ret) {
+        $("#tabPanier").DataTable().ajax.reload();
+        $("#tdTotal").html(ret + " €");
+
+    })
+}
+
+function supprimerProduitPanier(index) {
+    $.post(Routing.generate("burger_supprimerproduitexistant", {"index": index}), function (ret) {
+        $("#tabPanier").DataTable().ajax.reload();
+        $("#tdTotal").html(ret + " €");
+    })
+}

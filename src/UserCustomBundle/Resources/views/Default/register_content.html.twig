@@ -32,7 +32,7 @@
         {{ form_label(form.telephone, "Téléphone", {'label_attr': {}}) }}
         {{ form_widget(form.telephone, {'attr': {'class': 'form-control'}}) }}
     </div>
-        <div class="form-group">
+    <div class="form-group">
         {{ form_label(form.adresse, "Adresse", {'label_attr': {}}) }}
         {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
     </div>
@@ -44,10 +44,14 @@
         {{ form_label(form.codepostale, "Code Postale", {'label_attr': {}}) }}
         {{ form_widget(form.codepostale, {'attr': {'class': 'form-control'}}) }}
     </div>
+    <div class="form-group">
+        {{ form_label(form.informationComplementairesAdresse, "Informations complémentaires(batiments,digicode...)", {'label_attr': {}}) }}
+        {{ form_widget(form.informationComplementairesAdresse, {'attr': {'class': 'form-control'}}) }}
+    </div>
     <div>               
         <input type="submit" class="btn btn-primary btn-sm" value="{{ 'registration.submit'|trans }}" />
     </div>
     {{ form_end(form) }}
 
 </form>
-    
+

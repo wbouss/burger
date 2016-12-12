@@ -105,7 +105,7 @@
             <table id="tabTotaux" class="display" width="100%" cellspacing="0">
                 <tr>
                     <td> <h4 class="media-heading">Total de vos articles TTC</h4></td>
-                    <td>{{ total }} €</td>
+                    <td id="tdTotal">{{ total }} €</td>
                 </tr>
             </table>
             <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>

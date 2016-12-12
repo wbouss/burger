@@ -66,6 +66,13 @@ class User extends BaseUser {
      * @ORM\Column(name="ville", type="string", length=3000)
      */
     private $ville;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="informationComplementairesAdresse", type="string", length=3000, nullable=true)
+     */
+    private $informationComplementairesAdresse;
 
     public function __construct() {
         parent::__construct();
@@ -118,6 +125,14 @@ class User extends BaseUser {
 
     function setTelephone($telephone) {
         $this->telephone = $telephone;
+    }
+
+    function getInformationComplementairesAdresse() {
+        return $this->informationComplementairesAdresse;
+    }
+
+    function setInformationComplementairesAdresse($informationComplementairesAdresse) {
+        $this->informationComplementairesAdresse = $informationComplementairesAdresse;
     }
 
 

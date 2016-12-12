@@ -55,3 +55,9 @@ services:
         arguments: [~, BurgerBundle\Entity\Supplement, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Supplement }
+
+    burger.admin.parametre:
+        class: BurgerBundle\Admin\ParametreAdmin
+        arguments: [~, BurgerBundle\Entity\Parametre, BurgerBundle:ParametreAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Parametre }

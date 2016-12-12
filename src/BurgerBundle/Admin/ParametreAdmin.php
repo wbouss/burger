@@ -9,28 +9,17 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
-class UserAdmin extends AbstractAdmin {
+class ParametreAdmin extends AbstractAdmin {
 
     /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
         $datagridMapper
-                ->add('username')
-                ->add('usernameCanonical')
-                ->add('email')
-                ->add('emailCanonical')
-                ->add('enabled')
-                ->add('salt')
-                ->add('password')
-                ->add('lastLogin')
-                ->add('locked')
-                ->add('expiresAt')
-                ->add('confirmationToken')
-                ->add('passwordRequestedAt')
-                ->add('roles')
-                ->add('credentialsExpireAt')
                 ->add('id')
+                ->add('nom')
+                ->add('valeur')
+                ->add('options')
         ;
     }
 
@@ -39,15 +28,13 @@ class UserAdmin extends AbstractAdmin {
      */
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
-                ->add('username')
-                ->add('email')
-                ->add('locked')
-                ->add('roles')
-                ->add('telephone')
+                ->add('nom')
+                ->add('valeur')
                 ->add('_action', null, array(
                     'actions' => array(
                         'show' => array(),
                         'edit' => array(),
+                        'delete' => array(),
                     )
                 ))
         ;
@@ -58,23 +45,25 @@ class UserAdmin extends AbstractAdmin {
      */
     protected function configureFormFields(FormMapper $formMapper) {
         if ($this->id($this->getSubject())) {
+            $repositoryparametre = $this->getConfigurationPool()->getContainer()->get('doctrine')->getRepository("BurgerBundle:Parametre");
+            $parametre = $repositoryparametre->find($this->getRoot()->getSubject()->getId());
+            $op = explode(",",$parametre->getOptions());
+            $i = 0;
+            foreach( $op as $op_e){
+                $option_titre[$op[$i]] = $op[$i];
+                $i++;
+            }
+             
             // EDIT
             $formMapper
-                    ->add('email')
-                    ->add('adresse')
-                    ->add('codepostale')
-                    ->add('ville')
-                    ->add('firstName')
-                    ->add('lastName')
-                    ->add('informationComplementairesAdresse')
-                    ->add('roles')
+                    ->add('valeur',"choice", array("choices"=> $option_titre ))
             ;
         } else {
             // CREATE
             $formMapper
-                    ->add('username')
-                    ->add('email')
-                    ->add('password')
+                    ->add('nom')
+                    ->add('valeur')
+                    ->add('options')
             ;
         }
     }
@@ -84,17 +73,9 @@ class UserAdmin extends AbstractAdmin {
      */
     protected function configureShowFields(ShowMapper $showMapper) {
         $showMapper
-                ->add('username')
-                ->add('email')
-                ->add('adresse')
-                ->add('codepostale')
-                ->add('ville')
-                ->add('firstName')
-                ->add('lastName')
-                ->add('telephone')
-                ->add('lastLogin')
-                ->add('roles')
-                ->add('informationComplementairesAdresse')
+                ->add('nom')
+                ->add('valeur')
+                ->add('options')
         ;
     }
 

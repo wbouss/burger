@@ -112,29 +112,28 @@
                                         <p class="list-group-item-text">Sur place ou à emporter</p>
                                     </a>
                                     {% if type == "domicile" %}
-
                                         <a href="#" class="list-group-item active"  onClick="location.href = '{{ path('burger_livraison', { "type": "domicile" }) }}'">
                                         {% else %}
-                                            <a href="#" class="list-group-item"  onClick="location.href = '{{ path('burger_livraison', { "type": "domicile" }) }}'">
-                                            {% endif %}
+                                            {% if montantTotal >= 15 %}
+                                                <a href="#" class="list-group-item"  onClick="location.href = '{{ path('burger_livraison', { "type": "domicile" }) }}'">
+                                                {% else %}
+                                                    <a  class="list-group-item">
+                                                    {% endif %}
+                                                {% endif %}
 
-                                            <h4 class="list-group-item-heading">Livraison à domicile-Gratuit à partir de 15 euros</h4>
-                                            <p class="list-group-item-text">Adresse: {{ app.user.adresse }} {{ app.user.ville }} {{ app.user.codepostale }}</p>
-                                        </a>
-                                        </div>  
+
+                                                <h4 class="list-group-item-heading">Livraison à domicile-Gratuit à partir de 15 euros</h4>
+                                                <p class="list-group-item-text">Adresse: {{ app.user.adresse }} {{ app.user.ville }} {{ app.user.codepostale }}</p>
+                                            </a>
+                                            </div>  
+                                            </div>
+                                            </div>
+                                            <div id="livraison_button_to_continue">
+                                                <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
+                                                <button onClick="location.href = '{{ path('burger_commander', {"livraison" : type }) }}'" type="button" class="btn btn-primary">Valider</button>
+                                            </div>
+                                        {% endif %}
                                         </div>
                                         </div>
-                                        <div id="livraison_button_to_continue">
-                                            <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
-                                            <button onClick="location.href = '{{ path('burger_commander', {"livraison" : type }) }}'" type="button" class="btn btn-primary">Valider</button>
-                                        </div>
-                                    {% endif %}
-                                    </div>
-                                    {% javascripts 
-                                            '@BurgerBundle/Resources/public/js/panier.js'
-                                    %}
-                                    <script src="{{ asset_url }}"></script>
-                                    {% endjavascripts %}  
-                                    </div>
-                                    </body>
-                                    </html>
+                                        </body>
+                                        </html>

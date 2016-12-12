@@ -19,7 +19,7 @@
         {{ form_label(form.email, "Adresse E-mail ", {'label_attr': {}}) }}
         {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
     </div>
-  
+
     <div class="form-group">
         {{ form_label(form.lastName, "Nom", {'label_attr': {}}) }}
         {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
@@ -28,7 +28,7 @@
         {{ form_label(form.firstName, "Prénom", {'label_attr': {}}) }}
         {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
     </div>
-        <div class="form-group">
+    <div class="form-group">
         {{ form_label(form.telephone, "Téléphone ", {'label_attr': {}}) }}
         {{ form_widget(form.telephone, {'attr': {'class': 'form-control'}}) }}
     </div>
@@ -44,11 +44,15 @@
         {{ form_label(form.codepostale, "Code Postale", {'label_attr': {}}) }}
         {{ form_widget(form.codepostale, {'attr': {'class': 'form-control'}}) }}
     </div>
+    <div class="form-group">
+        {{ form_label(form.informationComplementairesAdresse, "Informations complémentaires(batiments,digicode...)", {'label_attr': {}}) }}
+        {{ form_widget(form.informationComplementairesAdresse, {'attr': {'class': 'form-control'}}) }}
+    </div>
     <div>               
         <input class="btn btn-primary" type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
     </div>
     {{ form_end(form) }}
 
 </form>
-    <br>
+<br>
 <button onClick="location.href = '{{ path('burger_changepassword') }}'" type="button" class="btn btn-warning">Changer de mot de passe </button>

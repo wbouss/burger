@@ -266,7 +266,7 @@
 
                 $.post(Routing.generate("burger_ajoutpanier", {"idProduit": idProduit, "typeProduit": typeProduit, "frite": frite, "sauce1": sauce1, "sauce2": sauce2, "boisson": boisson, "supplement": selectedSupplement, "crudite": selectedCrudites
                 }), function (ret) {
-
+                    document.location.href= Routing.generate("burger_panier");   
                 });
 
             });
