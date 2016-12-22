@@ -67,7 +67,10 @@ class UserAdmin extends AbstractAdmin {
                     ->add('firstName')
                     ->add('lastName')
                     ->add('informationComplementairesAdresse')
+                    ->add('codeImmeuble')
+                    ->add('interphone')
                     ->add('roles')
+
             ;
         } else {
             // CREATE
@@ -95,6 +98,8 @@ class UserAdmin extends AbstractAdmin {
                 ->add('lastLogin')
                 ->add('roles')
                 ->add('informationComplementairesAdresse')
+                ->add('codeImmeuble')
+                ->add('interphone')
         ;
     }
 

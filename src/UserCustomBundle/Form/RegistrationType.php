@@ -14,7 +14,9 @@ class RegistrationType extends AbstractType {
                 ->add('adresse', null, array('label' => 'form.adresse', 'translation_domain' => 'FOSUserBundle'))
                 ->add('ville', null, array('label' => 'form.ville', 'translation_domain' => 'FOSUserBundle'))
                 ->add('codepostale', null, array('label' => 'form.codepostale', 'translation_domain' => 'FOSUserBundle'))
-                ->add('informationComplementairesAdresse', null, array("required" => false, 'label' => 'form.codepostale', 'translation_domain' => 'FOSUserBundle'));
+                ->add('informationComplementairesAdresse', null, array("required" => false, 'translation_domain' => 'FOSUserBundle'))
+                ->add('codeImmeuble', null, array("required" => false, 'translation_domain' => 'FOSUserBundle'))
+                ->add('interphone', null, array("required" => false, 'translation_domain' => 'FOSUserBundle'));
     }
 
     public function getParent() {

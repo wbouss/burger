@@ -30,28 +30,26 @@ class User extends BaseUser {
      * @ORM\Column(name="adresse", type="string", length=3000)
      */
     private $adresse;
-    
-     /**
+
+    /**
      *
      * @ORM\Column(name="telephone", type="integer", length=3000)
      */
     private $telephone;
-    
-        /**
+
+    /**
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=3000)
      */
     private $firstName;
 
-    
     /**
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=3000)
      */
     private $lastName;
-
 
     /**
      * @var string
@@ -63,14 +61,29 @@ class User extends BaseUser {
     /**
      * @var string
      *
-     * @ORM\Column(name="ville", type="string", length=3000)
+     * @ORM\Column(name="ville", type="string", length=100)
      */
     private $ville;
-    
+
     /**
      * @var string
      *
-     * @ORM\Column(name="informationComplementairesAdresse", type="string", length=3000, nullable=true)
+     * @ORM\Column(name="codeImmeuble", type="string", length=100, nullable=true)
+     */
+    private $codeImmeuble;
+    
+   
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="interphone", type="string", length=100, nullable=true)
+     */
+    private $interphone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="informationComplementairesAdresse", type="string", length=1000, nullable=true)
      */
     private $informationComplementairesAdresse;
 
@@ -78,7 +91,7 @@ class User extends BaseUser {
         parent::__construct();
         // your own logic
     }
-    
+
     function getAdresse() {
         return $this->adresse;
     }
@@ -134,7 +147,21 @@ class User extends BaseUser {
     function setInformationComplementairesAdresse($informationComplementairesAdresse) {
         $this->informationComplementairesAdresse = $informationComplementairesAdresse;
     }
+    function getCodeImmeuble() {
+        return $this->codeImmeuble;
+    }
 
+    function getInterphone() {
+        return $this->interphone;
+    }
+
+    function setCodeImmeuble($codeImmeuble) {
+        $this->codeImmeuble = $codeImmeuble;
+    }
+
+    function setInterphone($interphone) {
+        $this->interphone = $interphone;
+    }
 
 
 

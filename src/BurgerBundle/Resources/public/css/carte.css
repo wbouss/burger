@@ -75,6 +75,9 @@ section::before,section::after {
 #register_confirm{
     margin-top: 20px;
 }
+#BurgerWoopInfoSupInput{
+    width: 100%;
+}
 #moncompte_content{
     margin-top: 20px;
 }

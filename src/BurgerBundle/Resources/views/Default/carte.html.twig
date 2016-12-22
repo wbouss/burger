@@ -170,6 +170,11 @@
                                                         {% endfor %}
                                                 </div>
                                             {% endif %}
+                                            {% if produit.type == "Burger" or produit.type == "Woop" %}
+                                                <div id="BurgerWoopInfoSup">
+                                                    <label>Informations supplémentaires : <input type="text" width="100%" id="BurgerWoopInfoSupInput"></label>
+                                                </div>
+                                            {% endif %}
                                             {% if produit.type == "Sandwich" %}
                                                 <div id="CruditesBox">
                                                     Crudités : 
@@ -210,6 +215,7 @@
             </div>
         </div>
         <script>
+          
             $(".buttonAjoutPanier").click(function () {
                 var typeProduit = "{{ typeProduit }}";
                 var idProduit = $(this).attr("data-id");
@@ -231,6 +237,8 @@
                     });
                     if (selectedSupplementCp.length > 0)
                         selectedSupplement = selectedSupplementCp;
+                    if ($("#BurgerWoopInfoSupInput").val().length != 0)
+                        selectedCrudites = $("#BurgerWoopInfoSupInput").val();
                 } else if (typeProduit == "Sandwich") {
                     var frite = $("#ChoixFrite").val();
                     var sauce1 = $("#ChoixSauce1").val();
@@ -266,7 +274,7 @@
 
                 $.post(Routing.generate("burger_ajoutpanier", {"idProduit": idProduit, "typeProduit": typeProduit, "frite": frite, "sauce1": sauce1, "sauce2": sauce2, "boisson": boisson, "supplement": selectedSupplement, "crudite": selectedCrudites
                 }), function (ret) {
-                    document.location.href= Routing.generate("burger_panier");   
+                    document.location.href = Routing.generate("burger_panier");
                 });
 
             });

@@ -18,6 +18,7 @@ $(document).ready(function () {
         "order": [[1, 'asc']],
         "bFilter": false,
         "paging": false,
+        "bSort": false,
         "oLanguage": {"sProcessing": "Traitement en cours...",
             "sLengthMenu": "",
             "sZeroRecords": "Votre panier est vide",
@@ -71,6 +72,8 @@ $(document).ready(function () {
             retour += "<li> Sauce 1: " + options[1] + "</li>";
             retour += "<li> Sauce 2: " + options[2] + "</li>";
             retour += "<li> Boisson: " + options[3] + "</li>";
+            if ( ( type == "Burger" || type == "Woop") &&  options[5] != "-1" )
+                retour += "<li> Informations supplémentaires: " + options[5] + "</li>";
             if (options[4] != -1) {
                 retour += "<li> Supplement: ";
                 for (i = 0; i < options[4].length; i++) {
@@ -80,6 +83,7 @@ $(document).ready(function () {
                 }
                 retour += "</li>";
             }
+
             retour += "</ul>";
         }
         if (type == "Sandwich")

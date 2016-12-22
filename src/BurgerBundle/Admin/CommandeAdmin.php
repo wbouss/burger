@@ -82,6 +82,9 @@ class CommandeAdmin extends AbstractAdmin {
                 ->add('nom')
                 ->add('adresse')
                 ->add('telephone')
+                ->add('codeImmeuble')
+                ->add('interphone')
+                ->add('informationComplementairesAdresse')
                 ->add("ligne", "entity", array("label" => "les produits", 'template' => 'BurgerBundle:Admin:Produit/ligneproduits.html.twig' // <-- This is the trick
                 ))
         ;

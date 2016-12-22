@@ -146,9 +146,9 @@ class DefaultController extends Controller {
             $message = "Les commandes en dessous de 15 euros ne peuvent être à domicile";
             return $this->render('BurgerBundle:Default:commander.html.twig', (array("message" => $message, "typeLivraison" => $livraison, "total" => $total)));
         }
-        
- 
-        
+
+
+
         $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
         $panier = $request->getSession()->get("panier");
         $translationP = $this->panierD($request);
@@ -159,6 +159,8 @@ class DefaultController extends Controller {
         $commande->setCodepostale($this->getUser()->getCodePostale());
         $commande->setVille($this->getUser()->getVille());
         $commande->setInformationComplementairesAdresse($this->getUser()->getInformationComplementairesAdresse());
+        $commande->setCodeImmeuble($this->getUser()->getCodeImmeuble());
+        $commande->setInterphone($this->getUser()->getInterphone());
         $commande->setNom($this->getUser()->getLastName());
         $commande->setTelephone($this->getUser()->getTelephone());
         $commande->setEtat("Emise");
@@ -273,7 +275,8 @@ class DefaultController extends Controller {
                 $optionsTranslation[] = $sauce2Translation;
                 $optionsTranslation[] = $boissonTranslation;
                 $optionsTranslation[] = $supplementTranslation;
-                $optionsTranslation[] = -1;
+                $optionsTranslation[] = $session["idProduit"][$i][1][5];
+                
             } else if ($produit->getType() == "Sandwich") {
 
                 $friteTranslation = $repositoryFrite->find(intval($session["idProduit"][$i][1][0]))->getNom();
@@ -420,10 +423,10 @@ class DefaultController extends Controller {
             return new Response("nok");
         }
     }
-    
-    function viderPanier(Request $request){
+
+    function viderPanier(Request $request) {
         $session = $request->getSession();
-        $session->set("panier",null);
+        $session->set("panier", null);
         return true;
     }
 
@@ -494,14 +497,14 @@ class DefaultController extends Controller {
 
     function ajouterArticle($idProduit, $qteProduit, $prixProduit, $options, $typeProduit, $request) {
         $session = $request->getSession();
-        if ($options[4] != -1) {
+        if ($options[4] != -1 ) {
             $arraySupplement = explode(",", $options[4]);
             $options[4] = $arraySupplement;
             $prix = $prixProduit + count($arraySupplement) * DefaultController::$tarifSup;
-        } else
+        }else
             $prix = $prixProduit;
 
-        if ($options[5] != -1) {
+        if ($options[5] != -1 && $typeProduit == "Sandwich") {
             $arrayCrudite = explode(",", $options[5]);
             $options[5] = $arrayCrudite;
         }
@@ -650,7 +653,7 @@ class DefaultController extends Controller {
 //    function supprimePanier() {
 //        unset($_SESSION['panier']);
 //    }
-    
+
     public function panierD(Request $request) {
         // on retourne vide si le panier n'existe pas
         if (empty($request->getSession()->get("panier"))) {
@@ -697,7 +700,7 @@ class DefaultController extends Controller {
                 $optionsTranslation[] = $sauce2Translation;
                 $optionsTranslation[] = $boissonTranslation;
                 $optionsTranslation[] = $supplementTranslation;
-                $optionsTranslation[] = -1;
+                $optionsTranslation[] = $session["idProduit"][$i][1][5];
             } else if ($produit->getType() == "Sandwich") {
 
                 $friteTranslation = $repositoryFrite->find(intval($session["idProduit"][$i][1][0]))->getNom();
@@ -750,4 +753,5 @@ class DefaultController extends Controller {
         }
         return $retour;
     }
+
 }

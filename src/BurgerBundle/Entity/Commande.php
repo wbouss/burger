@@ -70,7 +70,21 @@ class Commande {
      * @ORM\Column(name="informationComplementairesAdresse", type="string", length=255)
      */
     private $informationComplementairesAdresse;
-  
+    
+      /**
+     * @var string
+     *
+     * @ORM\Column(name="codeImmeuble", type="string", length=100, nullable=true)
+     */
+    private $codeImmeuble;
+    
+   
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="interphone", type="string", length=100, nullable=true)
+     */
+    private $interphone;
     /**
      *
      * @ORM\Column(name="telephone", type="integer")
@@ -202,7 +216,23 @@ class Commande {
         $this->informationComplementairesAdresse = $informationComplementairesAdresse;
     }
 
-   
+    function getCodeImmeuble() {
+        return $this->codeImmeuble;
+    }
+
+    function getInterphone() {
+        return $this->interphone;
+    }
+
+    function setCodeImmeuble($codeImmeuble) {
+        $this->codeImmeuble = $codeImmeuble;
+    }
+
+    function setInterphone($interphone) {
+        $this->interphone = $interphone;
+    }
+
+
 
 
 }

@@ -26,6 +26,8 @@ class ProfileType extends AbstractType {
         ->add('ville', null, array('label' => 'form.ville', 'translation_domain' => 'FOSUserBundle'))
         ->add('codepostale', null, array('label' => 'form.codepostale', 'translation_domain' => 'FOSUserBundle'))
         ->add('informationComplementairesAdresse', null, array("required" => false, 'label' => 'form.codepostale', 'translation_domain' => 'FOSUserBundle'))
+        ->add('codeImmeuble', null, array("required" => false, 'translation_domain' => 'FOSUserBundle'))
+        ->add('interphone', null, array("required" => false, 'translation_domain' => 'FOSUserBundle'))
         ->remove("current_password")
                 ->remove("username");
     }

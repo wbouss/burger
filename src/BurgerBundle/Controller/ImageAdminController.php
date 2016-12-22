@@ -6,6 +6,6 @@ use Sonata\AdminBundle\Controller\CRUDController;
 
 class ImageAdminController extends CRUDController
 {
-    public static  $FileDirectory = "Bundles/burger/images/Produits/";
+    public static  $FileDirectory = "bundles/burger/images/Produits/";
 
 }
