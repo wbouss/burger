@@ -21,9 +21,7 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
-        {% stylesheets '@BurgerBundle/Resources/public/css/font-awesome.min.css' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
+
 
         {% stylesheets '@BurgerBundle/Resources/public/css/carte.css' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
@@ -198,10 +196,16 @@
                                                     {% endfor %}
                                                 </div>
                                             {% endif %}
+                                        {% if produit.type == "Burger" or produit.type == "Woop" or produit.type == "Sandwich" %} 
+                                        Le {{ produit.type }} seul se vend au tarif de {{ produit.seul }} €
+                                        {% endif %}
 
                                         </div>
 
-                                        <a class="btn btn-danger buttonAjoutPanier" data-id="{{produit.id}}">Ajouter au panier</a>
+                                        <a class="btn btn-primary buttonAjoutPanier" data-id="{{produit.id}}">Acheter</a>
+                                        {% if produit.type == "Burger" or produit.type == "Woop" or produit.type == "Sandwich" %} 
+                                            <a class="btn btn-warning buttonAjoutPanierSeul" data-id="{{produit.id}}">Acheter seulement le {{ produit.type }} </a>
+                                        {% endif %}
                                         <div class="clearfix"></div>
                                     </div>
                                     <!--price tag-->
@@ -215,7 +219,23 @@
             </div>
         </div>
         <script>
-          
+
+            $(".buttonAjoutPanierSeul").click(function () {
+                var typeProduit = "{{ typeProduit }}";
+                var idProduit = $(this).attr("data-id");
+                var frite = -1;
+                var sauce1 = -1;
+                var sauce2 = -1;
+                var boisson = -1;
+                var selectedCrudites = -1;
+                var selectedSupplement = -1;
+
+                $.post(Routing.generate("burger_ajoutpanier", {"idProduit": idProduit, "typeProduit": typeProduit, "frite": frite, "sauce1": sauce1, "sauce2": sauce2, "boisson": boisson, "supplement": selectedSupplement, "crudite": selectedCrudites
+                }), function (ret) {
+                    document.location.href = Routing.generate("burger_panier");
+                });
+
+            });
             $(".buttonAjoutPanier").click(function () {
                 var typeProduit = "{{ typeProduit }}";
                 var idProduit = $(this).attr("data-id");

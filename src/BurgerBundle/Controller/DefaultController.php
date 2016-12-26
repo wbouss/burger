@@ -257,7 +257,14 @@ class DefaultController extends Controller {
             $format["descriptionProduit"] = $produit->getDescription();
 
             $optionsTranslation = Array();
-            if ($produit->getType() == "Burger" || $produit->getType() == "Woop") {
+            if (($produit->getType() == "Burger" || $produit->getType() == "Woop") && intval($session["idProduit"][$i][1][0]) == -1) {
+                $optionsTranslation[] = "";
+                $optionsTranslation [] = "";
+                $optionsTranslation[] = "";
+                $optionsTranslation[] = "";
+                $optionsTranslation[] = "";
+                $optionsTranslation[] = $session["idProduit"][$i][1][5];
+            } else if ($produit->getType() == "Burger" || $produit->getType() == "Woop") {
 
                 $friteTranslation = $repositoryFrite->find(intval($session["idProduit"][$i][1][0]))->getNom();
                 $sauce1Translation = $repositorySauce->find(intval($session["idProduit"][$i][1][1]))->getNom();
@@ -276,7 +283,6 @@ class DefaultController extends Controller {
                 $optionsTranslation[] = $boissonTranslation;
                 $optionsTranslation[] = $supplementTranslation;
                 $optionsTranslation[] = $session["idProduit"][$i][1][5];
-                
             } else if ($produit->getType() == "Sandwich") {
 
                 $friteTranslation = $repositoryFrite->find(intval($session["idProduit"][$i][1][0]))->getNom();
@@ -347,7 +353,11 @@ class DefaultController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
             $produit = $repositoryProduit->find($produitId);
-            $this->ajouterArticle($produit->getId(), 1, $produit->getPrix(), $options, $produitType, $request);
+            // on  fixe le prix on fonction de l'achat d'un menu ou du burger seulement
+            if (($produit->getType() == "Burger" || $produit->getType() == "Woop" || $produit->getType() == "Sandwich") && intval($options[0]) == -1)
+                $this->ajouterArticle($produit->getId(), 1, $produit->getSeul(), $options, $produitType, $request);
+            else
+                $this->ajouterArticle($produit->getId(), 1, $produit->getPrix(), $options, $produitType, $request);
         }
         $total = $this->MontantGlobal($request);
         return new Response("ok");
@@ -497,11 +507,11 @@ class DefaultController extends Controller {
 
     function ajouterArticle($idProduit, $qteProduit, $prixProduit, $options, $typeProduit, $request) {
         $session = $request->getSession();
-        if ($options[4] != -1 ) {
+        if ($options[4] != -1) {
             $arraySupplement = explode(",", $options[4]);
             $options[4] = $arraySupplement;
             $prix = $prixProduit + count($arraySupplement) * DefaultController::$tarifSup;
-        }else
+        } else
             $prix = $prixProduit;
 
         if ($options[5] != -1 && $typeProduit == "Sandwich") {

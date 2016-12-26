@@ -55,7 +55,14 @@ class Produit {
      * @Assert\Valid()
      * */
     private $image;
-
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="seul", type="float", nullable=true)
+     */
+    private $seul;
+    
     /**
      * Get id
      *
@@ -146,5 +153,15 @@ class Produit {
     function setType($type) {
         $this->type = $type;
     }
+    function getSeul() {
+        return $this->seul;
+    }
 
+    function setSeul($seul) {
+        $this->seul = $seul;
+    }
+
+
+
+    
 }

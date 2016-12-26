@@ -34,3 +34,7 @@ login_failure:
     path: /log_fail 
     defaults:  { _controller: UserCustomBundle:Security:login }    
         
+burger_moncompte:
+    path: /moncompte 
+    defaults:  { _controller: BurgerBundle:Default:moncompte }    
+    
