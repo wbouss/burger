@@ -3,20 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/bootstrap.css</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Admin/CommandeAdmin.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/Commande.php</file>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/carte.html.twig</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/carte.css</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/js/recap.js</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/commander.html.twig</file>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Admin/Produit/ligneproduits.html.twig</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/js/panier.js</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/jquery.dataTables.css</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/css/font-awesome.min.css</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/LigneCommande.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/Produit.php</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/views/Default/panier.html.twig</file>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Admin/ProduitAdmin.php</file>
             <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Resources/public/js/panier.js</file>
         </group>
     </open-files>
 </project-private>

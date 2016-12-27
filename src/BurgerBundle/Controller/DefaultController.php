@@ -257,7 +257,7 @@ class DefaultController extends Controller {
             $format["descriptionProduit"] = $produit->getDescription();
 
             $optionsTranslation = Array();
-            if (($produit->getType() == "Burger" || $produit->getType() == "Woop") && intval($session["idProduit"][$i][1][0]) == -1) {
+            if (($produit->getType() == "Burger" || $produit->getType() == "Woop" || $produit->getType() == "Sandwich") && intval($session["idProduit"][$i][1][0]) == -1) {
                 $optionsTranslation[] = "";
                 $optionsTranslation [] = "";
                 $optionsTranslation[] = "";
@@ -692,7 +692,14 @@ class DefaultController extends Controller {
             $format["descriptionProduit"] = $produit->getDescription();
 
             $optionsTranslation = Array();
-            if ($produit->getType() == "Burger" || $produit->getType() == "Woop") {
+            if (($produit->getType() == "Burger" || $produit->getType() == "Woop" || $produit->getType() == "Sandwich") && intval($session["idProduit"][$i][1][0]) == -1) {
+                $optionsTranslation[] = -1;
+                $optionsTranslation[] = -1;
+                $optionsTranslation[] = -1;
+                $optionsTranslation[] = -1;
+                $optionsTranslation[] = -1;
+                $optionsTranslation[] = -1;
+            } else if ($produit->getType() == "Burger" || $produit->getType() == "Woop") {
 
                 $friteTranslation = $repositoryFrite->find(intval($session["idProduit"][$i][1][0]))->getNom();
                 $sauce1Translation = $repositorySauce->find(intval($session["idProduit"][$i][1][1]))->getNom();

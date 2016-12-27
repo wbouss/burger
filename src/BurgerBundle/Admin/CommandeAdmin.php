@@ -94,6 +94,7 @@ class CommandeAdmin extends AbstractAdmin {
         // to remove a single route
         $collection->remove('create');
         $collection->remove('delete');
+        $collection->remove('edit');
     }
 
 }

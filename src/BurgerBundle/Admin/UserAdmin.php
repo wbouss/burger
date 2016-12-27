@@ -41,7 +41,6 @@ class UserAdmin extends AbstractAdmin {
         $listMapper
                 ->add('username')
                 ->add('email')
-                ->add('locked')
                 ->add('roles')
                 ->add('telephone')
                 ->add('_action', null, array(

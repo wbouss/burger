@@ -7,41 +7,45 @@
 
             Produit:  {{ val.produit }} , Quantité : {{ val.quantite }} , Prix payé: {{ val.prix|number_format(2, '.', ',') }}<br>
             {% if  admin.optionsBurger[i] is not empty %}
+                {% if admin.optionsBurger[i][0] == -1 and admin.optionsBurger[i][1] == -1 and admin.optionsBurger[i][2] == -1 and admin.optionsBurger[i][3] == -1 and admin.optionsBurger[i][4] == -1 and admin.optionsBurger[i][5] == -1 %}
+                   Sans boissons, ni frites
+                {% else %}
+                    Options:<br> 
+                    <ul>
+                        {% if admin.optionsBurger[i][0] != -1 %}
+                            <li>Type frite: {{ admin.optionsBurger[i][0] }}</li>   
+                            {% endif %}
 
-                Options:<br> 
-                <ul>
-                    {% if admin.optionsBurger[i][0] != -1 %}
-                        <li>Type frite: {{ admin.optionsBurger[i][0] }}</li>   
+                        {% if admin.optionsBurger[i][1] != -1 %}
+                            <li>Sauce 1: {{ admin.optionsBurger[i][1] }}</li>
+                            {% endif %}
+
+                        {% if admin.optionsBurger[i][2] != -1 %}
+                            <li>Sauce 2: {{ admin.optionsBurger[i][2] }}</li>
+                            {% endif %}
+
+                        {% if admin.optionsBurger[i][3] != -1 %}
+                            <li>Boisson: {{ admin.optionsBurger[i][3] }}</li>
+                            {% endif %}
+
+                        {% if admin.optionsBurger[i][4] != -1 %}
+                            <li>Supplement: 
+                                {% for sup in admin.optionsBurger[i][4] %}
+                                    {{ sup }}/
+                                {% endfor %}
+                            </li>
                         {% endif %}
 
-                    {% if admin.optionsBurger[i][1] != -1 %}
-                        <li>Sauce 1: {{ admin.optionsBurger[i][1] }}</li>
+                        {% if admin.optionsBurger[i][5] != -1 %}
+                            <li>Crudite:        
+                                {% for crud in admin.optionsBurger[i][5] %}
+                                    {{ crud }}/
+                                {% endfor %}
+                            </li>
                         {% endif %}
+                    </ul>
+                {% endif %}
 
-                    {% if admin.optionsBurger[i][2] != -1 %}
-                        <li>Sauce 2: {{ admin.optionsBurger[i][2] }}</li>
-                        {% endif %}
-
-                    {% if admin.optionsBurger[i][3] != -1 %}
-                        <li>Boisson: {{ admin.optionsBurger[i][3] }}</li>
-                        {% endif %}
-
-                    {% if admin.optionsBurger[i][4] != -1 %}
-                        <li>Supplement: 
-                            {% for sup in admin.optionsBurger[i][4] %}
-                                {{ sup }}/
-                            {% endfor %}
-                        </li>
-                    {% endif %}
-
-                    {% if admin.optionsBurger[i][5] != -1 %}
-                        <li>Crudite:        
-                            {% for crud in admin.optionsBurger[i][5] %}
-                                {{ crud }}/
-                            {% endfor %}
-                        </li>
-                    {% endif %}
-                </ul>
             {%  endif %}
             <br/>
             {% set i = i + 1 %}

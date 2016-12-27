@@ -92,7 +92,7 @@ section::before,section::after {
     02. Header 
 ========================================================================== */
 #header {
-    background-image: url(../../bundles/burger/images/default/night.jpg);
+    background-image: url(../bundles/burger/images/default/night.jpg);
     -webkit-background-size:/*@@prefixmycss->No equivalent*/;
     -moz-background-size:cover;
     -o-background-size:/*@@prefixmycss->No equivalent*/;
@@ -275,7 +275,7 @@ section::before,section::after {
     padding-bottom:130px;
 }
 .parallax.parallax2 {
-    background-image:url(../../bundles/burger/images/default/parallax2.jpg);
+    background-image:url(../bundles/burger/images/default/parallax2.jpg);
 }
 .bm10 {
     margin-bottom:10px !important;
