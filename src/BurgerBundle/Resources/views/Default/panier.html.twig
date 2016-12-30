@@ -70,8 +70,11 @@
 
                         <li><a href="{{path("burger_carte")}}">Offres</a></li>
                         <li><a href="{{path("burger_panier")}}">Panier</a></li>
-                        <li><a href="{{path("burger_moncompte")}}">Mon compte</a></li>
-
+                            {% if is_granted("ROLE_USER") %}
+                            <li><a href="{{path("burger_moncompte")}}">Mon compte</a></li>
+                            {% else %}
+                            <li><a href="{{path("burger_moncompte")}}">Se connecter</a></li>
+                            {% endif %}
                         <!--fix for scroll spy active menu element-->
                         <li style="display:none;"><a href="#header"></a></li>
 
@@ -108,7 +111,7 @@
                     <td id="tdTotal">{{ total }} €</td>
                 </tr>
             </table>
-            <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
+            <button onClick="location.href = '{{ path('burger_carte') }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
             {% if is_granted("ROLE_USER") %}
                 <button onClick="location.href = '{{ path('burger_livraison') }}'" type="button" class="btn btn-primary">Commander</button>
             {% else %}
