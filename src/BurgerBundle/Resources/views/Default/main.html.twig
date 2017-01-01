@@ -17,7 +17,10 @@
         {% stylesheets '@BurgerBundle/Resources/public/css/*' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
-
+        
+        {% stylesheets '../vendor/fortawesome/font-awesome/css/font-awesome.min.css'  filter='cssrewrite' output='css/fontawesome.css' %}
+        <link rel='stylesheet' href='{{ asset_url }}' /> 
+        {% endstylesheets %}
 
 
         <!-- google font -->

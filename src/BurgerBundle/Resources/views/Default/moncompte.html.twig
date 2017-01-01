@@ -19,10 +19,10 @@
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
-        {% stylesheets '@BurgerBundle/Resources/public/css/font-awesome.min.css' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% stylesheets '../vendor/fortawesome/font-awesome/css/font-awesome.min.css'  filter='cssrewrite' output='css/fontawesome.css' %}
+        <link rel='stylesheet' href='{{ asset_url }}' /> 
         {% endstylesheets %}
-
+        
         {% stylesheets '@BurgerBundle/Resources/public/css/carte.css' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}

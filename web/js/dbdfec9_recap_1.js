@@ -34,13 +34,24 @@ $(document).ready(function () {
             }
         },
         "createdRow": function (row, data, index) {
+                     if (data["typeProduit"] == "Boisson" || data["typeProduit"] == "Dessert")
+                $('td', row).eq(0).removeClass("details-control");
+
             var imgProduit = "/burger/web/" + data["imageProduit"];
             $('td', row).eq(1).html("<img src='" + imgProduit + "' width='80'/>");
             $('td', row).eq(2).html("<a href=''>" + data["libelleProduit"] + "</a><br>" + data["descriptionProduit"]);
             $('td', row).eq(3).html(data["prixProduit"] + " €");
-            $('td', row).eq(4).html(data['qteProduit']);
-
-            $('td', row).eq(4).html(data["prixProduit"] * data["qteProduit"] + " €");
+            var op = data
+            $('td', row).eq(4).html('<i class="fa fa-plus-circle fa-lg" aria-hidden="true" onClick="incrementerProduitPanier(' + index + ')"  onmouseover="this.style.cursor=\'pointer\'""></i> <i class="fa fa-minus-circle fa-lg" aria-hidden="true"   onmouseover="this.style.cursor=\'pointer\'" onClick="reduireProduitPanier(' + index + ')"></i> <input type="text" id="inputTextQuantite" value="' + data['qteProduit'] + '"  readonly/> <i class="fa fa-times fa-lg" aria-hidden="true"  onmouseover="this.style.cursor=\'pointer\'" onClick="supprimerProduitPanier(' + index + ')"></i>');
+            $('td', row).eq(5).html(data["prixProduit"] * data["qteProduit"] + " €");
+            if ( (data["typeProduit"] == "Burger" || data["typeProduit"] == "Woop" || data["typeProduit"] == "Sandwich") && data["optionsProduit"][0] == "") { // burger seul
+                $('td', row).eq(0).removeClass("details-control");
+                $('td', row).eq(2).html("<a href=''>" + data["libelleProduit"] + "</a> ("+data["typeProduit"]+" seulement)<br>" + data["descriptionProduit"]);
+            }
+            else
+            {
+                $('td', row).eq(2).html("<a href=''>" + data["libelleProduit"] + "</a><br>" + data["descriptionProduit"]);
+            }
         }
     });
     
@@ -59,17 +70,18 @@ $(document).ready(function () {
             tr.addClass('shown');
         }
     });
-    function format(type, options) {
+     function format(type, options) {
         var retour = "";
         var i = 0;
         retour += "<ul>";
+
         if (type == "Burger" || type == "Woop" || type == "Sandwich")
         {
             retour += "<li> Frite: " + options[0] + "</li>";
             retour += "<li> Sauce 1: " + options[1] + "</li>";
             retour += "<li> Sauce 2: " + options[2] + "</li>";
             retour += "<li> Boisson: " + options[3] + "</li>";
-            if ( ( type == "Burger" || type == "Woop") &&  options[5] != "-1" )
+            if ((type == "Burger" || type == "Woop") && options[5] != "-1")
                 retour += "<li> Informations supplémentaires: " + options[5] + "</li>";
             if (options[4] != -1) {
                 retour += "<li> Supplement: ";
@@ -110,5 +122,6 @@ $(document).ready(function () {
 
         return retour;
     }
+
 
 });
