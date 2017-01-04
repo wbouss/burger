@@ -199,9 +199,9 @@
                                                     {% endfor %}
                                                 </div>
                                             {% endif %}
-                                        {% if produit.type == "Burger" or produit.type == "Woop" or produit.type == "Sandwich" %} 
-                                        Le {{ produit.type }} seul se vend au tarif de {{ produit.seul }} €
-                                        {% endif %}
+                                            {% if produit.type == "Burger" or produit.type == "Woop" or produit.type == "Sandwich" %} 
+                                                Le {{ produit.type }} seul se vend au tarif de {{ produit.seul }} €
+                                            {% endif %}
 
                                         </div>
 
@@ -232,7 +232,42 @@
                 var boisson = -1;
                 var selectedCrudites = -1;
                 var selectedSupplement = -1;
+                if (typeProduit == "Burger" || typeProduit == "Woop")
+                {
+                    var selectedSupplementCp = [];
+                    $('#SupplementBox input:checked').each(function () {
+                        selectedSupplementCp.push($(this).attr('value'));
+                    });
+                    if (selectedSupplementCp.length > 0)
+                        selectedSupplement = selectedSupplementCp;
+                    if ($("#BurgerWoopInfoSupInput").val().length != 0)
+                        selectedCrudites = $("#BurgerWoopInfoSupInput").val();
+                } else if (typeProduit == "Sandwich") {
+                    var selectedSupplementCp = [];
+                    var selectedCruditesCp = [];
+                    $('#SupplementBox input:checked').each(function () {
+                        selectedSupplementCp.push($(this).attr('value'));
+                    });
 
+                    $('#CruditesBox input:checked').each(function () {
+                        selectedCruditesCp.push($(this).attr('value'));
+                    });
+                    if (selectedSupplementCp.length > 0)
+                        selectedSupplement = selectedSupplementCp;
+                    if (selectedCruditesCp.length > 0)
+                        selectedCrudites = selectedCruditesCp;
+                } else if (typeProduit == "Tex mex")
+                {
+                     var selectedSupplementCp = [];
+                    $('#SupplementBox input:checked').each(function () {
+                        selectedSupplementCp.push($(this).attr('value'));
+                    });
+                    if (selectedSupplementCp.length > 0)
+                        selectedSupplement = selectedSupplementCp;
+                } else if (typeProduit == "Dessert" || typeProduit == "Boisson")
+                {
+
+                }
                 $.post(Routing.generate("burger_ajoutpanier", {"idProduit": idProduit, "typeProduit": typeProduit, "frite": frite, "sauce1": sauce1, "sauce2": sauce2, "boisson": boisson, "supplement": selectedSupplement, "crudite": selectedCrudites
                 }), function (ret) {
                     document.location.href = Routing.generate("burger_panier");

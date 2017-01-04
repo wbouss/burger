@@ -257,13 +257,43 @@ class DefaultController extends Controller {
             $format["descriptionProduit"] = $produit->getDescription();
 
             $optionsTranslation = Array();
-            if (($produit->getType() == "Burger" || $produit->getType() == "Woop" || $produit->getType() == "Sandwich") && intval($session["idProduit"][$i][1][0]) == -1) {
+            if (($produit->getType() == "Burger" || $produit->getType() == "Woop") && intval($session["idProduit"][$i][1][0]) == -1) {
                 $optionsTranslation[] = "";
                 $optionsTranslation [] = "";
                 $optionsTranslation[] = "";
                 $optionsTranslation[] = "";
-                $optionsTranslation[] = "";
+                $supplementTranslation = Array();
+                if ($session["idProduit"][$i][1][4] != -1) {
+                    foreach ($session["idProduit"][$i][1][4] as $s) {
+                        $supplementTranslation[] = $repositorySupplement->find(intval($s))->getNom();
+                    }
+                } else
+                    $supplementTranslation = -1;
+                $optionsTranslation[] = $supplementTranslation;
                 $optionsTranslation[] = $session["idProduit"][$i][1][5];
+            }
+            else if (($produit->getType() == "Sandwich") && intval($session["idProduit"][$i][1][0]) == -1) {
+                $optionsTranslation[] = "";
+                $optionsTranslation [] = "";
+                $optionsTranslation[] = "";
+                $optionsTranslation[] = "";
+                $supplementTranslation = Array();
+                $cruditeTranslation = Array();
+                if ($session["idProduit"][$i][1][4] != -1) {
+                    foreach ($session["idProduit"][$i][1][4] as $s) {
+                        $supplementTranslation[] = $repositorySupplement->find(intval($s))->getNom();
+                    }
+                } else
+                    $supplementTranslation = -1;
+                if ($session["idProduit"][$i][1][5] != -1) {
+                    foreach ($session["idProduit"][$i][1][5] as $c) {
+                        $cruditeTranslation[] = $repositoryCrudite->find(intval($c))->getNom();
+                    }
+                } else {
+                    $cruditeTranslation = -1;
+                }
+                $optionsTranslation[] = $supplementTranslation;
+                $optionsTranslation[] = $cruditeTranslation;
             } else if ($produit->getType() == "Burger" || $produit->getType() == "Woop") {
 
                 $friteTranslation = $repositoryFrite->find(intval($session["idProduit"][$i][1][0]))->getNom();
@@ -680,7 +710,7 @@ class DefaultController extends Controller {
 
         $retour = array();
         $i = 0;
-        foreach ($session["idProduit"] as $s) {
+ foreach ($session["idProduit"] as $s) {
             $format = array();
             $format["IdProduit"] = $session["idProduit"][$i][0];
             $produit = $repositoryProduit->find($session["idProduit"][$i][0]);
@@ -692,13 +722,43 @@ class DefaultController extends Controller {
             $format["descriptionProduit"] = $produit->getDescription();
 
             $optionsTranslation = Array();
-            if (($produit->getType() == "Burger" || $produit->getType() == "Woop" || $produit->getType() == "Sandwich") && intval($session["idProduit"][$i][1][0]) == -1) {
+            if (($produit->getType() == "Burger" || $produit->getType() == "Woop") && intval($session["idProduit"][$i][1][0]) == -1) {
+                $optionsTranslation[] = -1;
+                $optionsTranslation [] = -1;
                 $optionsTranslation[] = -1;
                 $optionsTranslation[] = -1;
+                $supplementTranslation = Array();
+                if ($session["idProduit"][$i][1][4] != -1) {
+                    foreach ($session["idProduit"][$i][1][4] as $s) {
+                        $supplementTranslation[] = $repositorySupplement->find(intval($s))->getNom();
+                    }
+                } else
+                    $supplementTranslation = -1;
+                $optionsTranslation[] = $supplementTranslation;
+                $optionsTranslation[] = $session["idProduit"][$i][1][5];
+            }
+            else if (($produit->getType() == "Sandwich") && intval($session["idProduit"][$i][1][0]) == -1) {
+                $optionsTranslation[] = -1;
+                $optionsTranslation [] = -1;
                 $optionsTranslation[] = -1;
                 $optionsTranslation[] = -1;
-                $optionsTranslation[] = -1;
-                $optionsTranslation[] = -1;
+                $supplementTranslation = Array();
+                $cruditeTranslation = Array();
+                if ($session["idProduit"][$i][1][4] != -1) {
+                    foreach ($session["idProduit"][$i][1][4] as $s) {
+                        $supplementTranslation[] = $repositorySupplement->find(intval($s))->getNom();
+                    }
+                } else
+                    $supplementTranslation = -1;
+                if ($session["idProduit"][$i][1][5] != -1) {
+                    foreach ($session["idProduit"][$i][1][5] as $c) {
+                        $cruditeTranslation[] = $repositoryCrudite->find(intval($c))->getNom();
+                    }
+                } else {
+                    $cruditeTranslation = -1;
+                }
+                $optionsTranslation[] = $supplementTranslation;
+                $optionsTranslation[] = $cruditeTranslation;
             } else if ($produit->getType() == "Burger" || $produit->getType() == "Woop") {
 
                 $friteTranslation = $repositoryFrite->find(intval($session["idProduit"][$i][1][0]))->getNom();

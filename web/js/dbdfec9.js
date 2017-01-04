@@ -1,19 +1,20 @@
 $(document).ready(function () {
     var table = $('#tabRecap').DataTable({
         "sAjaxSource": Routing.generate('panier_data'),
-        "aoColumns": [
+        "columns": [
             {
                 "className": 'details-control',
                 "orderable": false,
                 "data": null,
                 "defaultContent": ''
             },
-            {"mDataProp": "libelleProduit", "width": "80"},
-            {"mDataProp": "libelleProduit"},
-            {"mDataProp": "prixProduit"},
-            {"mDataProp": "qteProduit"},
-            {"mDataProp": "qteProduit"}
+            {"data": "libelleProduit", "width": "80"},
+            {"data": "libelleProduit", "width": "35%"},
+            {"data": "prixProduit"},
+            {"data": "qteProduit"},
+            {"data": "qteProduit"}
         ],
+        "order": [[1, 'asc']],
         "bFilter": false,
         "paging": false,
         "bSort": false,
@@ -34,7 +35,7 @@ $(document).ready(function () {
             }
         },
         "createdRow": function (row, data, index) {
-                     if (data["typeProduit"] == "Boisson" || data["typeProduit"] == "Dessert")
+            if (data["typeProduit"] == "Boisson" || data["typeProduit"] == "Dessert")
                 $('td', row).eq(0).removeClass("details-control");
 
             var imgProduit = "/burger/web/" + data["imageProduit"];
@@ -44,18 +45,15 @@ $(document).ready(function () {
             var op = data
             $('td', row).eq(4).html('<i class="fa fa-plus-circle fa-lg" aria-hidden="true" onClick="incrementerProduitPanier(' + index + ')"  onmouseover="this.style.cursor=\'pointer\'""></i> <i class="fa fa-minus-circle fa-lg" aria-hidden="true"   onmouseover="this.style.cursor=\'pointer\'" onClick="reduireProduitPanier(' + index + ')"></i> <input type="text" id="inputTextQuantite" value="' + data['qteProduit'] + '"  readonly/> <i class="fa fa-times fa-lg" aria-hidden="true"  onmouseover="this.style.cursor=\'pointer\'" onClick="supprimerProduitPanier(' + index + ')"></i>');
             $('td', row).eq(5).html(data["prixProduit"] * data["qteProduit"] + " €");
-            if ( (data["typeProduit"] == "Burger" || data["typeProduit"] == "Woop" || data["typeProduit"] == "Sandwich") && data["optionsProduit"][0] == "") { // burger seul
-                $('td', row).eq(0).removeClass("details-control");
-                $('td', row).eq(2).html("<a href=''>" + data["libelleProduit"] + "</a> ("+data["typeProduit"]+" seulement)<br>" + data["descriptionProduit"]);
-            }
-            else
+            if ((data["typeProduit"] == "Burger" || data["typeProduit"] == "Woop" || data["typeProduit"] == "Sandwich") && data["optionsProduit"][0] == "") { // burger seul
+                $('td', row).eq(2).html("<a href=''>" + data["libelleProduit"] + "</a> (" + data["typeProduit"] + " seulement)<br>" + data["descriptionProduit"]);
+            } else
             {
                 $('td', row).eq(2).html("<a href=''>" + data["libelleProduit"] + "</a><br>" + data["descriptionProduit"]);
             }
         }
     });
-    
-     // Add event listener for opening and closing details
+    // Add event listener for opening and closing details
     $('#tabRecap tbody').on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
@@ -70,21 +68,23 @@ $(document).ready(function () {
             tr.addClass('shown');
         }
     });
-     function format(type, options) {
+    function format(type, options) {
         var retour = "";
         var i = 0;
         retour += "<ul>";
 
         if (type == "Burger" || type == "Woop" || type == "Sandwich")
         {
-            retour += "<li> Frite: " + options[0] + "</li>";
-            retour += "<li> Sauce 1: " + options[1] + "</li>";
-            retour += "<li> Sauce 2: " + options[2] + "</li>";
-            retour += "<li> Boisson: " + options[3] + "</li>";
+            if (options[0].length != 0) {
+                retour += "<li> Frite: " + options[0] + "</li>";
+                retour += "<li> Sauce 1: " + options[1] + "</li>";
+                retour += "<li> Sauce 2: " + options[2] + "</li>";
+                retour += "<li> Boisson: " + options[3] + "</li>";
+            }
             if ((type == "Burger" || type == "Woop") && options[5] != "-1")
                 retour += "<li> Informations supplémentaires: " + options[5] + "</li>";
             if (options[4] != -1) {
-                retour += "<li> Supplement: ";
+                retour += "<li> Supplément: ";
                 for (i = 0; i < options[4].length; i++) {
                     retour += options[4][i];
                     if (i != options[4].length - 1)
@@ -93,9 +93,8 @@ $(document).ready(function () {
                 retour += "</li>";
             }
 
-            retour += "</ul>";
         }
-        if (type == "Sandwich")
+        if (type == "Sandwich" && options[5] != -1)
         {
             retour += "<li> Crudités: ";
             for (i = 0; i < options[5].length; i++) {

@@ -7,44 +7,47 @@
 
             Produit:  {{ val.produit }} , Quantité : {{ val.quantite }} , Prix payé: {{ val.prix|number_format(2, '.', ',') }}<br>
             {% if  admin.optionsBurger[i] is not empty %}
-                {% if admin.optionsBurger[i][0] == -1 and admin.optionsBurger[i][1] == -1 and admin.optionsBurger[i][2] == -1 and admin.optionsBurger[i][3] == -1 and admin.optionsBurger[i][4] == -1 and admin.optionsBurger[i][5] == -1 %}
-                   Sans boissons, ni frites
-                {% else %}
-                    Options:<br> 
-                    <ul>
-                        {% if admin.optionsBurger[i][0] != -1 %}
-                            <li>Type frite: {{ admin.optionsBurger[i][0] }}</li>   
-                            {% endif %}
-
-                        {% if admin.optionsBurger[i][1] != -1 %}
-                            <li>Sauce 1: {{ admin.optionsBurger[i][1] }}</li>
-                            {% endif %}
-
-                        {% if admin.optionsBurger[i][2] != -1 %}
-                            <li>Sauce 2: {{ admin.optionsBurger[i][2] }}</li>
-                            {% endif %}
-
-                        {% if admin.optionsBurger[i][3] != -1 %}
-                            <li>Boisson: {{ admin.optionsBurger[i][3] }}</li>
-                            {% endif %}
-
-                        {% if admin.optionsBurger[i][4] != -1 %}
-                            <li>Supplement: 
-                                {% for sup in admin.optionsBurger[i][4] %}
-                                    {{ sup }}/
-                                {% endfor %}
-                            </li>
+                {% if admin.optionsBurger[i][0] == -1 and admin.optionsBurger[i][1] == -1 and admin.optionsBurger[i][2] == -1 and admin.optionsBurger[i][3] == -1 %}
+                    Sans boissons, ni frites <br>
+                {% endif %}
+                Options:<br> 
+                <ul>
+                    {% if admin.optionsBurger[i][0] != -1 %}
+                        <li>Type frite: {{ admin.optionsBurger[i][0] }}</li>   
                         {% endif %}
 
-                        {% if admin.optionsBurger[i][5] != -1 %}
+                    {% if admin.optionsBurger[i][1] != -1 %}
+                        <li>Sauce 1: {{ admin.optionsBurger[i][1] }}</li>
+                        {% endif %}
+
+                    {% if admin.optionsBurger[i][2] != -1 %}
+                        <li>Sauce 2: {{ admin.optionsBurger[i][2] }}</li>
+                        {% endif %}
+
+                    {% if admin.optionsBurger[i][3] != -1 %}
+                        <li>Boisson: {{ admin.optionsBurger[i][3] }}</li>
+                        {% endif %}
+
+                    {% if admin.optionsBurger[i][4] != -1 %}
+                        <li>Supplement: 
+                            {% for sup in admin.optionsBurger[i][4] %}
+                                {{ sup }}/
+                            {% endfor %}
+                        </li>
+                    {% endif %}
+
+                    {% if admin.optionsBurger[i][5] != -1  %}
+                        {% if admin.optionsBurger[i][5] is iterable  %}
                             <li>Crudite:        
                                 {% for crud in admin.optionsBurger[i][5] %}
                                     {{ crud }}/
                                 {% endfor %}
                             </li>
+                        {% else %}
+                            <li>Information supplémentaires: {{ admin.optionsBurger[i][5]}} </li>
+                            {% endif %}
                         {% endif %}
-                    </ul>
-                {% endif %}
+                </ul>
 
             {%  endif %}
             <br/>
