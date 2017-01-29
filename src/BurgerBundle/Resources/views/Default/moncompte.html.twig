@@ -58,17 +58,17 @@
                         </a></div>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{path("burger_homepage")}}">Histoire</a></li>
-                        <li><a href="{{path("burger_homepage")}}">Faits</a></li>
-                        <li><a href="{{path("burger_homepage")}}">Nos Chefs</a></li>
+                        <li><a href="{{path("burger_homepage")}}" class="menuscroll">Accueil</a></li>
 
-                        <li><a href="{{path("burger_carte")}}">Offres</a></li>
+                        <li><a href="{{path("burger_carte")}}">Commander</a></li>
+						<li><a href="#"></a></li>
                         <li><a href="{{path("burger_panier")}}">Panier</a></li>
                             {% if is_granted("ROLE_USER") %}
                             <li><a href="{{path("burger_moncompte")}}">Mon compte</a></li>
                             {% else %}
                             <li><a href="{{path("burger_moncompte")}}">Se connecter</a></li>
                             {% endif %}
+
                         <!--fix for scroll spy active menu element-->
                         <li style="display:none;"><a href="#header"></a></li>
 
@@ -138,7 +138,7 @@
                     {% endfor %}
                 {% endif %}
 
-
+                <button onClick="location.href = '{{ path('usercustom_reset_password') }}'" type="button" class="btn btn-warning">Mot de passe oublié</button>
             </div>
         </div>
 

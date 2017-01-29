@@ -59,17 +59,17 @@
                         </a></div>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{path("burger_homepage")}}">Histoire</a></li>
-                        <li><a href="{{path("burger_homepage")}}">Faits</a></li>
-                        <li><a href="{{path("burger_homepage")}}">Nos Chefs</a></li>
+                        <li><a href="{{path("burger_homepage")}}" class="menuscroll">Accueil</a></li>
 
-                        <li><a href="{{path("burger_carte")}}">Offres</a></li>
+                        <li><a href="{{path("burger_carte")}}">Commander</a></li>
+                        <li><a href="#"></a></li>
                         <li><a href="{{path("burger_panier")}}">Panier</a></li>
                             {% if is_granted("ROLE_USER") %}
                             <li><a href="{{path("burger_moncompte")}}">Mon compte</a></li>
                             {% else %}
                             <li><a href="{{path("burger_moncompte")}}">Se connecter</a></li>
                             {% endif %}
+
                         <!--fix for scroll spy active menu element-->
                         <li style="display:none;"><a href="#header"></a></li>
 
@@ -119,6 +119,13 @@
             </table>
             <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Annuler</button>
             {% if is_granted("ROLE_USER") %}
+                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="ADKT7ZEL4JHDN">
+                    <input type="image" src="https://www.sandbox.paypal.com/fr_FR/FR/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal, le réflexe sécurité pour payer en ligne">
+                    <img alt="" border="0" src="https://www.sandbox.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+                </form>
+
                 <button onClick="location.href = '{{ path('burger_paiement' , {"livraison" : typeLivraison }) }}'" type="button" class="btn btn-primary">Paiement</button>
             {% else %}
                 <button onClick="location.href = '{{ path('burger_moncompte') }}'" type="button" class="btn btn-primary">Se connecter pour commander</button>

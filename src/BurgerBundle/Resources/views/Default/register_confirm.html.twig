@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Le panier</title>
+        <title>Confirmation</title>
 
         {% stylesheets '@BurgerBundle/Resources/public/css/bootstrap-theme.min.css' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
@@ -58,19 +58,20 @@
                         </a></div>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{path("burger_homepage")}}">Histoire</a></li>
-                        <li><a href="{{path("burger_homepage")}}">Faits</a></li>
-                        <li><a href="{{path("burger_homepage")}}">Nos Chefs</a></li>
+                        <li><a href="{{path("burger_homepage")}}" class="menuscroll">Accueil</a></li>
 
-                        <li><a href="{{path("burger_carte")}}">Offres</a></li>
+                        <li><a href="{{path("burger_carte")}}">Commander</a></li>
+						<li><a href="#"></a></li>
                         <li><a href="{{path("burger_panier")}}">Panier</a></li>
                             {% if is_granted("ROLE_USER") %}
                             <li><a href="{{path("burger_moncompte")}}">Mon compte</a></li>
                             {% else %}
                             <li><a href="{{path("burger_moncompte")}}">Se connecter</a></li>
                             {% endif %}
+
                         <!--fix for scroll spy active menu element-->
                         <li style="display:none;"><a href="#header"></a></li>
+
 
                     </ul>
                 </div><!--/.navbar-collapse -->

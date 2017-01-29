@@ -35,6 +35,8 @@ class Commande {
      */
     private $etat;
 
+
+
     /**
      * @var string
      *
@@ -48,49 +50,47 @@ class Commande {
      * @ORM\Column(name="adresse", type="string", length=255)
      */
     private $adresse;
-    
-     /**
+
+    /**
      * @var string
      *
      * @ORM\Column(name="codepostale", type="string", length=255)
      */
     private $codepostale;
-    
-    
-        /**
+
+    /**
      * @var string
      *
      * @ORM\Column(name="ville", type="string", length=255)
      */
     private $ville;
-    
-        /**
+
+    /**
      * @var string
      *
      * @ORM\Column(name="informationComplementairesAdresse", type="string", length=255)
      */
     private $informationComplementairesAdresse;
-    
-      /**
+
+    /**
      * @var string
      *
      * @ORM\Column(name="codeImmeuble", type="string", length=100, nullable=true)
      */
     private $codeImmeuble;
-    
-   
+
     /**
      * @var string
      *
      * @ORM\Column(name="interphone", type="string", length=100, nullable=true)
      */
     private $interphone;
+
     /**
      *
      * @ORM\Column(name="telephone", type="integer")
      */
     private $telephone;
-
 
     /**
      * @var string
@@ -152,7 +152,6 @@ class Commande {
         return $this->etat;
     }
 
-
     function getNom() {
         return $this->nom;
     }
@@ -168,6 +167,7 @@ class Commande {
     function setAdresse($adresse) {
         $this->adresse = $adresse;
     }
+
     function getLivraison() {
         return $this->livraison;
     }
@@ -184,10 +184,10 @@ class Commande {
         $this->telephone = $telephone;
     }
 
-        function __construct() {
+    function __construct() {
         $this->etat = "Emise";
     }
-    
+
     function getCodepostale() {
         return $this->codepostale;
     }
@@ -231,7 +231,14 @@ class Commande {
     function setInterphone($interphone) {
         $this->interphone = $interphone;
     }
+    
+    function getMagasin() {
+        return $this->magasin;
+    }
 
+    function setMagasin($magasin) {
+        $this->magasin = $magasin;
+    }
 
 
 

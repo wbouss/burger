@@ -101,7 +101,7 @@ class DefaultController extends Controller {
      *
      * @Route("/commander/{livraison}", name="burger_commander")
      */
-    public function commanderAction(Request $request, $livraison = "magasin") {
+    public function commanderAction(Request $request, $livraison = "magasin1") {
         $total = $this->MontantGlobal($request);
         return $this->render('BurgerBundle:Default:commander.html.twig', (array("typeLivraison" => $livraison, "total" => $total)));
     }
@@ -114,12 +114,14 @@ class DefaultController extends Controller {
     public function livraisonAction(Request $request, $type = "") {
         $nb = count($request->getSession()->get("panier")["idProduit"]);
         $montantTotal = $this->MontantGlobal($request);
-        if ($type != "" && $type == "magasin")
-            $livraison = "magasin";
-        if ($type != "" && $type == "domicile")
+        if ($type != "" && $type == "magasin1")
+            $livraison = "magasin1";
+        else if ($type != "" && $type == "magasin2")
+            $livraison = "magasin2";
+        else if ($type != "" && $type == "domicile")
             $livraison = "domicile";
         else
-            $livraison = "magasin";
+            $livraison = "magasin1";
         return $this->render('BurgerBundle:Default:livraison.html.twig', array("montantTotal" => $montantTotal, "nbArticlePanier" => $nb, "type" => $livraison));
     }
 
@@ -128,7 +130,7 @@ class DefaultController extends Controller {
      *
      * @Route("/paiement/{livraison}", name="burger_paiement")
      */
-    public function paiementAction(Request $request, $livraison = "magasin") {
+    public function paiementAction(Request $request, $livraison = "magasin1") {
         $total = $this->MontantGlobal($request);
         $em = $this->getDoctrine()->getManager();
 
@@ -141,7 +143,7 @@ class DefaultController extends Controller {
             return $this->render('BurgerBundle:Default:commander.html.twig', (array("message" => $message, "typeLivraison" => $livraison, "total" => $total)));
         }
 
-        // On test si on peut passer des commandes
+        // On test si la commande est conforme aux règles
         if ($livraison == "domicile" && $total < 15) {
             $message = "Les commandes en dessous de 15 euros ne peuvent être à domicile";
             return $this->render('BurgerBundle:Default:commander.html.twig', (array("message" => $message, "typeLivraison" => $livraison, "total" => $total)));
@@ -710,7 +712,7 @@ class DefaultController extends Controller {
 
         $retour = array();
         $i = 0;
- foreach ($session["idProduit"] as $s) {
+        foreach ($session["idProduit"] as $s) {
             $format = array();
             $format["IdProduit"] = $session["idProduit"][$i][0];
             $produit = $repositoryProduit->find($session["idProduit"][$i][0]);
