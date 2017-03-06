@@ -17,19 +17,14 @@ class UserAdmin extends AbstractAdmin {
     protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
         $datagridMapper
                 ->add('username')
-                ->add('usernameCanonical')
                 ->add('email')
-                ->add('emailCanonical')
                 ->add('enabled')
                 ->add('salt')
                 ->add('password')
                 ->add('lastLogin')
-                ->add('locked')
-                ->add('expiresAt')
                 ->add('confirmationToken')
                 ->add('passwordRequestedAt')
                 ->add('roles')
-                ->add('credentialsExpireAt')
                 ->add('id')
         ;
     }
