@@ -78,8 +78,11 @@ section::before,section::after {
 #BurgerWoopInfoSupInput{
     width: 100%;
 }
-#moncompte_content{
+#moncompte_content_resetpassword{
     margin-top: 20px;
+}
+#moncompte_content{
+    margin-top: 60px;
 }
 #inputTextQuantite{
     width: 30px;

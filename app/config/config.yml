@@ -96,3 +96,6 @@ fos_user:
     profile:
         form:
             type: UserCustomBundle\Form\ProfileType
+    from_email:
+        address: wbouss@gmail.com
+        sender_name: You

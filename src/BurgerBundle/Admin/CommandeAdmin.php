@@ -78,7 +78,7 @@ class CommandeAdmin extends AbstractAdmin {
                 ->add('id')
                 ->add('date')
                 ->add('etat')
-                ->add('livraison')
+                ->add('livraison', "fsl")
                 ->add('nom')
                 ->add('adresse')
                 ->add('telephone')

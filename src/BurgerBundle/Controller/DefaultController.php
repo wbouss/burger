@@ -101,8 +101,12 @@ class DefaultController extends Controller {
      *
      * @Route("/commander/{livraison}", name="burger_commander")
      */
-    public function commanderAction(Request $request, $livraison = "magasin1") {
+    public function commanderAction(Request $request, $livraison = "magasin") {
         $total = $this->MontantGlobal($request);
+        if ($livraison == "domicile")
+            $livraison = "Livraison par le magasin";
+        else if ($livraison == "domicile2")
+            $livraison = "domicile2";
         return $this->render('BurgerBundle:Default:commander.html.twig', (array("typeLivraison" => $livraison, "total" => $total)));
     }
 
@@ -114,14 +118,16 @@ class DefaultController extends Controller {
     public function livraisonAction(Request $request, $type = "") {
         $nb = count($request->getSession()->get("panier")["idProduit"]);
         $montantTotal = $this->MontantGlobal($request);
-        if ($type != "" && $type == "magasin1")
-            $livraison = "magasin1";
+        if ($type != "" && $type == "magasin")
+            $livraison = "magasin";
         else if ($type != "" && $type == "magasin2")
             $livraison = "magasin2";
         else if ($type != "" && $type == "domicile")
             $livraison = "domicile";
+                else if ($type != "" && $type == "domicile2")
+            $livraison = "domicile2";
         else
-            $livraison = "magasin1";
+            $livraison = "magasin";
         return $this->render('BurgerBundle:Default:livraison.html.twig', array("montantTotal" => $montantTotal, "nbArticlePanier" => $nb, "type" => $livraison));
     }
 
@@ -130,7 +136,7 @@ class DefaultController extends Controller {
      *
      * @Route("/paiement/{livraison}", name="burger_paiement")
      */
-    public function paiementAction(Request $request, $livraison = "magasin1") {
+    public function paiementAction(Request $request, $livraison = "magasin") {
         $total = $this->MontantGlobal($request);
         $em = $this->getDoctrine()->getManager();
 
@@ -167,7 +173,17 @@ class DefaultController extends Controller {
         $commande->setTelephone($this->getUser()->getTelephone());
         $commande->setEtat("Emise");
         $commande->setDate(new \DateTime());
-        $commande->setLivraison($livraison);
+        if($livraison == "domicile")
+            $commande->setLivraison("Livraison par  magasin St Jacques");
+        else if($livraison == "domicile2")
+             $commande->setLivraison("Livraison par  magasin Rennes");
+        else if($livraison == "magasin")
+            $commande->setLivraison("A emporter du magasin St Jacques");
+        else if($livraison == "magasin2")
+            $commande->setLivraison("A emporter du magasin Rennes");
+        else
+            $commande->setLivraison($livraison); // cas non existant
+        
         $em->persist($commande);
 
         $lignes = array();

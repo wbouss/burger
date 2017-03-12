@@ -68,7 +68,7 @@ class Commande {
     /**
      * @var string
      *
-     * @ORM\Column(name="informationComplementairesAdresse", type="string", length=255)
+     * @ORM\Column(name="informationComplementairesAdresse", type="string", length=255, nullable=true)
      */
     private $informationComplementairesAdresse;
 

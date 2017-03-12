@@ -1,5 +1,5 @@
 
-Bonjour,
+Bonjour,<br>
 
 Nous vous remercions de votre commande et de votre confiance. Le récapitulatif ci-dessous de votre commande. <br>
 
@@ -8,10 +8,9 @@ Type de livraison: {{ commande.livraison }}<br>
 Nom du client: {{ commande.nom }}<br>
 Adresse du client: {{ commande.adresse }}<br>
 Téléphone du client: {{ commande.telephone }}<br>
-Type de livraison: {{ commande.livraison }}<br><br>
 
 Voici la liste des produits commandés: <br><br>
 
 {% for ligne in lignes %}
-    Produit:  ligne.produit.intitule , Quantité : ligne.quantite , Prix payé par unité: ligne.prix<br> 
+    Produit:  {{ ligne.produit.intitule }} , Quantité : {{ ligne.quantite }}, Prix payé par unité: {{  ligne.prix }}<br> 
 {% endfor %}

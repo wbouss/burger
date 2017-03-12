@@ -62,7 +62,7 @@
                         <li><a href="{{path("burger_homepage")}}" class="menuscroll">Accueil</a></li>
 
                         <li><a href="{{path("burger_carte")}}">Commander</a></li>
-						<li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
                         <li><a href="{{path("burger_panier")}}">Panier</a></li>
                             {% if is_granted("ROLE_USER") %}
                             <li><a href="{{path("burger_moncompte")}}">Mon compte</a></li>
@@ -106,45 +106,64 @@
                         <div class="panel-heading">Choix de livraison</div>
                         <div class="panel-body">
                             <div class="list-group">
-                                {% if type == "magasin1" %}
-                                    <a href="#" class="list-group-item active"  onClick="location.href = '{{ path('burger_livraison', { "type": "magasin1" }) }}'">
+                                {% if type == "magasin" %}
+                                    <a href="#" class="list-group-item active"  onClick="location.href = '{{ path('burger_livraison', { "type": "magasin" }) }}'">
                                     {% else %}
-                                        <a href="#" class="list-group-item"  onClick="location.href = '{{ path('burger_livraison', { "type": "magasin1" }) }}'">
+                                        <a href="#" class="list-group-item"  onClick="location.href = '{{ path('burger_livraison', { "type": "magasin" }) }}'">
                                         {% endif %}
                                         <h4 class="list-group-item-heading">En magasin St Jacques-Gratuit</h4>
                                         <p class="list-group-item-text">Sur place ou à emporter</p>
                                     </a>
-                                {% if type == "magasin2" %}
-                                    <a href="#" class="list-group-item active"  onClick="location.href = '{{ path('burger_livraison', { "type": "magasin2" }) }}'">
-                                    {% else %}
-                                        <a href="#" class="list-group-item"  onClick="location.href = '{{ path('burger_livraison', { "type": "magasin2" }) }}'">
-                                        {% endif %}
-                                        <h4 class="list-group-item-heading">En magasin Rennes-Gratuit</h4>
-                                        <p class="list-group-item-text">Sur place ou à emporter</p>
-                                    </a>
-                                    {% if type == "domicile" %}
-                                        <a href="#" class="list-group-item active"  onClick="location.href = '{{ path('burger_livraison', { "type": "domicile" }) }}'">
+                                    {% if type == "magasin2" %}
+                                        <a href="#" class="list-group-item active"  onClick="location.href = '{{ path('burger_livraison', { "type": "magasin2" }) }}'">
+                                        {% else %}
+                                            <a href="#" class="list-group-item"  onClick="location.href = '{{ path('burger_livraison', { "type": "magasin2" }) }}'">
+                                            {% endif %}
+                                            <h4 class="list-group-item-heading">En magasin Rennes-Gratuit</h4>
+                                            <p class="list-group-item-text">Sur place ou à emporter</p>
+                                        </a>
+                                        {% if type == "domicile" %}
+                                            <a href="#" class="list-group-item active"  onClick="location.href = '{{ path('burger_livraison', { "type": "domicile" }) }}'">
+                                            <h4 class="list-group-item-heading">Livraison magasin St Jacques à domicile-Gratuit à partir de 15 euros</h4>
+                                            <p class="list-group-item-text">Adresse: {{ app.user.adresse }} {{ app.user.ville }} {{ app.user.codepostale }}</p>
+                                            </a>
                                         {% else %}
                                             {% if montantTotal >= 15 %}
                                                 <a href="#" class="list-group-item"  onClick="location.href = '{{ path('burger_livraison', { "type": "domicile" }) }}'">
-                                                {% else %}
-                                                    <a  class="list-group-item">
-                                                    {% endif %}
-                                                {% endif %}
-
-
-                                                <h4 class="list-group-item-heading">Livraison à domicile-Gratuit à partir de 15 euros</h4>
-                                                <p class="list-group-item-text">Adresse: {{ app.user.adresse }} {{ app.user.ville }} {{ app.user.codepostale }}</p>
+                                            {% else %}
+                                                <a  class="list-group-item">
+                                            {% endif %}
+                                            <h4 class="list-group-item-heading">Livraison magasin St Jacques à domicile-Gratuit à partir de 15 euros</h4>
+                                            <p class="list-group-item-text">Adresse: {{ app.user.adresse }} {{ app.user.ville }} {{ app.user.codepostale }}</p>
                                             </a>
-                                            </div>  
-                                            </div>
-                                            </div>
-                                            <div id="livraison_button_to_continue">
-                                                <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
-                                                <button onClick="location.href = '{{ path('burger_commander', {"livraison" : type }) }}'" type="button" class="btn btn-primary">Valider</button>
-                                            </div>
                                         {% endif %}
-                                        </div>
-                                        </div>
-                                        </body>
-                                        </html>
+                                        
+                                        {% if type == "domicile2" %}
+                                            <a href="#" class="list-group-item active"  onClick="location.href = '{{ path('burger_livraison', { "type": "domicile2" }) }}'">
+                                            <h4 class="list-group-item-heading">Livraison magasin St Jacques à domicile-Gratuit à partir de 15 euros</h4>
+                                            <p class="list-group-item-text">Adresse: {{ app.user.adresse }} {{ app.user.ville }} {{ app.user.codepostale }}</p>
+                                            </a>
+                                        {% else %}
+                                            {% if montantTotal >= 15 %}
+                                                <a href="#" class="list-group-item"  onClick="location.href = '{{ path('burger_livraison', { "type": "domicile2" }) }}'">
+                                            {% else %}
+                                                <a  class="list-group-item">
+                                            {% endif %}
+                                            <h4 class="list-group-item-heading">Livraison magasin Rennes à domicile-Gratuit à partir de 15 euros</h4>
+                                            <p class="list-group-item-text">Adresse: {{ app.user.adresse }} {{ app.user.ville }} {{ app.user.codepostale }}</p>
+                                            </a>
+                                        {% endif %}
+                                                    
+                                                     
+                                                    </div>  
+                                                    </div>
+                                                    </div>
+                                                    <div id="livraison_button_to_continue">
+                                                        <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Continuer mes achats</button>
+                                                        <button onClick="location.href = '{{ path('burger_commander', {"livraison" : type }) }}'" type="button" class="btn btn-primary">Valider</button>
+                                                    </div>
+                                                {% endif %}
+                                                </div>
+                                                </div>
+                                                </body>
+                                                </html>
