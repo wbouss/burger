@@ -117,19 +117,46 @@
                     <td>{{ total }} €</td>
                 </tr>
             </table>
-            <button onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Annuler</button>
             {% if is_granted("ROLE_USER") %}
-                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                    <input type="hidden" name="cmd" value="_s-xclick">
-                    <input type="hidden" name="hosted_button_id" value="ADKT7ZEL4JHDN">
-                    <input type="image" src="https://www.sandbox.paypal.com/fr_FR/FR/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal, le réflexe sécurité pour payer en ligne">
-                    <img alt="" border="0" src="https://www.sandbox.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
-                </form>
 
-                <button onClick="location.href = '{{ path('burger_paiement' , {"livraison" : typeLivraison }) }}'" type="button" class="btn btn-primary">Paiement</button>
-            {% else %}
+
+                {#                   <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                                    <input type='hidden' value="{{ total }}" name="amount" />
+                                    <input name="currency_code" type="hidden" value="EUR" />
+                                    <input name="shipping" type="hidden" value="0.00" />
+                                    <input name="tax" type="hidden" value="0.00" />
+                                    <input name="return" type="hidden" value="http://bibi-burger.fr/dfjgmdfjmgjd/burger/web/app_dev.php/pok" />
+                                    <input name="cancel_return" type="hidden" value="http://bibi-burger.fr/dfjgmdfjmgjd/burger/web/app_dev.php/pnok" />
+                                    <input name="notify_url" type="hidden" value="http://bibi-burger.fr/dfjgmdfjmgjd/burger/web/app_dev.php/paiement" />
+                                    <input name="cmd" type="hidden" value="_xclick" />
+                                    <input name="business" type="hidden" value="wbousssony1@gmail.com" />
+                                    <input name="item_name" type="hidden" value="Commande bibi-burger" />
+                                    <input name="no_note" type="hidden" value="1" />
+                                    <input name="lc" type="hidden" value="FR" />
+                                    <input name="bn" type="hidden" value="PP-BuyNowBF" />
+                                    <input name="custom" type="hidden" value="{{app.user.id}}" />
+                                    <input alt="Effectuez vos paiements via PayPal : une solution rapide, gratuite et sécurisée" name="submit" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_buynow_LG.gif" type="image" /><img src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" border="0" alt="" width="1" height="1" />
+                                </form>#}
+                
+                <form style="display: inline-block;" action="{{path("burger_paiement", {"livraison":  typeLivraison  })}}" method="POST">
+                    <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_test_QDRpNiZyOSQY3vPT4UKN0A8Y"
+                        data-amount="{{ total * 100 }}"
+                        data-name="Paiement de la commande"
+                        data-description="Widget"
+                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                        data-locale="auto"
+                        data-zip-code="true"
+                        data-currency="eur">
+                    </script>
+                </form>
+{#                <button onClick="location.href = '{{ path('paiement' , {'id': app.user.id } ) }}'" type="button" class="btn btn-primary">Paiement</button>
+#}            {% else %}
                 <button onClick="location.href = '{{ path('burger_moncompte') }}'" type="button" class="btn btn-primary">Se connecter pour commander</button>
             {% endif %}
+            <button style="display: inline-block;" onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Annuler</button>
+
             {% javascripts 
                 '@BurgerBundle/Resources/public/js/recap.js'
             %}

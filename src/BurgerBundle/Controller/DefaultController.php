@@ -124,11 +124,63 @@ class DefaultController extends Controller {
             $livraison = "magasin2";
         else if ($type != "" && $type == "domicile")
             $livraison = "domicile";
-                else if ($type != "" && $type == "domicile2")
+        else if ($type != "" && $type == "domicile2")
             $livraison = "domicile2";
         else
             $livraison = "magasin";
         return $this->render('BurgerBundle:Default:livraison.html.twig', array("montantTotal" => $montantTotal, "nbArticlePanier" => $nb, "type" => $livraison));
+    }
+
+//
+//    /**
+//     * @Route("/payment/{id}", name="paiement")
+//     */
+//    public function afficherPaiementStripeAction(Request $request) {
+//        $montantTotal = $this->MontantGlobal($request);
+//        return $this->render('BurgerBundle:Default:paiement.html.twig', array("montantTotal" => $montantTotal * 100));
+//    }
+//    
+//    /**
+//     * Matches 
+//     *
+//     * @Route("/payer", name="burger_fairepayer")
+//     */
+//    public function fairePayerStripeAction(Request $request) {
+//        $montantTotal = $this->MontantGlobal($request);
+//
+//        // See your keys here: https://dashboard.stripe.com/account/apikeys
+//        \Stripe\Stripe::setApiKey("sk_test_7Pj74JxtAJF4cQfSSeostGWA");
+//
+//        // Token is created using Stripe.js or Checkout!
+//        // Get the payment token submitted by the form:
+//        $token = $request->get('stripeToken');
+//
+//        // Charge the user's card:
+//        $charge = \Stripe\Charge::create(array(
+//                    "amount" => $montantTotal * 100,
+//                    "currency" => "eur",
+//                    "description" => "Commande",
+//                    "source" => $token,
+//        ));
+//        return $this->render('BurgerBundle:Default:paiementOk.html.twig');
+//    }
+
+    /**
+     * Matches 
+     *
+     * @Route("/pok", name="burger_paiementok")
+     */
+    public function pokAction(Request $request) {
+        return $this->render('BurgerBundle:Default:paiementOk.html.twig');
+    }
+
+    /**
+     * Matches 
+     *
+     * @Route("/pnok", name="burger_paiementnok")
+     */
+    public function pnokAction(Request $request) {
+        return $this->render('BurgerBundle:Default:paiementNok.html.twig');
     }
 
     /**
@@ -137,7 +189,30 @@ class DefaultController extends Controller {
      * @Route("/paiement/{livraison}", name="burger_paiement")
      */
     public function paiementAction(Request $request, $livraison = "magasin") {
+
+
+
+        // See your keys here: https://dashboard.stripe.com/account/apikeys
+        \Stripe\Stripe::setApiKey("sk_test_7Pj74JxtAJF4cQfSSeostGWA");
+
+        // Token is created using Stripe.js or Checkout!
+        // Get the payment token submitted by the form:
+        $token = $request->get('stripeToken');
+
+        if (empty($token))
+            return $this->render('BurgerBundle:Default:panier.html.twig');
+        
         $total = $this->MontantGlobal($request);
+
+        // Charge the user's card:
+        $charge = \Stripe\Charge::create(array(
+                    "amount" => $total * 100,
+                    "currency" => "eur",
+                    "description" => "Commande",
+                    "source" => $token,
+        ));
+
+
         $em = $this->getDoctrine()->getManager();
 
         // on vérifie s'il n'y a pas d'erreur
@@ -173,17 +248,18 @@ class DefaultController extends Controller {
         $commande->setTelephone($this->getUser()->getTelephone());
         $commande->setEtat("Emise");
         $commande->setDate(new \DateTime());
-        if($livraison == "domicile")
+        $commande->setAmount($total);
+        if ($livraison == "domicile")
             $commande->setLivraison("Livraison par  magasin St Jacques");
-        else if($livraison == "domicile2")
-             $commande->setLivraison("Livraison par  magasin Rennes");
-        else if($livraison == "magasin")
+        else if ($livraison == "domicile2")
+            $commande->setLivraison("Livraison par  magasin Rennes");
+        else if ($livraison == "magasin")
             $commande->setLivraison("A emporter du magasin St Jacques");
-        else if($livraison == "magasin2")
+        else if ($livraison == "magasin2")
             $commande->setLivraison("A emporter du magasin Rennes");
         else
             $commande->setLivraison($livraison); // cas non existant
-        
+
         $em->persist($commande);
 
         $lignes = array();
@@ -237,7 +313,7 @@ class DefaultController extends Controller {
                 ->setContentType('text/html');
         $this->get('mailer')->send($message);
 
-        return $this->render('BurgerBundle:Default:paiement.html.twig');
+        return $this->render('BurgerBundle:Default:paiementOk.html.twig');
     }
 
     /**

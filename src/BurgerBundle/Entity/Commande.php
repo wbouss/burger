@@ -3,6 +3,7 @@
 namespace BurgerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Payment\CoreBundle\Entity\PaymentInstruction;
 
 /**
  * Commande
@@ -99,6 +100,12 @@ class Commande {
      */
     private $livraison;
 
+
+
+
+    /** @ORM\Column(type="decimal", precision = 2) */
+    private $amount;
+    
     /**
      * Get id
      *
@@ -238,6 +245,16 @@ class Commande {
 
     function setMagasin($magasin) {
         $this->magasin = $magasin;
+    }
+
+    function getAmount() {
+        return $this->amount;
+    }
+
+
+
+    function setAmount($amount) {
+        $this->amount = $amount;
     }
 
 

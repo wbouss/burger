@@ -4,6 +4,8 @@ imports:
     - { resource: services.yml }
     - { resource: "@BurgerBundle/Resources/config/services.yml" }
     - { resource: "@UserCustomBundle/Resources/config/services.yml" }
+    - { resource: "@JmsBundle/Resources/config/services.yml" }
+    - { resource: "@PaymentBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -99,3 +101,17 @@ fos_user:
     from_email:
         address: wbouss@gmail.com
         sender_name: You
+        
+jms_payment_paypal:
+    username: wbousssony1_api1.gmail.com
+    password: 8W8XRY89RPZMJ54B
+    signature: AFcWxV21C7fd0v3bYYYRCpSSRl31ASYK2tdUhdx.nfEXhlRagK33QZqp
+    debug: true
+    
+sensio_framework_extra:
+    router:      { annotations: true }
+    request:     { converters: true, auto_convert: true }
+    view:        { annotations: true }
+    cache:       { annotations: true }
+    security:    { annotations: true }
+    psr_message: { enabled: false } # Defaults to true if the PSR-7 bridge is installed

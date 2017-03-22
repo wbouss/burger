@@ -60,7 +60,7 @@
                         <li><a href="{{path("burger_homepage")}}" class="menuscroll">Accueil</a></li>
 
                         <li><a href="{{path("burger_carte")}}">Commander</a></li>
-                        <li><a href="#"></a></li>
+						<li><a href="#"></a></li>
                         <li><a href="{{path("burger_panier")}}">Panier</a></li>
                             {% if is_granted("ROLE_USER") %}
                             <li><a href="{{path("burger_moncompte")}}">Mon compte</a></li>
@@ -78,19 +78,7 @@
         <div class="container inner">
             <div id="paiement_Content">
                 <div class="well">
-                    <form action="{{path("burger_fairepayer")}}" method="POST">
-                        <script
-                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                            data-key="pk_test_QDRpNiZyOSQY3vPT4UKN0A8Y"
-                            data-amount="{{ montantTotal }}"
-                            data-name="Paiement de la commande"
-                            data-description="Widget"
-                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                            data-locale="auto"
-                            data-zip-code="true"
-                            data-currency="eur">
-                        </script>
-                    </form>
+                    Félicitation, votre commande a bien été enregistré, vous allez recevoir un mail récapitulatif de votre commande.<br> A bientot sur Bibi-Burger
                 </div>
             </div>
         </div>

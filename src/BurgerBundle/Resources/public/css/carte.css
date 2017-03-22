@@ -45,6 +45,9 @@ section::before,section::after {
 #top_login{
     margin-bottom: 10px;
 }
+#paiement_Content{
+    margin-top: 70px;
+}
 /* Separators Styles */
 .ss-style-top::before {
     left:0;

@@ -1,7 +1,7 @@
 
 Bonjour,
 
-Une nouvelle commande vient d'être emise. Le récapitulatif ci-dessous. <br>
+Une nouvelle commande vient d'être emise. Le récapitulatif ci-dessous. <br><br>
 
 Date: {{ commande.date|date("d/m/Y") }}<br>
 Type de livraison: {{ commande.livraison }}<br>
@@ -12,5 +12,5 @@ Téléphone du client: {{ commande.telephone }}<br>
 Voici la liste des produits commandés: <br><br>
 
 {% for ligne in lignes %}
-    Produit:  {{ ligne.produit.intitule }} , Quantité : {{ ligne.quantite }}, Prix payé par unité: {{  ligne.prix }}<br> 
+    Produit:  {{ ligne.produit }} , Quantité : {{ ligne.quantite }}, Prix payé par unité: {{  ligne.prix }}<br> 
 {% endfor %}
