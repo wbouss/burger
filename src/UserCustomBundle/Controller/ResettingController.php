@@ -136,7 +136,7 @@ class ResettingController extends Controller
 
     /**
      * Reset user password.
-     *
+     * @Route("resetting/reset/{token}", name="usercustom_resetting_password")
      * @param Request $request
      * @param string  $token
      *
@@ -176,7 +176,7 @@ class ResettingController extends Controller
             $userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_profile_show');
+                $url = $this->generateUrl('burger_moncompte');
                 $response = new RedirectResponse($url);
             }
 
@@ -188,7 +188,7 @@ class ResettingController extends Controller
             return $response;
         }
 
-        return $this->render('@FOSUser/Resetting/reset.html.twig', array(
+        return $this->render('BurgerBundle:User:resetPassword.html.twig', array(
             'token' => $token,
             'form' => $form->createView(),
         ));

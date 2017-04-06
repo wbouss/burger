@@ -22,12 +22,12 @@
         {% stylesheets '../vendor/fortawesome/font-awesome/css/font-awesome.min.css'  filter='cssrewrite' output='css/fontawesome.css' %}
         <link rel='stylesheet' href='{{ asset_url }}' /> 
         {% endstylesheets %}
-        
+
         {% stylesheets '@BurgerBundle/Resources/public/css/carte.css' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
-  
+
 
         {% javascripts 
         '@BurgerBundle/Resources/public/js/jquery.js'
@@ -61,7 +61,7 @@
                         <li><a href="{{path("burger_homepage")}}" class="menuscroll">Accueil</a></li>
 
                         <li><a href="{{path("burger_carte")}}">Commander</a></li>
-						<li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
                         <li><a href="{{path("burger_panier")}}">Panier</a></li>
                             {% if is_granted("ROLE_USER") %}
                             <li><a href="{{path("burger_moncompte")}}">Mon compte</a></li>
@@ -83,9 +83,9 @@
                         {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
                         <button class="btn btn-danger btn-xs" onClick="location.href = '{{ path('fos_user_security_logout') }}'"> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</button>
                         <div class="alert alert-default" role="alert">
-                              {% if errorP is defined %}
-                                    <div class="alert alert-danger" role="alert">{{ errorP }}</div>
-                                {% endif %}
+                            {% if errorP is defined %}
+                                <div class="alert alert-danger" role="alert">{{ errorP }}</div>
+                            {% endif %}
                             {{ render(controller("UserCustomBundle:Profile:edit", { 'call' : 'action' })) }}
                         </div>
                     {% else %}
@@ -137,8 +137,11 @@
                         {% endfor %}
                     {% endfor %}
                 {% endif %}
-
-                <button onClick="location.href = '{{ path('usercustom_reset_password') }}'" type="button" class="btn btn-warning">Mot de passe oublié</button>
+                
+                {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <button onClick="location.href = '{{ path('usercustom_reset_password') }}'" type="button" class="btn btn-warning">Mot de passe oublié</button>
+                {% endif %}
+                
             </div>
         </div>
 
