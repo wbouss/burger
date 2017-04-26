@@ -1,0 +1,33 @@
+<html class="no-js"> <!--<![endif]-->
+    <head>
+        <title>Bibi Burger</title>
+        <!-- meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        
+        {% javascripts
+            '@AcmeFooBundle/Resources/public/js/angularjs/1.2.4/angular.min.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        
+    </head>
+    <body>
+    </body>
+    <table>
+        <tr *ngFor="let commande of commandes">
+            <td>{{ c.id }}</td>
+        </tr>
+    </table>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('customersCtrl', function ($scope, $http) {
+            $http.get("customers_mysql.php")
+                    .then(function (response) {
+                        $scope.names = response.data.records;
+                    });
+        });
+    </script>
+    ff
+</html>

@@ -124,3 +124,9 @@ $(document).ready(function () {
 
 
 });
+
+function confirmPayment(){
+    if(confirm("Voulez vous valider la commande ?  "))
+        location.href = pathPayment;
+
+}

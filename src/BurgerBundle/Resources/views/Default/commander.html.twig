@@ -147,21 +147,27 @@
                         data-description="Widget"
                         data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
                         data-locale="auto"
+                        data-label="Paiement par carte bancaire"
                         data-zip-code="true"
                         data-currency="eur">
                     </script>
                 </form>
-{#                <button onClick="location.href = '{{ path('paiement' , {'id': app.user.id } ) }}'" type="button" class="btn btn-primary">Paiement</button>
-#}            {% else %}
+                <button style="display: inline-block;" onClick="confirmPayment()" type="button" class="btn btn-success">Paiement sur place</button>
+
+                {#                <button onClick="location.href = '{{ path('paiement' , {'id': app.user.id } ) }}'" type="button" class="btn btn-primary">Paiement</button>
+                #}            {% else %}
                 <button onClick="location.href = '{{ path('burger_moncompte') }}'" type="button" class="btn btn-primary">Se connecter pour commander</button>
             {% endif %}
             <button style="display: inline-block;" onClick="location.href = '{{ path('burger_carte', { "type": "burger" }) }}'" type="button" class="btn btn-warning">Annuler</button>
 
-            {% javascripts 
+            <script>
+                var pathPayment = '{{ path('burger_paiementplace', {"livraison":  typeLivraison  })  }}';
+            </script>
+            {% javascripts
                 '@BurgerBundle/Resources/public/js/recap.js'
             %}
             <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}  
+            {% endjavascripts %}
         </div>
     </div>
 </body>

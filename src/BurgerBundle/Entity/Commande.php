@@ -100,7 +100,12 @@ class Commande {
      */
     private $livraison;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type_paiement", type="string", length=255)
+     */
+    private $typepaiement;
 
 
     /** @ORM\Column(type="decimal", precision = 2) */
@@ -207,9 +212,6 @@ class Commande {
         return $this->informationComplementairesAdresse;
     }
 
-    function getOptions() {
-        return $this->options;
-    }
 
     function setCodepostale($codepostale) {
         $this->codepostale = $codepostale;
@@ -239,13 +241,6 @@ class Commande {
         $this->interphone = $interphone;
     }
     
-    function getMagasin() {
-        return $this->magasin;
-    }
-
-    function setMagasin($magasin) {
-        $this->magasin = $magasin;
-    }
 
     function getAmount() {
         return $this->amount;
@@ -256,6 +251,24 @@ class Commande {
     function setAmount($amount) {
         $this->amount = $amount;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTypepaiement()
+    {
+        return $this->typepaiement;
+    }
+
+    /**
+     * @param mixed $typepaiement
+     */
+    public function setTypepaiement($typepaiement)
+    {
+        $this->typepaiement = $typepaiement;
+    }
+
+
 
 
 

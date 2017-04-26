@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/burger/src/BurgerBundle/Entity/Commande.php</file>
-            <file>file:/C:/wamp64/www/burger/app/AppKernel.php</file>
-            <file>file:/C:/wamp64/www/burger/app/config/config.yml</file>
+            <file>file:/C:/wamp64/www/burgerv2/app/AppKernel.php</file>
+            <file>file:/C:/wamp64/www/burgerv2/src/BurgerBundle/Resources/views/Admin/Live/liveOrder.html.twig</file>
+            <file>file:/C:/wamp64/www/burgerv2/src/BurgerBundle/Controller/ImageAdminController.php</file>
+            <file>file:/C:/wamp64/www/burgerv2/src/BurgerBundle/Resources/views/Admin/Produit/ligneproduits.html.twig</file>
+            <file>file:/C:/wamp64/www/burgerv2/src/BurgerBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/wamp64/www/burgerv2/src/BurgerBundle/Entity/Commande.php</file>
         </group>
     </open-files>
 </project-private>

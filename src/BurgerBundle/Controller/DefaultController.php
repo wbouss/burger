@@ -8,6 +8,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class DefaultController extends Controller {
 
@@ -25,6 +29,32 @@ class DefaultController extends Controller {
         $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
         $produits = $repositoryProduit->findAll();
         return $this->render('BurgerBundle:Default:main.html.twig', array("produits" => $produits));
+    }
+
+    /**
+     * 
+     * @Route("/liveOrder" , name="burger_liveorder")
+     */
+    public function liveOrderAction(Request $request) {
+        return $this->render("BurgerBundle:Admin:Live/liveOrder.html.twig");
+    }
+
+    /**
+     * 
+     * @Route("/liveOrderData" , name="burger_liveorderdata")
+     */
+    public function liveOrderDataAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $repositoryCommande = $em->getRepository("BurgerBundle:Commande");
+        $commandes = $repositoryCommande->findAll();
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        
+        $jsonContent = $serializer->serialize($commandes, 'json');
+
+        return new Response($jsonContent);
     }
 
     /**
@@ -201,7 +231,7 @@ class DefaultController extends Controller {
 
         if (empty($token))
             return $this->render('BurgerBundle:Default:panier.html.twig');
-        
+
         $total = $this->MontantGlobal($request);
 
         // Charge the user's card:
@@ -249,6 +279,7 @@ class DefaultController extends Controller {
         $commande->setEtat("Emise");
         $commande->setDate(new \DateTime());
         $commande->setAmount($total);
+        $commande->setTypepaiement("carte bancaire");
         if ($livraison == "domicile")
             $commande->setLivraison("Livraison par  magasin St Jacques");
         else if ($livraison == "domicile2")
@@ -311,6 +342,123 @@ class DefaultController extends Controller {
                 ->setTo(DefaultController::$MailResp)
                 ->setBody($body)
                 ->setContentType('text/html');
+        $this->get('mailer')->send($message);
+
+        return $this->render('BurgerBundle:Default:paiementOk.html.twig');
+    }
+
+    /**
+     * Matches
+     *
+     * @Route("/paiementplace/{livraison}", name="burger_paiementplace")
+     */
+    public function paiementPlaceAction(Request $request, $livraison = "magasin") {
+
+
+        $total = $this->MontantGlobal($request);
+
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        // on vérifie s'il n'y a pas d'erreur
+        // On test si on peut passer des commandes
+        $repositoryParametre = $em->getRepository("BurgerBundle:Parametre");
+        $autorisation = $repositoryParametre->findOneByNom("Activation des commandes");
+        if (empty($autorisation) || $autorisation->getValeur() != "En marche") {
+            $message = "Les commandes sont suspendu, veuillez réessayer plus tard";
+            return $this->render('BurgerBundle:Default:commander.html.twig', (array("message" => $message, "typeLivraison" => $livraison, "total" => $total)));
+        }
+
+        // On test si la commande est conforme aux règles
+        if ($livraison == "domicile" && $total < 15) {
+            $message = "Les commandes en dessous de 15 euros ne peuvent être à domicile";
+            return $this->render('BurgerBundle:Default:commander.html.twig', (array("message" => $message, "typeLivraison" => $livraison, "total" => $total)));
+        }
+
+
+
+        $repositoryProduit = $em->getRepository("BurgerBundle:Produit");
+        $panier = $request->getSession()->get("panier");
+        $translationP = $this->panierD($request);
+
+        // creation de la commande
+        $commande = new \BurgerBundle\Entity\Commande();
+        $commande->setAdresse($this->getUser()->getAdresse());
+        $commande->setCodepostale($this->getUser()->getCodePostale());
+        $commande->setVille($this->getUser()->getVille());
+        $commande->setInformationComplementairesAdresse($this->getUser()->getInformationComplementairesAdresse());
+        $commande->setCodeImmeuble($this->getUser()->getCodeImmeuble());
+        $commande->setInterphone($this->getUser()->getInterphone());
+        $commande->setNom($this->getUser()->getLastName());
+        $commande->setTelephone($this->getUser()->getTelephone());
+        $commande->setEtat("Emise");
+        $commande->setDate(new \DateTime());
+        $commande->setAmount($total);
+        $commande->setTypepaiement("sur place");
+
+        if ($livraison == "domicile")
+            $commande->setLivraison("Livraison par  magasin St Jacques");
+        else if ($livraison == "domicile2")
+            $commande->setLivraison("Livraison par  magasin Rennes");
+        else if ($livraison == "magasin")
+            $commande->setLivraison("A emporter du magasin St Jacques");
+        else if ($livraison == "magasin2")
+            $commande->setLivraison("A emporter du magasin Rennes");
+        else
+            $commande->setLivraison($livraison); // cas non existant
+
+        $em->persist($commande);
+
+        $lignes = array();
+        // creation des ligne de commande
+        for ($i = 0; $i < count($panier["idProduit"]); $i++) {
+            $ligne = new \BurgerBundle\Entity\LigneCommande();
+            $p = $repositoryProduit->find($panier["idProduit"][$i][0]);
+            $ligne->setProduit($p->getIntitule());
+            $ligne->setQuantite($panier["qteProduit"][$i]);
+            $ligne->setPrix($panier["prixProduit"][$i]);
+            $ligne->setCommande($commande);
+            $ligne->setOptions(json_encode($translationP[$i]["optionsProduit"]));
+            $em->persist($ligne);
+            $lignes[] = $ligne;
+        }
+
+        $em->flush();
+        $this->viderPanier($request);
+
+        /*
+         *  mail au fournisseur
+         */
+        $titre = "Nouvelle commande";
+        $from = "noreply-burger@bibiburger.fr";
+
+
+        $body = $this->get("templating")->render('BurgerBundle:Mail:nouvelleCommandeResponsable.html.twig', array('commande' => $commande, "lignes" => $lignes));
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject($titre)
+            ->setFrom($from)
+            ->setTo(DefaultController::$MailResp)
+            ->setBody($body)
+            ->setContentType('text/html');
+        $this->get('mailer')->send($message);
+
+        /*
+         *  mail au client
+         */
+        $titre = "Votre commande BIBIBURGER";
+        $from = "noreply-burger@bibiburger.fr";
+
+
+        $body = $this->get("templating")->render('BurgerBundle:Mail:nouvelleCommandeClient.html.twig', array('commande' => $commande, "lignes" => $lignes));
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject($titre)
+            ->setFrom($from)
+            ->setTo(DefaultController::$MailResp)
+            ->setBody($body)
+            ->setContentType('text/html');
         $this->get('mailer')->send($message);
 
         return $this->render('BurgerBundle:Default:paiementOk.html.twig');
