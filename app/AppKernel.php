@@ -25,13 +25,6 @@ class AppKernel extends Kernel {
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new UserCustomBundle\UserCustomBundle(),
-            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-            new \JMS\AopBundle\JMSAopBundle(),
-            new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-            new JMS\Payment\CoreBundle\JMSPaymentCoreBundle(),
-            new JMS\Payment\PaypalBundle\JMSPaymentPaypalBundle(),
-            new JmsBundle\JmsBundle(),
-            new PaymentBundle\PaymentBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

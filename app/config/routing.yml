@@ -1,9 +1,3 @@
-payment:
-    resource: "@PaymentBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-
 
 user_custom:
     resource: "@UserCustomBundle/Controller/"
@@ -46,7 +40,3 @@ burger_moncompte:
     path: /moncompte 
     defaults:  { _controller: BurgerBundle:Default:moncompte }    
     
-jms:
-    resource: "@JmsBundle/Controller/"
-    type:     annotation
-    prefix:   /
