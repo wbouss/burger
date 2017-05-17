@@ -97,9 +97,9 @@
                                 {% if errorL is defined %}
                                     <div class="alert alert-danger" role="alert">{{ errorL }}</div>
                                 {% endif %}
-                                <div class="alert alert-info" role="alert">
+                                <div class="alert alert-default" role="alert">
                                     {{ render(controller("UserCustomBundle:Security:Login", { 'call' : 'action' })) }}
-                                </div> 
+                                </div>
                                 <div class="page-header">
                                     <h1>S'enregistrer</h1>
                                     {% if formR is defined %}

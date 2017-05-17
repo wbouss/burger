@@ -206,7 +206,7 @@ section::before,section::after {
     text-align: right;
 }
 #panier_Content,#livraison_Content {
-    margin-top: 20px;
+    margin-top: 70px;
 }
 
 #panier_Content_etape button, #livraison_Content_etape button{
@@ -333,6 +333,10 @@ section::before,section::after {
     margin:0;
     padding:0;
     list-style:none;
+}
+#food-menu
+{
+    padding-top: 50px;
 }
 .menu-images img {
     -webkit-border-radius:10px;
